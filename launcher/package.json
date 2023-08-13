@@ -1,0 +1,12 @@
+{
+    "name": "launcher",
+    "version": "0.0.1",
+    "description": "Project launcher",
+    "author": "Alexey Soloviev",
+    "private": true,
+    "license": "UNLICENSED",
+    "scripts": {
+        "dev:up": "docker-compose --env-file .env.dev -f docker-compose.yml -f docker-compose.dev.yml up",
+        "dev:down": "docker-compose --env-file .env.dev -f docker-compose.yml -f docker-compose.dev.yml down"
+    }
+}
