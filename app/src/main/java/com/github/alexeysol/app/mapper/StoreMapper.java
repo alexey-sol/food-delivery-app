@@ -6,9 +6,18 @@ import com.github.alexeysol.app.model.entity.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Mapper(uses = StoreAddressMapper.class)
 public interface StoreMapper {
     StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
+
+    default Set<StoreDto> map(Set<Store> stores) {
+        return stores.stream()
+            .map(this::map)
+            .collect(Collectors.toSet());
+    }
 
     StoreDto map(Store store);
 

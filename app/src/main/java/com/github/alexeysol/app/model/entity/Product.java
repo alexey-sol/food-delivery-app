@@ -50,10 +50,17 @@ public class Product {
     @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(
         name = "product_category",
-        joinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "id") },
-        inverseJoinColumns = { @JoinColumn(name = "category_id", referencedColumnName = "id") }
+        joinColumns = {
+            @JoinColumn(name = "product_id", referencedColumnName = "id")
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "category_id", referencedColumnName = "id")
+        }
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToOne(mappedBy = "product")
+    private CartItem cartItem;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

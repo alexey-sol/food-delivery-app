@@ -1,13 +1,15 @@
 package com.github.alexeysol.app.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -15,22 +17,26 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Store {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
-    private String name;
+    private int phone;
 
-    private String description;
+    @Column(name = "full_name")
+    private String fullName;
+
+    // TODO hashed pass?
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-    private StoreAddress address;
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private UserAddress address;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Set<Product> products;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

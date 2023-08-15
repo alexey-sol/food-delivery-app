@@ -12,11 +12,11 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public Optional<Product> getProductById(long id) {
+    public Optional<Product> findProductById(long id) {
         return productRepository.findById(id);
     }
 
-    public Product createProduct(Product product) {
+    public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 }

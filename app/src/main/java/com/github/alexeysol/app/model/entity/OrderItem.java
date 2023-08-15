@@ -1,36 +1,38 @@
 package com.github.alexeysol.app.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.Set;
 
 @Entity
+@Table(name = "order_item")
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Store {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
-    private String name;
-
-    private String description;
+    private int quantity = 0;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-    private StoreAddress address;
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    private Product product;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Set<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    private Order order;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

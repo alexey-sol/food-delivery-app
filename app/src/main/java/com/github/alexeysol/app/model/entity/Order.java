@@ -1,7 +1,11 @@
 package com.github.alexeysol.app.model.entity;
 
+import com.github.alexeysol.app.model.OrderType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,22 +19,20 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Store {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
-    private String name;
+    private long total_price = 0L;
 
-    private String description;
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderType type;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-    private StoreAddress address;
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Set<Product> products;
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItems;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

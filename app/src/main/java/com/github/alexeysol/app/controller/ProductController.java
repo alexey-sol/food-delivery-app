@@ -27,7 +27,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable long id) {
-        var product = productService.getProductById(id).orElseThrow(() -> {
+        var product = productService.findProductById(id).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, "Product", id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
@@ -40,13 +40,13 @@ public class ProductController {
     public ProductDto createProduct(@RequestBody @Valid CreateProductDto dto) {
         var storeId = dto.getStoreId();
 
-        var store = storeService.getStoreById(storeId).orElseThrow(() -> {
+        var store = storeService.findStoreById(storeId).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, "Store", storeId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
         Product product = productMapper.map(dto, store);
-        productService.createProduct(product);
+        productService.saveProduct(product);
         return productMapper.map(product);
     }
 }

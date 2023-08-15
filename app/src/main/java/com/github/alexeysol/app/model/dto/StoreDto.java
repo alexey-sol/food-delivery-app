@@ -12,6 +12,8 @@ public class StoreDto {
 
     private String description;
 
+    private StoreAddressDto address;
+
     private Date createdAt;
 
     private Date updatedAt;
