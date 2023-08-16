@@ -7,6 +7,7 @@ import lombok.*;
 @Table(name = "store_address")
 @Data
 @EqualsAndHashCode(exclude = "store")
+@ToString(exclude = "store")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

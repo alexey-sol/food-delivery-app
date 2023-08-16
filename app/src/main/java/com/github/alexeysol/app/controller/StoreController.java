@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -21,20 +22,37 @@ import java.util.Set;
 @Validated
 @RequiredArgsConstructor
 public class StoreController {
+    private static final String STORE = "Store";
+
     private final StoreService storeService;
 
     private final StoreMapper storeMapper = StoreMapper.INSTANCE;
 
-    @GetMapping("/all/{city}")
-    public Set<StoreDto> getAllStoresByCity(@PathVariable String city) {
-        var stores = storeService.findAllStoresByCity(city);
-        return storeMapper.map(stores);
+    @GetMapping
+    public Set<StoreDto> getStores(@RequestParam Optional<String> city) {
+        Set<Store> products;
+
+        if (city.isPresent()) {
+            products = getAllStoresByCity(city.get());
+        } else {
+            products = getAllStores();
+        }
+
+        return storeMapper.map(products);
+    }
+
+    public Set<Store> getAllStoresByCity(String city) {
+        return storeService.findAllStoresByCity(city);
+    }
+
+    public Set<Store> getAllStores() {
+        return storeService.findAllStores();
     }
 
     @GetMapping("/{id}")
     public StoreDto getStoreById(@PathVariable long id) {
         var store = storeService.findStoreById(id).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, "Product", id);
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, STORE, id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 

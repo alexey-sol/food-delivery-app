@@ -4,6 +4,7 @@ import com.github.alexeysol.app.model.dto.CreateStoreAddressDto;
 import com.github.alexeysol.app.model.dto.StoreAddressDto;
 import com.github.alexeysol.app.model.entity.StoreAddress;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper
 public interface StoreAddressMapper {
@@ -11,5 +12,6 @@ public interface StoreAddressMapper {
 
     StoreAddress map(StoreAddressDto dto);
 
+    @Mapping(target = "id", ignore = true)
     StoreAddress map(CreateStoreAddressDto dto);
 }
