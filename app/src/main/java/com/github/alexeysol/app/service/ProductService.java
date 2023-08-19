@@ -3,23 +3,23 @@ package com.github.alexeysol.app.service;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public Set<Product> findAllProducts() {
-        return new HashSet<>(productRepository.findAll());
+    public Page<Product> findAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
-    public Set<Product> findAllProductsByStoreId(long storeId) {
-        return new HashSet<>(productRepository.findAllByStoreId(storeId));
+    public Page<Product> findAllProductsByStoreId(long storeId, Pageable pageable) {
+        return productRepository.findAllByStoreId(storeId, pageable);
     }
 
     public Optional<Product> findProductById(long id) {

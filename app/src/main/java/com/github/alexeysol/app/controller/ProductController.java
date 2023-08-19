@@ -2,13 +2,17 @@ package com.github.alexeysol.app.controller;
 
 import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.ProductMapper;
+import com.github.alexeysol.app.model.PagingCriteria;
 import com.github.alexeysol.app.model.dto.CreateProductDto;
 import com.github.alexeysol.app.model.dto.ProductDto;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.StoreService;
+import com.github.alexeysol.app.util.PageableUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/product", produces = "application/json")
@@ -32,29 +35,33 @@ public class ProductController {
     private final ProductMapper productMapper = ProductMapper.INSTANCE;
 
     @GetMapping
-    public Set<ProductDto> getProducts(@RequestParam Optional<Long> storeId) {
-        Set<Product> products;
+    public Page<ProductDto> getProducts(@RequestParam Optional<Long> storeId, @RequestParam Optional<String> paging) {
+        var pageable = paging.isPresent()
+            ? PageableUtil.convert(paging.get())
+            : PageableUtil.convert(new PagingCriteria());
+
+        Page<Product> productPage;
 
         if (storeId.isPresent()) {
-            products = getAllProductsByStoreId(storeId.get());
+            productPage = getAllProductsByStoreId(storeId.get(), pageable);
         } else {
-            products = getAllProducts();
+            productPage = getAllProducts(pageable);
         }
 
-        return productMapper.map(products);
+        return productMapper.map(productPage, pageable);
     }
 
-    private Set<Product> getAllProductsByStoreId(long storeId) {
+    private Page<Product> getAllProductsByStoreId(long storeId, Pageable pageable) {
         storeService.findStoreById(storeId).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, STORE, storeId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-        return productService.findAllProductsByStoreId(storeId);
+        return productService.findAllProductsByStoreId(storeId, pageable);
     }
 
-    private Set<Product> getAllProducts() {
-        return productService.findAllProducts();
+    private Page<Product> getAllProducts(Pageable pageable) {
+        return productService.findAllProducts(pageable);
     }
 
     @GetMapping("/{id}")

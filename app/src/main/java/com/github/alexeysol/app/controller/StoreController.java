@@ -2,12 +2,16 @@ package com.github.alexeysol.app.controller;
 
 import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.StoreMapper;
+import com.github.alexeysol.app.model.PagingCriteria;
 import com.github.alexeysol.app.model.dto.CreateStoreDto;
 import com.github.alexeysol.app.model.dto.StoreDto;
 import com.github.alexeysol.app.model.entity.Store;
 import com.github.alexeysol.app.service.StoreService;
+import com.github.alexeysol.app.util.PageableUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/store", produces = "application/json")
@@ -29,24 +32,28 @@ public class StoreController {
     private final StoreMapper storeMapper = StoreMapper.INSTANCE;
 
     @GetMapping
-    public Set<StoreDto> getStores(@RequestParam Optional<String> city) {
-        Set<Store> products;
+    public Page<StoreDto> getStores(@RequestParam Optional<String> city, @RequestParam Optional<String> paging) {
+        var pageable = paging.isPresent()
+            ? PageableUtil.convert(paging.get())
+            : PageableUtil.convert(new PagingCriteria());
+
+        Page<Store> storePage;
 
         if (city.isPresent()) {
-            products = getAllStoresByCity(city.get());
+            storePage = getAllStoresByCity(city.get(), pageable);
         } else {
-            products = getAllStores();
+            storePage = getAllStores(pageable);
         }
 
-        return storeMapper.map(products);
+        return storeMapper.map(storePage, pageable);
     }
 
-    public Set<Store> getAllStoresByCity(String city) {
-        return storeService.findAllStoresByCity(city);
+    public Page<Store> getAllStoresByCity(String city, Pageable pageable) {
+        return storeService.findAllStoresByCity(city, pageable);
     }
 
-    public Set<Store> getAllStores() {
-        return storeService.findAllStores();
+    public Page<Store> getAllStores(Pageable pageable) {
+        return storeService.findAllStores(pageable);
     }
 
     @GetMapping("/{id}")
