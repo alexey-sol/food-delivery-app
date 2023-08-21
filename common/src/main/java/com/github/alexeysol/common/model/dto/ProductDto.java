@@ -1,18 +1,24 @@
-package com.github.alexeysol.app.model.dto;
+package com.github.alexeysol.common.model.dto;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class StoreDto {
+public class ProductDto {
     private long id;
 
     private String name;
 
     private String description;
 
-    private StoreAddressDto address;
+    private int calories;
+
+    private int quantity;
+
+    private long price;
+
+    private StoreDto store;
 
     private Date createdAt;
 

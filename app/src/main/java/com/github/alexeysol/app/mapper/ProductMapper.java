@@ -1,9 +1,9 @@
 package com.github.alexeysol.app.mapper;
 
-import com.github.alexeysol.app.model.dto.CreateProductDto;
-import com.github.alexeysol.app.model.dto.ProductDto;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.model.entity.Store;
+import com.github.alexeysol.common.model.dto.CreateProductDto;
+import com.github.alexeysol.common.model.dto.ProductDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

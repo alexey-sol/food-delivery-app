@@ -1,16 +1,21 @@
-package com.github.alexeysol.app.util;
+package com.github.alexeysol.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.experimental.UtilityClass;
 
 import java.util.Map;
 
 @UtilityClass
 public class JsonUtil {
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper()
+        .findAndRegisterModules()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     public <T> T deserialize(String json, Class<T> valueType) {
         try {

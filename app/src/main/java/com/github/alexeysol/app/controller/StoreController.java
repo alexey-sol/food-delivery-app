@@ -2,18 +2,16 @@ package com.github.alexeysol.app.controller;
 
 import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.StoreMapper;
-import com.github.alexeysol.app.model.PagingCriteria;
-import com.github.alexeysol.app.model.dto.CreateStoreDto;
-import com.github.alexeysol.app.model.dto.StoreDto;
 import com.github.alexeysol.app.model.entity.Store;
 import com.github.alexeysol.app.service.StoreService;
-import com.github.alexeysol.app.util.PageableUtil;
+import com.github.alexeysol.common.model.dto.CreateStoreDto;
+import com.github.alexeysol.common.model.dto.StoreDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,11 +30,12 @@ public class StoreController {
     private final StoreMapper storeMapper = StoreMapper.INSTANCE;
 
     @GetMapping
-    public Page<StoreDto> getStores(@RequestParam Optional<String> city, @RequestParam Optional<String> paging) {
-        var pageable = paging.isPresent()
-            ? PageableUtil.convert(paging.get())
-            : PageableUtil.convert(new PagingCriteria());
-
+    public Page<StoreDto> getStores(
+        @RequestParam Optional<String> city,
+        @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+        @RequestParam(value = "size", defaultValue = "20", required = false) int size
+    ) {
+        var pageable = PageRequest.of(page, size);
         Page<Store> storePage;
 
         if (city.isPresent()) {
@@ -48,11 +47,11 @@ public class StoreController {
         return storeMapper.map(storePage, pageable);
     }
 
-    public Page<Store> getAllStoresByCity(String city, Pageable pageable) {
+    private Page<Store> getAllStoresByCity(String city, Pageable pageable) {
         return storeService.findAllStoresByCity(city, pageable);
     }
 
-    public Page<Store> getAllStores(Pageable pageable) {
+    private Page<Store> getAllStores(Pageable pageable) {
         return storeService.findAllStores(pageable);
     }
 
@@ -66,7 +65,6 @@ public class StoreController {
         return storeMapper.map(store);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public StoreDto createStore(@RequestBody @Valid CreateStoreDto dto) {
         Store store = storeMapper.map(dto);

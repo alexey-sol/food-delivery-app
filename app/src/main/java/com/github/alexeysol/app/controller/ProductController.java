@@ -2,19 +2,17 @@ package com.github.alexeysol.app.controller;
 
 import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.ProductMapper;
-import com.github.alexeysol.app.model.PagingCriteria;
-import com.github.alexeysol.app.model.dto.CreateProductDto;
-import com.github.alexeysol.app.model.dto.ProductDto;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.StoreService;
-import com.github.alexeysol.app.util.PageableUtil;
+import com.github.alexeysol.common.model.dto.CreateProductDto;
+import com.github.alexeysol.common.model.dto.ProductDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,11 +33,12 @@ public class ProductController {
     private final ProductMapper productMapper = ProductMapper.INSTANCE;
 
     @GetMapping
-    public Page<ProductDto> getProducts(@RequestParam Optional<Long> storeId, @RequestParam Optional<String> paging) {
-        var pageable = paging.isPresent()
-            ? PageableUtil.convert(paging.get())
-            : PageableUtil.convert(new PagingCriteria());
-
+    public Page<ProductDto> getProducts(
+        @RequestParam Optional<Long> storeId,
+        @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+        @RequestParam(value = "size", defaultValue = "20", required = false) int size
+    ) {
+        var pageable = PageRequest.of(page, size);
         Page<Product> productPage;
 
         if (storeId.isPresent()) {
@@ -74,7 +73,6 @@ public class ProductController {
         return productMapper.map(product);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ProductDto createProduct(@RequestBody @Valid CreateProductDto dto) {
         var storeId = dto.getStoreId();

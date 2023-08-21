@@ -1,7 +1,7 @@
 server:
-    port: 8081
+    port: ${APP_PORT}
     servlet:
-        context-path: "/api"
+        context-path: ${APP_PREFIX:/api}
 spring:
     config:
         import: optional:file:.env[.properties]

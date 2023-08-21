@@ -1,6 +1,6 @@
-package com.github.alexeysol.app._dev.config;
+package com.github.alexeysol.apigateway._dev.config;
 
-import com.github.alexeysol.app.model.UserRole;
+import com.github.alexeysol.apigateway.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

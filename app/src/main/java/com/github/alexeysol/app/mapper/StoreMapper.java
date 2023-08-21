@@ -1,8 +1,8 @@
 package com.github.alexeysol.app.mapper;
 
-import com.github.alexeysol.app.model.dto.CreateStoreDto;
-import com.github.alexeysol.app.model.dto.StoreDto;
 import com.github.alexeysol.app.model.entity.Store;
+import com.github.alexeysol.common.model.dto.CreateStoreDto;
+import com.github.alexeysol.common.model.dto.StoreDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

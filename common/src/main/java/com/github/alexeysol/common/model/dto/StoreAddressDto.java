@@ -1,4 +1,4 @@
-package com.github.alexeysol.app.model.dto;
+package com.github.alexeysol.common.model.dto;
 
 import lombok.Data;
 
