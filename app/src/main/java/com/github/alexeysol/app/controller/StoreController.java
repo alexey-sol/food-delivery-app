@@ -6,6 +6,7 @@ import com.github.alexeysol.app.model.entity.Store;
 import com.github.alexeysol.app.service.StoreService;
 import com.github.alexeysol.common.model.dto.CreateStoreDto;
 import com.github.alexeysol.common.model.dto.StoreDto;
+import com.github.alexeysol.common.model.dto.UpdateStoreDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,5 +71,17 @@ public class StoreController {
         Store store = storeMapper.map(dto);
         storeService.saveStore(store);
         return storeMapper.map(store);
+    }
+
+    @PatchMapping("/{id}")
+    public StoreDto updateStoreById(@PathVariable long id, @RequestBody @Valid UpdateStoreDto dto) {
+        var store = storeService.findStoreById(id).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, STORE, id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+        });
+
+        Store updatedStore = storeMapper.map(dto, store);
+        storeService.saveStore(updatedStore);
+        return storeMapper.map(updatedStore);
     }
 }

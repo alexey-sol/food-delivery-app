@@ -2,8 +2,7 @@ package com.github.alexeysol.apigateway.controller;
 
 import com.github.alexeysol.apigateway.config.ApiGatewayConfig;
 import com.github.alexeysol.common.model.ServicePage;
-import com.github.alexeysol.common.model.dto.CreateProductDto;
-import com.github.alexeysol.common.model.dto.ProductDto;
+import com.github.alexeysol.common.model.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -47,6 +46,18 @@ public class ProductController {
         return config.appWebClient()
             .post()
             .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE).build())
+            .body(BodyInserters.fromValue(dto))
+            .retrieve()
+            .bodyToMono(ProductDto.class)
+            .block();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{id}")
+    public ProductDto updateProductById(@PathVariable long id, @RequestBody UpdateProductDto dto) {
+        return config.appWebClient()
+            .patch()
+            .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE, String.valueOf(id)).build())
             .body(BodyInserters.fromValue(dto))
             .retrieve()
             .bodyToMono(ProductDto.class)

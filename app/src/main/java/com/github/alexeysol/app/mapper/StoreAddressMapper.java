@@ -3,10 +3,10 @@ package com.github.alexeysol.app.mapper;
 import com.github.alexeysol.app.model.entity.StoreAddress;
 import com.github.alexeysol.common.model.dto.CreateStoreAddressDto;
 import com.github.alexeysol.common.model.dto.StoreAddressDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import com.github.alexeysol.common.model.dto.UpdateStoreAddressDto;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface StoreAddressMapper {
     StoreAddressDto map(StoreAddress address);
 
@@ -14,4 +14,8 @@ public interface StoreAddressMapper {
 
     @Mapping(target = "id", ignore = true)
     StoreAddress map(CreateStoreAddressDto dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "store", ignore = true)
+    StoreAddress map(UpdateStoreAddressDto dto, @MappingTarget StoreAddress address);
 }

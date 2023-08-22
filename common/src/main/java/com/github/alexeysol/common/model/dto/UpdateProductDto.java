@@ -2,12 +2,8 @@ package com.github.alexeysol.common.model.dto;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class ProductDto {
-    private long id;
-
+public class UpdateProductDto {
     private String name;
 
     private String description;
@@ -17,10 +13,4 @@ public class ProductDto {
     private Integer quantity;
 
     private Long price;
-
-    private StoreDto store;
-
-    private Date createdAt;
-
-    private Date updatedAt;
 }

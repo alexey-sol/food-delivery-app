@@ -7,6 +7,7 @@ import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.StoreService;
 import com.github.alexeysol.common.model.dto.CreateProductDto;
 import com.github.alexeysol.common.model.dto.ProductDto;
+import com.github.alexeysol.common.model.dto.UpdateProductDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -85,5 +86,17 @@ public class ProductController {
         Product product = productMapper.map(dto, store);
         productService.saveProduct(product);
         return productMapper.map(product);
+    }
+
+    @PatchMapping("/{id}")
+    public ProductDto updateProductById(@PathVariable long id, @RequestBody @Valid UpdateProductDto dto) {
+        var product = productService.findProductById(id).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT, id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+        });
+
+        Product updatedProduct = productMapper.map(dto, product);
+        productService.saveProduct(updatedProduct);
+        return productMapper.map(updatedProduct);
     }
 }

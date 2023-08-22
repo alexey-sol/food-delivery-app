@@ -4,6 +4,7 @@ import com.github.alexeysol.apigateway.config.ApiGatewayConfig;
 import com.github.alexeysol.common.model.ServicePage;
 import com.github.alexeysol.common.model.dto.CreateStoreDto;
 import com.github.alexeysol.common.model.dto.StoreDto;
+import com.github.alexeysol.common.model.dto.UpdateStoreDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -47,6 +48,18 @@ public class StoreController {
         return config.appWebClient()
             .post()
             .uri(builder -> builder.pathSegment(STORE_RESOURCE).build())
+            .body(BodyInserters.fromValue(dto))
+            .retrieve()
+            .bodyToMono(StoreDto.class)
+            .block();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{id}")
+    public StoreDto updateStoreById(@RequestBody UpdateStoreDto dto, @PathVariable long id) {
+        return config.appWebClient()
+            .patch()
+            .uri(builder -> builder.pathSegment(STORE_RESOURCE, String.valueOf(id)).build())
             .body(BodyInserters.fromValue(dto))
             .retrieve()
             .bodyToMono(StoreDto.class)

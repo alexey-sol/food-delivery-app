@@ -9,5 +9,5 @@ public class ServiceResponseExceptionDto {
     private String error;
     private String message;
     private String timestamp;
-    private int status;
+    private Integer status;
 }

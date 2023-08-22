@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class StoreDto {
-    private long id;
+    private Long id;
 
     private String name;
 

@@ -11,14 +11,14 @@ public class CreateProductDto {
 
     private String description;
 
-    private int calories;
+    private Integer calories;
 
     @NotNull(message = "Quantity is required")
-    private int quantity;
+    private Integer quantity;
 
     @NotNull(message = "Price is required")
-    private long price;
+    private Long price;
 
     @NotNull(message = "Store ID is required")
-    private long storeId;
+    private Long storeId;
 }

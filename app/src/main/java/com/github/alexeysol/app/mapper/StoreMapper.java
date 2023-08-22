@@ -3,8 +3,11 @@ package com.github.alexeysol.app.mapper;
 import com.github.alexeysol.app.model.entity.Store;
 import com.github.alexeysol.common.model.dto.CreateStoreDto;
 import com.github.alexeysol.common.model.dto.StoreDto;
+import com.github.alexeysol.common.model.dto.UpdateStoreDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-@Mapper(uses = StoreAddressMapper.class)
+@Mapper(uses = StoreAddressMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface StoreMapper {
     StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
 
@@ -33,4 +36,7 @@ public interface StoreMapper {
 
     @Mapping(target = "id", ignore = true)
     Store map(CreateStoreDto dto);
+
+    @Mapping(target = "id", ignore = true)
+    Store map(UpdateStoreDto dto, @MappingTarget Store store);
 }
