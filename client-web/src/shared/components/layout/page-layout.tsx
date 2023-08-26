@@ -2,7 +2,7 @@ import React, {
     useMemo, type PropsWithChildren, memo,
 } from "react";
 import {
-    Box, Pagination, Skeleton, type SxProps, type Theme,
+    Box, Pagination, Skeleton, Typography, type SxProps, type Theme,
 } from "@mui/material";
 import { type UsePaginationProps } from "@mui/material/usePagination";
 import type { PagingOptions } from "shared/models";
@@ -13,6 +13,8 @@ export type PageLayoutProps = PropsWithChildren<{
     pagingOptions: PagingOptions;
     skeletonSx?: SxProps<Theme>;
 }>;
+
+const NOTHING_FOUND_TEXT = "Nothing found";
 
 export const DEFAULT_ITEM_SX: SxProps<Theme> = {
     mb: 2, minWidth: 275,
@@ -41,6 +43,8 @@ export const PageLayout = memo(({
         <Skeleton key={index} variant="rectangular" sx={resultSkeletonSx} />
     )), [size]);
 
+    const paginationCount = Math.ceil(totalElements / size);
+
     return (
         <Box sx={{
             display: "flex",
@@ -49,13 +53,21 @@ export const PageLayout = memo(({
             height: "100%",
         }}
         >
+            {totalElements === 0 && (
+                <Box>
+                    <Typography>
+                        {NOTHING_FOUND_TEXT}
+                    </Typography>
+                </Box>
+            )}
+
             <Box>
                 {isPending ? skeletons : children}
             </Box>
 
             <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Pagination
-                    count={Math.ceil(totalElements / size)}
+                    count={paginationCount}
                     page={page}
                     onChange={handlePageChange}
                 />

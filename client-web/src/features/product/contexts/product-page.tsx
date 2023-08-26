@@ -1,39 +1,47 @@
 import React, {
     useMemo, type FC, type PropsWithChildren, useCallback, useEffect,
 } from "react";
-
 import { getUseContextOrThrowError } from "shared/utils/helpers/context";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import { PagingOptions } from "shared/models";
 import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
-import { useGetStoresQuery } from "../services/api";
+import { useGetProductsQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
-import { GetStoresArg } from "../services/api/types";
-import type { StorePreview } from "../models";
+import { GetProductsArg } from "../services/api/types";
+import type { ProductPreview } from "../models";
 
-const INITIAL_STORES: StorePreview[] = [];
+const INITIAL_PRODUCTS: ProductPreview[] = [];
 
-type UseStoresArg = ReturnType<typeof usePagingOptions>;
+type UseProductsArg = ReturnType<typeof usePagingOptions>;
 
-const useStores = ({ pagingOptions, setTotalElements }: UseStoresArg) => {
+const useProducts = ({ pagingOptions, setTotalElements }: UseProductsArg) => {
+    const params = useParams();
     const { page, size } = pagingOptions;
 
-    const getStoresArg: GetStoresArg = useMemo(
-        () => ({ paging: { page, size } }),
-        [page, size],
+    const storeId = params.storeId
+        ? +params.storeId
+        : undefined;
+
+    const getProductsArg: GetProductsArg = useMemo(
+        () => ({
+            paging: { page, size },
+            storeId,
+        }),
+        [page, size, storeId],
     );
 
-    const resultOfGet = useGetStoresQuery(getStoresArg, {
+    const resultOfGet = useGetProductsQuery(getProductsArg, {
         selectFromResult: ({ data, isFetching }) => ({
             isFetching,
-            stores: data?.content ?? INITIAL_STORES,
+            products: data?.content ?? INITIAL_PRODUCTS,
             totalElements: data?.totalElements ?? pagingOptions.totalElements,
         }),
     });
 
-    const { isFetching, totalElements, stores } = resultOfGet;
+    const { isFetching, totalElements, products } = resultOfGet;
 
     useEffect(() => {
         setTotalElements(totalElements);
@@ -41,19 +49,19 @@ const useStores = ({ pagingOptions, setTotalElements }: UseStoresArg) => {
 
     return {
         isPending: isFetching,
-        stores,
+        products,
     };
 };
 
-type UseStorePageResult = {
+type UseProductPageResult = {
     isPending: boolean;
     pagingOptions: PagingOptions;
-    stores: StorePreview[];
+    products: ProductPreview[];
 };
 
-export const StorePageContext = React.createContext<UseStorePageResult | null>(null);
+export const ProductPageContext = React.createContext<UseProductPageResult | null>(null);
 
-export const StorePageProvider: FC<PropsWithChildren> = ({ children }) => {
+export const ProductPageProvider: FC<PropsWithChildren> = ({ children }) => {
     const initialOptions = useAppSelector(selectPagingOptions);
 
     const dispatch = useAppDispatch();
@@ -65,19 +73,19 @@ export const StorePageProvider: FC<PropsWithChildren> = ({ children }) => {
         initialOptions,
         setPagingOptions: onSetPagingOptions,
     });
-    const { isPending, stores } = useStores({ pagingOptions, setTotalElements });
+    const { isPending, products } = useProducts({ pagingOptions, setTotalElements });
 
     const value = useMemo(() => ({
         isPending,
         pagingOptions,
-        stores,
-    }), [isPending, pagingOptions, stores]);
+        products,
+    }), [isPending, pagingOptions, products]);
 
     return (
-        <StorePageContext.Provider value={value}>
+        <ProductPageContext.Provider value={value}>
             {children}
-        </StorePageContext.Provider>
+        </ProductPageContext.Provider>
     );
 };
 
-export const useStorePageContext = getUseContextOrThrowError(StorePageContext);
+export const useProductPageContext = getUseContextOrThrowError(ProductPageContext);

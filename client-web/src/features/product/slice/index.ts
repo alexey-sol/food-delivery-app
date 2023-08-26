@@ -3,16 +3,16 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { pagingOptions } from "shared/const";
 import type { PagingOptions } from "shared/models";
 
-export type StoreState = {
+export type ProductState = {
     pagingOptions: PagingOptions;
 };
 
-const initialState: StoreState = {
+const initialState: ProductState = {
     pagingOptions,
 };
 
-export const storeSlice = createSlice({
-    name: "store",
+export const productSlice = createSlice({
+    name: "product",
     initialState,
     reducers: {
         setPagingOptions: (state, action: PayloadAction<Partial<PagingOptions>>) => {
@@ -24,6 +24,6 @@ export const storeSlice = createSlice({
     },
 });
 
-export const { setPagingOptions } = storeSlice.actions;
+export const { setPagingOptions } = productSlice.actions;
 
-export const storeReducer = storeSlice.reducer;
+export const productReducer = productSlice.reducer;

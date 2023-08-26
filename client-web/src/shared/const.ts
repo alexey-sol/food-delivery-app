@@ -1,12 +1,15 @@
 export const defaults = {
     ERROR_MESSAGE: "Something went wrong",
-    PAGING_PAGE: 1,
-    // PAGING_SIZE: 20, // TODO restore
-    PAGING_SIZE: 5,
 };
 
 export const dom = {
     ROOT_ELEMENT_ID: "root",
+};
+
+export const pagingOptions = {
+    page: 1,
+    size: 20,
+    totalElements: 0,
 };
 
 export const url = {

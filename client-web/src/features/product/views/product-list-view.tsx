@@ -1,14 +1,14 @@
 import React, { type FC, memo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { StoreList } from "features/store/components/store-list";
+import { ProductList } from "features/product/components/product-list";
 import { PageLayout, type PageLayoutProps } from "shared/components/layout";
 import { url } from "shared/const";
-import { StorePageProvider, useStorePageContext } from "../contexts/store-page";
+import { ProductPageProvider, useProductPageContext } from "../contexts/product-page";
 
 type HandlePageChange = NonNullable<PageLayoutProps["handlePageChange"]>;
 
-export const StoreListView: FC = () => {
-    const { isPending, pagingOptions } = useStorePageContext();
+export const ProductListView: FC = () => {
+    const { isPending, pagingOptions } = useProductPageContext();
     const [, setSearchParams] = useSearchParams();
 
     const handlePageChange = useCallback<HandlePageChange>((event, newPage) => {
@@ -22,14 +22,14 @@ export const StoreListView: FC = () => {
             pagingOptions={pagingOptions}
             skeletonSx={{ minHeight: 122 }}
         >
-            <StoreList />
+            <ProductList />
         </PageLayout>
     );
 };
 
 // eslint-disable-next-line import/no-default-export
 export default memo(() => (
-    <StorePageProvider>
-        <StoreListView />
-    </StorePageProvider>
+    <ProductPageProvider>
+        <ProductListView />
+    </ProductPageProvider>
 ));

@@ -8,8 +8,8 @@ export const baseUrl = getApiPath(apiPrefix);
 
 export const createTag = (id: string | number = cn.TAG_LIST_ID): {
     id: string | number;
-    type: typeof cn.STORE_TAG_TYPE;
+    type: typeof cn.PRODUCT_TAG_TYPE;
 } => ({
     id,
-    type: cn.STORE_TAG_TYPE,
+    type: cn.PRODUCT_TAG_TYPE,
 });
