@@ -1,0 +1,7 @@
+server:
+    port: ${GATEWAY_PORT}
+    servlet:
+        context-path: ${GATEWAY_PREFIX:/api}
+service:
+    app:
+        base-url: "http://${APP_HOST}:${APP_PORT}"
