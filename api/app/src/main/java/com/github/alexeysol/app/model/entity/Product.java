@@ -1,10 +1,7 @@
 package com.github.alexeysol.app.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,7 +16,8 @@ import java.util.Set;
     @Index(columnList = "store_id")
 })
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,10 +35,10 @@ public class Product {
 
     // TODO check if quantity = 0 then need to cook it up?
     @Column(nullable = false)
-    private int quantity = 0;
+    private int quantity;
 
     @Column(nullable = false)
-    private long price = 0L;
+    private long price;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="store_id", nullable = false)
@@ -59,8 +57,8 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @OneToOne(mappedBy = "product")
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product")
+    private Set<CartItem> cartItems;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

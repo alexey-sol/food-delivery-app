@@ -1,11 +1,8 @@
 import React, { useMemo, type FC } from "react";
-import {
-    Card, CardContent, Typography, type SxProps, type Theme,
-} from "@mui/material";
+import { Box, type SxProps, type Theme } from "@mui/material";
 import { useProductPageContext } from "features/product/contexts/product-page";
 import { DEFAULT_ITEM_SX } from "shared/components/layout";
-
-const NO_DESCRIPTION_TEXT = "No description";
+import { Product } from "../product";
 
 export type ProductListProps = {
     itemSx?: SxProps<Theme>;
@@ -20,22 +17,14 @@ export const ProductList: FC<ProductListProps> = ({ itemSx = DEFAULT_ITEM_SX }) 
     }), [itemSx]);
 
     const productOverviews = products.map((product) => (
-        <Card key={product.id} sx={resultItemSx}>
-            <CardContent>
-                <Typography variant="h5" color="text.secondary" gutterBottom>
-                    {product.name}
-                </Typography>
-
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" component="section">
-                    {product.description ?? NO_DESCRIPTION_TEXT}
-                </Typography>
-            </CardContent>
-        </Card>
+        <Box key={product.id} sx={resultItemSx}>
+            <Product product={product} />
+        </Box>
     ));
 
     return (
-        <section>
+        <Box>
             {productOverviews}
-        </section>
+        </Box>
     );
 };

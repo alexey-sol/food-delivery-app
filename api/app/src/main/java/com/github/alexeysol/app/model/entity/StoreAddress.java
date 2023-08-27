@@ -5,9 +5,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "store_address")
-@Data
-@EqualsAndHashCode(exclude = "store")
-@ToString(exclude = "store")
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

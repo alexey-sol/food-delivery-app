@@ -1,10 +1,7 @@
 package com.github.alexeysol.app.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,23 +11,29 @@ import java.util.Date;
 @Entity
 @Table(name = "cart_item")
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartItem {
+    private final static int QUANTITY_UPDATE_STEP = 1;
+    private final static int INITIAL_QUANTITY = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
-    private int quantity = 0;
+    private int quantity = INITIAL_QUANTITY;
 
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne // TODO is this right relation? SHould be...
+    // https://stackoverflow.com/questions/66853058/hibernate-in-a-one-to-many-relationship-a-child-loses-references-to-the-paren
     @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
     private Cart cart;
 
@@ -41,4 +44,34 @@ public class CartItem {
     @Column(name = "updated_at")
     @LastModifiedDate
     private Date updatedAt;
+
+    public int incrementQuantity() {
+        return incrementQuantity(QUANTITY_UPDATE_STEP);
+    }
+
+    public int incrementQuantity(int count) {
+        this.quantity += count;
+        normalizeQuantityIfNeeded();
+        return this.quantity;
+    }
+
+    public int decrementQuantity() {
+        return decrementQuantity(QUANTITY_UPDATE_STEP);
+    }
+
+    public int decrementQuantity(int count) {
+        this.quantity -= count;
+        normalizeQuantityIfNeeded();
+        return this.quantity;
+    }
+
+    private void normalizeQuantityIfNeeded() {
+        if (quantity < INITIAL_QUANTITY) {
+            quantity = INITIAL_QUANTITY;
+        }
+    }
+
+    public boolean isIdle() {
+        return quantity <= INITIAL_QUANTITY;
+    }
 }

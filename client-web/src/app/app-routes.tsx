@@ -2,6 +2,7 @@ import React, { lazy, type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import { url } from "shared/const";
 
+const CartView = lazy(() => import("features/user/views/cart-view"));
 const StoreListView = lazy(() => import("features/store/views/store-list-view"));
 const ProductListView = lazy(() => import("features/product/views/product-list-view"));
 
@@ -18,6 +19,8 @@ export const AppRoutes: FC = () => (
                 </Route>
             </Route>
         </Route>
+
+        <Route path={url.CART} element={<CartView />} />
 
         <Route path="*" element={<div>404</div>} />
     </Routes>

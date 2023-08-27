@@ -11,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

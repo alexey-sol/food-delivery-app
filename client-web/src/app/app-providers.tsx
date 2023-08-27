@@ -2,9 +2,10 @@ import React, { type FC, StrictMode, Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { compose } from "@reduxjs/toolkit";
-import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { ErrorBoundary } from "shared/components/error-boundary";
+import { CartProvider } from "features/user/contexts/cart";
 
 import { store } from "./store";
 import { theme } from "./style/theme";
@@ -40,9 +41,16 @@ export const withFallback: WithProvider = (component) => () => (
     </StrictMode>
 );
 
+export const withUser: WithProvider = (component) => () => (
+    <CartProvider>
+        {component()}
+    </CartProvider>
+);
+
 export const withProviders = compose<FC>(
     withStore,
     withRouter,
     withTheme,
     withFallback,
+    withUser,
 );

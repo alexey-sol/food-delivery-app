@@ -6,12 +6,21 @@ import { appConfig } from "app/app-config";
 import { AppLink } from "shared/components/app-link";
 import { url } from "shared/const";
 
-const pages = [
+type PageData = {
+    path: string;
+    title: string;
+};
+
+const pages: PageData[] = [
     {
-        title: "Stores",
         path: url.STORE,
+        title: "Stores",
     },
-] as const;
+    {
+        path: url.CART,
+        title: "Cart",
+    },
+];
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 

@@ -13,6 +13,7 @@ export const pagingOptions = {
 };
 
 export const url = {
+    CART: "cart",
     PAGE: "page",
     PRODUCT: "product",
     STORE: "store",
