@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StoreRepository extends PagingAndSortingRepository<Store, Long>, JpaRepository<Store, Long> {
-    Page<Store> findAllByAddressCityIgnoreCase(String city, Pageable pageable);
+    Page<Store> findAllByAddressCityId(long cityId, Pageable pageable);
 }

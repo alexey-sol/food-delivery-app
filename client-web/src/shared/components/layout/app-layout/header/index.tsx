@@ -1,32 +1,29 @@
 import React, { type FC } from "react";
 import {
-    AppBar, Avatar, Box, Button, Container, IconButton, Toolbar, Tooltip, Typography,
+    AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography,
 } from "@mui/material";
 import { appConfig } from "app/app-config";
 import { AppLink } from "shared/components/app-link";
 import { url } from "shared/const";
+import { useAuthContext } from "features/auth/contexts/auth";
 
 type PageData = {
     path: string;
     title: string;
 };
 
-const pages: PageData[] = [
-    {
-        path: url.STORE,
-        title: "Stores",
-    },
-    {
-        path: url.CART,
-        title: "Cart",
-    },
-];
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 export const Header: FC = () => {
+    const { profile, signOut } = useAuthContext();
+
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         // TODO
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
     };
 
     return (
@@ -51,21 +48,71 @@ export const Header: FC = () => {
                     </AppLink>
 
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                        {pages.map(({ path, title }) => (
-                            <AppLink key={path} to={path}>
+                        <AppLink to={`/${url.STORE}`}>
+                            <Button sx={{ color: "white", display: "block" }}>
+                                Stores
+                            </Button>
+                        </AppLink>
+
+                        {!profile && (
+                            <AppLink to={`/${url.SIGN_IN}`}>
                                 <Button sx={{ color: "white", display: "block" }}>
-                                    {title}
+                                    Sign In
                                 </Button>
                             </AppLink>
-                        ))}
+                        )}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title={profile?.fullName}>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="user-name" />
+                                <Avatar alt={profile?.fullName ?? "Profile"} />
                             </IconButton>
                         </Tooltip>
+                        <Menu
+                            sx={{ mt: "45px" }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <AppLink to={`/${url.CART}`}>
+                                    <Typography textAlign="center">Carts</Typography>
+                                </AppLink>
+                            </MenuItem>
+
+                            {profile && (
+
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <AppLink to={`/${url.ORDER}`}>
+                                        <Typography textAlign="center">Orders</Typography>
+                                    </AppLink>
+                                </MenuItem>
+                            )}
+
+                            {profile && (
+                                <MenuItem onClick={() => {
+                                    signOut();
+                                    handleCloseUserMenu();
+                                }}
+                                >
+                                    <Typography textAlign="center">Sign Out</Typography>
+                                </MenuItem>
+
+                            )}
+
+                        </Menu>
                     </Box>
                 </Toolbar>
             </Container>

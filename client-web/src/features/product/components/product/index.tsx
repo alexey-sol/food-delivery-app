@@ -2,7 +2,7 @@ import React, { useCallback, type FC } from "react";
 import {
     Card, CardContent, Typography, Button,
 } from "@mui/material";
-import { useCartContext } from "features/user/contexts/cart";
+import { useUserContext } from "features/user/contexts/user";
 import type { ProductPreview } from "features/product/models";
 
 const QUANTITY_UPDATE_STEP = 1;
@@ -21,7 +21,7 @@ export const Product: FC<ProductProps> = ({ product }) => {
         name,
     } = product;
 
-    const { cart: { saveCartItem } } = useCartContext();
+    const { carts: { saveCartItem } } = useUserContext();
 
     const addItemToCart = useCallback(() => {
         saveCartItem({

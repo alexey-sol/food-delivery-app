@@ -18,8 +18,8 @@ public class StoreService {
         return storeRepository.findAll(pageable);
     }
 
-    public Page<Store> findAllStoresByCity(String city, Pageable pageable) {
-        return storeRepository.findAllByAddressCityIgnoreCase(city, pageable);
+    public Page<Store> findAllStoresByCityId(long cityId, Pageable pageable) {
+        return storeRepository.findAllByAddressCityId(cityId, pageable);
     }
 
     public Optional<Store> findStoreById(long id) {

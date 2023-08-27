@@ -1,13 +1,8 @@
-import type { Page } from "shared/models";
+import type { Address, Page } from "shared/models";
 import type { HasId } from "shared/models/props";
 
-export type StoreAddress = {
-    addressLine: string;
-    city: string;
-};
-
 export type StorePreview = HasId & {
-    address: StoreAddress;
+    address: Address;
     createdAt: string;
     description?: string;
     name: string;

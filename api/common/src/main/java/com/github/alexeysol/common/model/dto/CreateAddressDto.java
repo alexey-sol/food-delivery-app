@@ -1,13 +1,14 @@
 package com.github.alexeysol.common.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CreateStoreAddressDto {
+public class CreateAddressDto {
     @NotEmpty(message = "Address line is required and must not be blank")
     private String addressLine;
 
-    @NotEmpty(message = "City is required and must not be blank")
-    private String city;
+    @NotNull(message = "City ID is required")
+    private Long cityId;
 }

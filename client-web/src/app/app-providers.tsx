@@ -5,8 +5,9 @@ import { compose } from "@reduxjs/toolkit";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ErrorBoundary } from "shared/components/error-boundary";
-import { CartProvider } from "features/user/contexts/cart";
-
+import { AuthProvider } from "features/auth/contexts/auth";
+import { UserProvider } from "features/user/contexts/user";
+import { GlobalStyles } from "@mui/material";
 import { store } from "./store";
 import { theme } from "./style/theme";
 
@@ -28,6 +29,11 @@ export const withRouter: WithProvider = (component) => () => (
 
 export const withTheme: WithProvider = (component) => () => (
     <ThemeProvider theme={theme}>
+        <GlobalStyles
+            styles={{
+                body: { overflowY: "scroll" },
+            }}
+        />
         <CssBaseline />
         {component()}
     </ThemeProvider>
@@ -42,9 +48,11 @@ export const withFallback: WithProvider = (component) => () => (
 );
 
 export const withUser: WithProvider = (component) => () => (
-    <CartProvider>
-        {component()}
-    </CartProvider>
+    <AuthProvider>
+        <UserProvider>
+            {component()}
+        </UserProvider>
+    </AuthProvider>
 );
 
 export const withProviders = compose<FC>(

@@ -2,15 +2,23 @@ package com.github.alexeysol.app.mapper;
 
 import com.github.alexeysol.app.model.entity.Cart;
 import com.github.alexeysol.common.model.dto.CartDto;
-import com.github.alexeysol.common.model.dto.SaveCartItemDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = CartItemMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Mapper(uses = { CartItemMapper.class, StoreMapper.class }, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CartMapper {
     CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
+
+    default List<CartDto> map(List<Cart> carts) {
+        return carts.stream()
+            .map(this::map)
+            .collect(Collectors.toList());
+    }
 
     CartDto map(Cart cart);
 

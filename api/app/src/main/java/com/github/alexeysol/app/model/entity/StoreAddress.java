@@ -18,8 +18,9 @@ public class StoreAddress {
     @Column(name = "address_line", nullable = false)
     private String addressLine;
 
-    @Column(nullable = false)
-    private String city;
+    @ManyToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City city;
 
     @OneToOne(mappedBy = "address")
     private Store store;

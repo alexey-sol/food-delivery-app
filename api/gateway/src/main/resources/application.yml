@@ -5,3 +5,5 @@ server:
 service:
     app:
         base-url: "http://${APP_HOST}:${APP_PORT}"
+        jwt:
+            secret: ${JWT_SECRET}

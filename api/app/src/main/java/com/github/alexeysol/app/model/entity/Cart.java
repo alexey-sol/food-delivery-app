@@ -6,8 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -24,11 +23,19 @@ public class Cart {
     @Column(name = "total_price", nullable = false)
     private long totalPrice;
 
-    @OneToOne(mappedBy = "cart")
+//    @OneToOne(mappedBy = "cart")
+//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
-    private Set<CartItem> cartItems;
+    @ManyToOne
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
+
+    @OneToMany(mappedBy = "cart")
+//    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

@@ -3,6 +3,7 @@ package com.github.alexeysol.app.controller;
 import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.StoreMapper;
 import com.github.alexeysol.app.model.entity.Store;
+import com.github.alexeysol.app.service.CityService;
 import com.github.alexeysol.app.service.StoreService;
 import com.github.alexeysol.common.model.dto.CreateStoreDto;
 import com.github.alexeysol.common.model.dto.StoreDto;
@@ -24,23 +25,25 @@ import java.util.Optional;
 @Validated
 @RequiredArgsConstructor
 public class StoreController {
+    private static final String CITY = "City";
     private static final String STORE = "Store";
 
+    private final CityService cityService;
     private final StoreService storeService;
 
     private final StoreMapper storeMapper = StoreMapper.INSTANCE;
 
     @GetMapping
     public Page<StoreDto> getStores(
-        @RequestParam Optional<String> city,
+        @RequestParam Optional<Long> cityId,
         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
         @RequestParam(value = "size", defaultValue = "20", required = false) int size
     ) {
         var pageable = PageRequest.of(page, size);
         Page<Store> storePage;
 
-        if (city.isPresent()) {
-            storePage = getAllStoresByCity(city.get(), pageable);
+        if (cityId.isPresent()) {
+            storePage = getAllStoresByCityId(cityId.get(), pageable);
         } else {
             storePage = getAllStores(pageable);
         }
@@ -48,8 +51,8 @@ public class StoreController {
         return storeMapper.map(storePage, pageable);
     }
 
-    private Page<Store> getAllStoresByCity(String city, Pageable pageable) {
-        return storeService.findAllStoresByCity(city, pageable);
+    private Page<Store> getAllStoresByCityId(long cityId, Pageable pageable) {
+        return storeService.findAllStoresByCityId(cityId, pageable);
     }
 
     private Page<Store> getAllStores(Pageable pageable) {
@@ -68,7 +71,17 @@ public class StoreController {
 
     @PostMapping
     public StoreDto createStore(@RequestBody @Valid CreateStoreDto dto) {
-        Store store = storeMapper.map(dto);
+        var cityId = dto.getAddress().getCityId();
+
+        var city = cityService.findCityById(cityId).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, CITY, cityId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+        });
+
+//        Store store = storeMapper.map(dto, city);
+        Store store = storeMapper.map(dto, city);
+//        store.getAddress().setCity(city); // TODO set city via mapper
+
         storeService.saveStore(store);
         return storeMapper.map(store);
     }

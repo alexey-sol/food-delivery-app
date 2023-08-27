@@ -7,3 +7,12 @@ export type Page<E = unknown> = {
 export type PagingOptions = Pick<Page, "size" | "totalElements"> & {
     page: number;
 };
+
+export type Address = {
+    id: number;
+    addressLine: string;
+    city: {
+        id: number;
+        name: string;
+    }
+};

@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,26 +33,29 @@ public class CartController {
 
     private final CartMapper cartMapper = CartMapper.INSTANCE;
 
-    @GetMapping
-    public CartDto getCart(@RequestParam long userId) {
-        var cart = cartService.findCartByUserId(userId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND, CART_RESOURCE);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
-        });
-
-        return cartMapper.map(cart);
+    @GetMapping  // TODO query better: it's explicit
+    public List<CartDto> getAllCartsByUserId(@RequestParam long userId) {
+        var carts = cartService.findAllCartsByUserId(userId);
+        return cartMapper.map(carts);
     }
 
     // TODO probably should be PUT since we adding/updating/deleting cart item entity
     @PatchMapping
     public CartDto saveCartItem(@RequestBody SaveCartItemDto dto) {
+        // dto.productId
+        // dto.quantity
+        // dto.userId
+
+
         var product = productService.findProductById(dto.getProductId()).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT_RESOURCE, dto.getProductId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
+        var store = product.getStore();
+
         // TODO if no cart then create cart
-        var optionalCart = cartService.findCartByUserId(dto.getUserId());
+        var optionalCart = cartService.findCartByStoreId(store.getId());
         Cart cart;
 
         if (optionalCart.isPresent()) {
@@ -60,13 +66,24 @@ public class CartController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
             });
 
+            var ccc = new HashSet<CartItem>();
+
             cart = Cart.builder()
+//                .cartItems(new ArrayList<>())
+                .cartItems(ccc)
+                .store(store)
                 .user(user)
                 .build();
             // TODO need to save cart here?
 //            cartService.saveCart(cart);
-            user.setCart(cart);
-            userService.saveUser(user);
+
+//            user.setCart(cart);
+//            cartService.saveCart(cart);
+
+            var updatedCarts = user.getCarts();
+            updatedCarts.add(cart);
+            user.setCarts(updatedCarts);
+//            userService.saveUser(user);
         }
 
         var isAddingToCart = dto.getQuantity() > 0;
@@ -77,13 +94,7 @@ public class CartController {
             .product(product)
             .build());
 
-        var quantityModulus = Math.abs(dto.getQuantity());
 
-        if (isAddingToCart) {
-            cartItem.incrementQuantity(quantityModulus); // TODO add/subtract quantity
-        } else {
-            cartItem.decrementQuantity(quantityModulus);
-        }
 
 
 //        var quantity = cartItem.getQuantity();
@@ -93,10 +104,24 @@ public class CartController {
         if (dto.getQuantity() > 0) { // TODO 0 to const
             cart.addPrice(newPriceModulus);
         } else {
-            cart.subtractPrice(newPriceModulus);
+            if (cartItem.getQuantity() > 0) {
+                cart.subtractPrice(newPriceModulus);
+            }
         }
 
-        cartService.saveCart(cart);
+        var quantityModulus = Math.abs(dto.getQuantity());
+
+        if (isAddingToCart) { // TODO check if cart is a right one
+            cartItem.incrementQuantity(quantityModulus); // TODO add/subtract quantity
+        } else {
+            cartItem.decrementQuantity(quantityModulus);
+        }
+
+
+
+
+
+//        cartService.saveCart(cart);
 
         // TODO update cart.totalPrice as well
 
@@ -104,11 +129,22 @@ public class CartController {
         if (cartItem.isIdle()) {
             cartService.deleteCartItemById(cartItem.getId());
         } else {
+            cartService.saveCart(cart);
             cartService.saveCartItem(cartItem);
+
+
+            var updatedCartItems = cart.getCartItems();
+            updatedCartItems.add(cartItem);
+
+
         }
 
 
-
+        if (cart.getCartItems().isEmpty()) { // TODO add isIdle method
+            // TODO do i need delete cart if there's nothing left?
+//            cartService.deleteCartById(cart.getId());
+            // TODO return null in this case? bit it will be inconvinietn in front
+        }
 
 
         return cartMapper.map(cart);

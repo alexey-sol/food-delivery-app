@@ -5,8 +5,11 @@ import com.github.alexeysol.common.model.dto.SaveCartItemDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.BodyInserters;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cart", produces = "application/json")
@@ -17,14 +20,15 @@ public class CartController {
     private final GatewayConfig config;
 
     @GetMapping
-    public CartDto getCartByUserId(HttpServletRequest request) {
+    public List<CartDto> getAllCartsByUserId(HttpServletRequest request) {
         return config.appWebClient()
             .get()
+//            .uri(builder -> builder.pathSegment(CART_RESOURCE, String.valueOf(userId)).build())
             .uri(builder -> builder.pathSegment(CART_RESOURCE)
                 .query(request.getQueryString())
                 .build())
             .retrieve()
-            .bodyToMono(CartDto.class)
+            .bodyToMono(new ParameterizedTypeReference<List<CartDto>>() {})
             .block();
     }
 

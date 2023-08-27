@@ -5,6 +5,7 @@ export type ProductPreview = HasId & {
     createdAt: string;
     description?: string;
     name: string;
+    price: number;
     updatedAt: string;
 };
 

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { appConfig } from "app/app-config";
-import type { Cart } from "features/user/models";
+import type { Cart } from "features/cart/models";
 
 import { baseUrl } from "./utils";
 import * as cn from "./const";
@@ -13,7 +13,7 @@ export const cartApi = createApi({
     tagTypes: [cn.CART_TAG_TYPE],
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getCartByUserId: builder.query<Cart, number>({
+        getCartsByUserId: builder.query<Cart[], number>({
             query: (userId) => ({
                 params: { userId },
                 url: cartResource,
@@ -30,6 +30,6 @@ export const cartApi = createApi({
 });
 
 export const {
-    useGetCartByUserIdQuery,
+    useLazyGetCartsByUserIdQuery,
     useSaveCartItemMutation,
 } = cartApi;

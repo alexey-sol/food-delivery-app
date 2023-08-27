@@ -11,6 +11,8 @@ public class CartDto {
 
     private long totalPrice;
 
+    private StoreDto store;
+
     private Set<CartItemDto> cartItems;
 
     private Date createdAt;

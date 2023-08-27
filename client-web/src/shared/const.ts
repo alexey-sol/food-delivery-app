@@ -16,5 +16,8 @@ export const url = {
     CART: "cart",
     PAGE: "page",
     PRODUCT: "product",
+    ORDER: "order",
+    SIGN_IN: "sign-in",
+    SIGN_UP: "sign-up",
     STORE: "store",
 };

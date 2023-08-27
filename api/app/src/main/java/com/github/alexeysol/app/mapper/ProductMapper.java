@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(uses = StoreMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ProductMapper {
@@ -28,7 +29,7 @@ public interface ProductMapper {
     default List<ProductDto> map(List<Product> products) {
         return products.stream()
             .map(this::map)
-            .toList();
+            .collect(Collectors.toList());
     }
 
     ProductDto map(Product product);

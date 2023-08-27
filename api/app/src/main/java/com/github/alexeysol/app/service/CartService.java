@@ -7,6 +7,7 @@ import com.github.alexeysol.app.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,8 +16,12 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-    public Optional<Cart> findCartByUserId(long userId) {
-        return cartRepository.findByUserId(userId);
+    public List<Cart> findAllCartsByUserId(long userId) {
+        return cartRepository.findAllByUserId(userId);
+    }
+
+    public Optional<Cart> findCartByStoreId(long storeId) {
+        return cartRepository.findByStoreId(storeId);
     }
 
     public Cart saveCart(Cart cart) {

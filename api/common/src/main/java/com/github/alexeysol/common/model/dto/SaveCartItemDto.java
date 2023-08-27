@@ -1,16 +1,16 @@
 package com.github.alexeysol.common.model.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class SaveCartItemDto {
-    @NotEmpty(message = "Product ID is required and must not be blank")
-    private long productId;
+    @NotNull(message = "Product ID is required")
+    private Long productId;
 
-    @NotEmpty(message = "Quantity is required and must not be blank")
-    private int quantity;
+    @NotNull(message = "Quantity is required")
+    private Integer quantity;
 
-    @NotEmpty(message = "User ID is required and must not be blank")
-    private long userId;
+    @NotNull(message = "User ID is required")
+    private Long userId;
 }

@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,10 @@ public class Store {
     private StoreAddress address;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private Set<Cart> carts = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

@@ -14,5 +14,5 @@ public class CreateStoreDto {
 
     @Valid
     @NotNull(message = "Address is required")
-    private CreateStoreAddressDto address;
+    private CreateAddressDto address;
 }

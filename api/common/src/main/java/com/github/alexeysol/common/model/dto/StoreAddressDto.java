@@ -8,5 +8,5 @@ public class StoreAddressDto {
 
     private String addressLine;
 
-    private String city;
+    private CityDto city;
 }
