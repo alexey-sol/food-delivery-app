@@ -11,6 +11,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(
+    componentModel = "spring", // TODO remove everywhere
     uses = { CartMapper.class, UserAddressMapper.class },
     builder = @Builder(disableBuilder = true),
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE

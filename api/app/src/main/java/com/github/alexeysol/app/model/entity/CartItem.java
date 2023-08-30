@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart_item")
@@ -27,6 +29,20 @@ public class CartItem {
     @Column(nullable = false)
     private int quantity = INITIAL_QUANTITY;
 
+
+//    @ManyToMany(cascade = { CascadeType.MERGE })
+//    @JoinTable(
+//        name = "cart_item_product",
+//        joinColumns = {
+//            @JoinColumn(name = "product_id", referencedColumnName = "id")
+//        },
+//        inverseJoinColumns = {
+//            @JoinColumn(name = "cart_item_id", referencedColumnName = "id")
+//        }
+//    )
+    // private Set<Product> products
+
+    // TODO ideally make it many-to-many
 //    @OneToOne(cascade = CascadeType.ALL)
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)

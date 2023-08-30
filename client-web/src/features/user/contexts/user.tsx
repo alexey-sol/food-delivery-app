@@ -26,8 +26,6 @@ const useCarts = ({ profile }: { profile?: User }) => {
         }
     }, [userId]);
 
-    console.log("results: get, save", profile?.carts, resultOfSave.data); // TODO need to put saved cart to user.carts somehow. "user" should be redux slice. Or just remove carts from exposed user, provide them from here?
-
     // const carts = profile?.carts ?? INITIAL_CARTS;
     const carts = resultOfGet.data ?? profile?.carts ?? INITIAL_CARTS;
 

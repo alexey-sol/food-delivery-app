@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "order_item")
@@ -24,11 +25,21 @@ public class OrderItem {
     @Column(nullable = false)
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    private Product product;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "order_item_product",
+        joinColumns = {
+            @JoinColumn(name = "product_id", referencedColumnName = "id")
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "order_item_id", referencedColumnName = "id")
+        }
+    )
+    private Set<Product> products;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 

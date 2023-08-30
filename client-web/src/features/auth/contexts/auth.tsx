@@ -9,6 +9,7 @@ import {
     authApi, useGetProfileQuery, useSignInMutation, useSignOutMutation, useSignUpMutation,
 } from "../services/api";
 import type { City, SignInDto, SignUpDto } from "../models";
+import { useNavigate } from "react-router-dom";
 
 // TODO need this context at all? Maybe use user context?
 const INITIAL_CITIES: City[] = [];
@@ -25,6 +26,8 @@ export type UseAuthApiResult = {
 };
 
 export const useAuth = (): UseAuthApiResult => {
+    const navigate = useNavigate();
+
     const dispatch = useAppDispatch();
     const resetAuthState = useCallback(() => dispatch(authApi.util.resetApiState()), [dispatch]);
 
@@ -52,7 +55,7 @@ export const useAuth = (): UseAuthApiResult => {
     //     signUpResult.isLoading]);
 
     useEffect(() => {
-        const signedOut = Boolean(signOutResult.data);
+        const signedOut = !!signOutResult.data;
 
         if (signedOut) {
             resetAuthState();

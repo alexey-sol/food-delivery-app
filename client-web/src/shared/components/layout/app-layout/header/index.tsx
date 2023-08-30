@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import React, { useEffect, type FC, useCallback } from "react";
 import {
     AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography,
 } from "@mui/material";
@@ -6,6 +6,7 @@ import { appConfig } from "app/app-config";
 import { AppLink } from "shared/components/app-link";
 import { url } from "shared/const";
 import { useAuthContext } from "features/auth/contexts/auth";
+import { useNavigate } from "react-router-dom";
 
 type PageData = {
     path: string;
@@ -13,6 +14,8 @@ type PageData = {
 };
 
 export const Header: FC = () => {
+    const navigate = useNavigate();
+
     const { profile, signOut } = useAuthContext();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -22,9 +25,14 @@ export const Header: FC = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = useCallback(() => {
         setAnchorElUser(null);
-    };
+    }, []);
+
+    // TODO clutch
+    // useEffect(() => {
+    //     handleCloseUserMenu();
+    // }, [handleCloseUserMenu]);
 
     return (
         <AppBar position="static">
@@ -54,66 +62,64 @@ export const Header: FC = () => {
                             </Button>
                         </AppLink>
 
-                        {!profile && (
+                        {/* {!profile && (
                             <AppLink to={`/${url.SIGN_IN}`}>
                                 <Button sx={{ color: "white", display: "block" }}>
                                     Sign In
                                 </Button>
                             </AppLink>
-                        )}
+                        )} */}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title={profile?.fullName}>
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={profile?.fullName ?? "Profile"} />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <AppLink to={`/${url.CART}`}>
-                                    <Typography textAlign="center">Carts</Typography>
-                                </AppLink>
-                            </MenuItem>
-
-                            {profile && (
-
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <AppLink to={`/${url.ORDER}`}>
-                                        <Typography textAlign="center">Orders</Typography>
-                                    </AppLink>
-                                </MenuItem>
-                            )}
-
-                            {profile && (
+                    {profile && (
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title={profile?.fullName}>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt={profile?.fullName ?? "Profile"} />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: "45px" }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
                                 <MenuItem onClick={() => {
-                                    signOut();
                                     handleCloseUserMenu();
+                                    navigate(`/${url.CART}`);
+                                }}
+                                >
+                                    <Typography textAlign="center">Carts</Typography>
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleCloseUserMenu();
+                                    navigate(`/${url.ORDER}`);
+                                }}
+                                >
+                                    <Typography textAlign="center">Orders</Typography>
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleCloseUserMenu();
+                                    signOut();
                                 }}
                                 >
                                     <Typography textAlign="center">Sign Out</Typography>
                                 </MenuItem>
-
-                            )}
-
-                        </Menu>
-                    </Box>
+                            </Menu>
+                        </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

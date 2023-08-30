@@ -37,6 +37,9 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private Set<Cart> carts = new HashSet<>();
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private Set<Order> orders = new HashSet<>();
+
     @Column(name = "created_at", updatable = false)
     @CreatedDate
     private Date createdAt;

@@ -34,6 +34,7 @@ export const Product: FC<ProductProps> = ({ product }) => {
         saveCartItem({
             productId: id,
             quantity: -QUANTITY_UPDATE_STEP,
+            // TODO + cartId
         });
     }, [id, saveCartItem]);
 

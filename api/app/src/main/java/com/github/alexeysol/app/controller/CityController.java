@@ -18,7 +18,8 @@ import java.util.Set;
 public class CityController {
     private final CityService cityService;
 
-    private final CityMapper cityMapper = CityMapper.INSTANCE;
+//    private final CityMapper cityMapper = CityMapper.INSTANCE;
+    private final CityMapper cityMapper;
 
     @GetMapping
     public Set<CityDto> getCities() {

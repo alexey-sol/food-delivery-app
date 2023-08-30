@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { authApi } from "features/auth/services/api";
 import { cartApi } from "features/cart/services/api";
+import { orderApi } from "features/order/services/api";
 import { productApi } from "features/product/services/api";
 import { storeApi } from "features/store/services/api";
 import { userApi } from "features/user/services/api";
@@ -15,6 +16,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(cartApi.middleware)
+        .concat(orderApi.middleware)
         .concat(productApi.middleware)
         .concat(storeApi.middleware)
         .concat(userApi.middleware),

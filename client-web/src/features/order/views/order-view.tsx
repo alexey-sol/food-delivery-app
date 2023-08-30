@@ -1,14 +1,14 @@
 import React, { type FC, memo } from "react";
-import { OrderProvider } from "features/order/contexts/order";
-import { Cart } from "../components/cart";
+import { Order } from "../components/order";
+import { OrderProvider } from "../contexts/order";
 
-export const CartView: FC = () => (
-    <Cart />
+export const OrderView: FC = () => (
+    <Order />
 );
 
 // eslint-disable-next-line import/no-default-export
 export default memo(() => (
     <OrderProvider>
-        <CartView />
+        <OrderView />
     </OrderProvider>
 ));

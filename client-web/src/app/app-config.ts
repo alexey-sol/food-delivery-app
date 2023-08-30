@@ -6,6 +6,7 @@ const config = {
     authResource: process.env.AUTH_RESOURCE ?? "auth",
     cartResource: process.env.CART_RESOURCE ?? "cart",
     nodeEnv: process.env.NODE_ENV,
+    orderResource: process.env.ORDER_RESOURCE ?? "order",
     productResource: process.env.PRODUCT_RESOURCE ?? "product",
     storeResource: process.env.STORE_RESOURCE ?? "store",
     userResource: process.env.USER_RESOURCE ?? "user",

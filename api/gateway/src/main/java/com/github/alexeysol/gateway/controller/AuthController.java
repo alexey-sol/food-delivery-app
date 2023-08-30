@@ -165,20 +165,21 @@ public class AuthController {
     }
 
     @PostMapping("/sign-out")
-    public void signOut(@CookieValue("auth_token") Optional<String> authToken, HttpServletResponse response) {
+    public boolean signOut(@CookieValue("auth_token") Optional<String> authToken, HttpServletResponse response) {
         // TODO remove "auth_token" cookie
         if (authToken.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "f off"); // TODO message
+            return false;
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "f off"); // TODO message
         }
 
         // ...
 //        String accessToken = jwtUtil.generateAccessToken(existingUserDto);
         var authCookie = new Cookie("auth_token", null);
         authCookie.setHttpOnly(true);
-        authCookie.setMaxAge(0); // TODO dayMs 24 * 60 * 60 * 1000; - probably should match jwt life period
+        authCookie.setMaxAge(0);
         response.addCookie(authCookie);
         // ...
 
-
+        return true;
     }
 }

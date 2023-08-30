@@ -7,12 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
+// TODO don't need it seems
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductServiceTestttImpl implements ProductServiceTesttt {
     private final ProductRepository productRepository;
 
     public Page<Product> findAllProducts(Pageable pageable) {
@@ -34,9 +34,5 @@ public class ProductService {
     // TODO test for mapping:
     public Product findById(Long id) {
         return productRepository.findById(id).get();
-    }
-
-    public List<Product> findAll() {
-        return productRepository.findAll();
     }
 }

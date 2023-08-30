@@ -29,4 +29,9 @@ public class StoreService {
     public Store saveStore(Store store) {
         return storeRepository.save(store);
     }
+
+    // TODO test for mapping:
+    public Store findById(Long id) {
+        return storeRepository.findById(id).get();
+    }
 }

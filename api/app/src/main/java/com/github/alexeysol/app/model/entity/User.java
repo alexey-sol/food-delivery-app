@@ -48,8 +48,10 @@ public class User implements UserDetails {
 //    @JoinColumn(name = "cart_id", referencedColumnName = "id")
 //    private Cart cart;
     @OneToMany(mappedBy = "user")
-//    private Set<Cart> carts = new HashSet<>();
     private Set<Cart> carts = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

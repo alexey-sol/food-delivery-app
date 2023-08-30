@@ -31,7 +31,8 @@ public class CartController {
     private final ProductService productService;
     private final UserService userService;
 
-    private final CartMapper cartMapper = CartMapper.INSTANCE;
+//    private final CartMapper cartMapper = CartMapper.INSTANCE;
+    private final CartMapper cartMapper;
 
     @GetMapping  // TODO query better: it's explicit
     public List<CartDto> getAllCartsByUserId(@RequestParam long userId) {
@@ -55,7 +56,10 @@ public class CartController {
         var store = product.getStore();
 
         // TODO if no cart then create cart
-        var optionalCart = cartService.findCartByStoreId(store.getId());
+        var optionalCart = cartService.findCartByUserIdAndStoreId(dto.getUserId(), store.getId());
+
+//        var carts = cartService.findAllCartsByStoreIdAndUserId(store.getId(), dto.getUserId()); // there may be only 1 user's cart related to the store
+
         Cart cart;
 
         if (optionalCart.isPresent()) {
@@ -142,7 +146,7 @@ public class CartController {
 
         if (cart.getCartItems().isEmpty()) { // TODO add isIdle method
             // TODO do i need delete cart if there's nothing left?
-//            cartService.deleteCartById(cart.getId());
+            cartService.deleteCartById(cart.getId());
             // TODO return null in this case? bit it will be inconvinietn in front
         }
 

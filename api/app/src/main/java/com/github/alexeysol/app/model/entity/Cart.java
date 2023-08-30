@@ -2,11 +2,14 @@ package com.github.alexeysol.app.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.*;
+
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -33,6 +36,7 @@ public class Cart {
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     private Store store;
 
+    @Cascade({ DELETE_ORPHAN })
     @OneToMany(mappedBy = "cart")
 //    private Set<CartItem> cartItems = new HashSet<>();
     private Set<CartItem> cartItems = new HashSet<>();

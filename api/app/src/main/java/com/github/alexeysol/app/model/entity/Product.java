@@ -41,7 +41,7 @@ public class Product {
     private long price;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="store_id", nullable = false)
+    @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
     // TODO maybe it should be many-to-one
@@ -57,8 +57,12 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
+//    @ManyToMany(mappedBy = "product")
     @OneToMany(mappedBy = "product")
     private Set<CartItem> cartItems = new HashSet<>();
+
+    @ManyToMany(mappedBy = "products")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

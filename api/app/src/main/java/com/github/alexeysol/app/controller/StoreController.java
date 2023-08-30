@@ -31,7 +31,8 @@ public class StoreController {
     private final CityService cityService;
     private final StoreService storeService;
 
-    private final StoreMapper storeMapper = StoreMapper.INSTANCE;
+//    private final StoreMapper storeMapper = StoreMapper.INSTANCE;
+    private final StoreMapper storeMapper;
 
     @GetMapping
     public Page<StoreDto> getStores(

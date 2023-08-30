@@ -26,7 +26,8 @@ public class UserController {
     private final CityService cityService;
     private final UserService userService;
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+//    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private final UserMapper userMapper;
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable long id) {

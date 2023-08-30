@@ -20,8 +20,16 @@ public class CartService {
         return cartRepository.findAllByUserId(userId);
     }
 
-    public Optional<Cart> findCartByStoreId(long storeId) {
-        return cartRepository.findByStoreId(storeId);
+    public Optional<Cart> findCartById(long id) {
+        return cartRepository.findById(id);
+    }
+
+    public Optional<Cart> findCartByUserIdAndStoreId(long userId, long storeId) {
+        return cartRepository.findTopByUserIdAndStoreId(userId, storeId);
+    }
+
+    public List<Cart> findAllCartsByStoreIdAndUserId(long storeId, long userId) {
+        return cartRepository.findAllByStoreIdAndUserId(storeId, userId);
     }
 
     public Cart saveCart(Cart cart) {
