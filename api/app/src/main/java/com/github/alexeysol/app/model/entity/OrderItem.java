@@ -27,17 +27,9 @@ public class OrderItem {
 
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "order_item_product",
-        joinColumns = {
-            @JoinColumn(name = "product_id", referencedColumnName = "id")
-        },
-        inverseJoinColumns = {
-            @JoinColumn(name = "order_item_id", referencedColumnName = "id")
-        }
-    )
-    private Set<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+// TODO UtilityClass?
 @Component
 public class JwtUtil {
-    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour
+    private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
+    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour - put in app properties TODO
 
     @Value("${service.app.jwt.secret}") // TODO use Properties
     private String JWT_SECRET;
@@ -23,7 +25,7 @@ public class JwtUtil {
             .setIssuer("gateway") // TODO needed?
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
-            .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+            .signWith(SIGNATURE_ALGORITHM, JWT_SECRET)
             .compact();
     }
 

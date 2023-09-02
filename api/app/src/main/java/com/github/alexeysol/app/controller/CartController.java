@@ -14,10 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cart", produces = "application/json")
@@ -92,7 +90,7 @@ public class CartController {
 
         var isAddingToCart = dto.getQuantity() > 0;
 
-        var optionalCartItem = cartService.findCartItemByProductId(dto.getProductId());
+        var optionalCartItem = cartService.findCartItemByCartIdAndProductId(cart.getId(), dto.getProductId());
         var cartItem = optionalCartItem.orElseGet(() -> CartItem.builder()
             .cart(cart)
             .product(product)

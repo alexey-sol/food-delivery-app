@@ -1,5 +1,5 @@
 import React, {
-    useMemo, type FC, type PropsWithChildren, useCallback,
+    useMemo, type FC, type PropsWithChildren, useCallback, useEffect, useState,
 } from "react";
 import { getUseContextOrThrowError } from "shared/utils/helpers/context";
 
@@ -27,9 +27,45 @@ const useCarts = ({ profile }: { profile?: User }) => {
     }, [userId]);
 
     // const carts = profile?.carts ?? INITIAL_CARTS;
-    const carts = resultOfGet.data ?? profile?.carts ?? INITIAL_CARTS;
+    // const carts = resultOfGet.data ?? profile?.carts ?? INITIAL_CARTS;
 
-    const saveCartItem = useCallback((arg: Pick<SaveCartItemArg, "quantity" | "productId">) => {
+    const [carts, setCarts] = useState<Cart[]>(INITIAL_CARTS);
+
+    const savedCartIndex = carts?.findIndex((cart) => cart.id === resultOfSave.data?.id);
+
+    useEffect(() => {
+        // if (resultOfSave.data) {
+
+
+        //     console.log(savedCartIndex, resultOfSave.data, carts)
+        //     if (savedCartIndex >= 0) {
+        //         const updatedCarts = [...carts];
+        //         // updatedCarts[savedCartIndex] = {...updatedCarts[savedCartIndex], ...resultOfSave.data};
+        //         updatedCarts[savedCartIndex] = resultOfSave.data;
+        //         setCarts(updatedCarts);
+        //     }
+        // }
+        if (resultOfGet.data) {
+            setCarts(resultOfGet.data);
+        }
+        // else if (profile?.carts) {
+        //     setCarts(profile?.carts);
+        // }
+    }, [savedCartIndex, resultOfSave.data, resultOfGet.data, profile?.carts]);
+
+    // useEffect(() => {
+    //     if (resultOfSave.data) {
+    //         const savedCartIndex = carts?.findIndex((cart) => cart.id === resultOfSave.data?.id);
+
+    //         if (savedCartIndex >= 0) {
+    //             const updatedCarts = [...carts];
+    //             updatedCarts[savedCartIndex] = resultOfSave.data;
+    //             setCarts(updatedCarts);
+    //         }
+    //     }
+    // }, [carts, resultOfSave.data]);
+
+    const saveCartItem = useCallback((arg: Pick<SaveCartItemArg, "quantity" | "productId" | "storeId">) => {
         if (userId) {
             saveCartItemMutation({ userId, ...arg });
         }
@@ -39,10 +75,20 @@ const useCarts = ({ profile }: { profile?: User }) => {
     // const carts = resultOfGet.data; // TODO plural: carts
     const isPending = resultOfSave.isLoading;
 
+    // TODO
+    const isPendingFor = useCallback(
+        (productId: number) => resultOfSave.isLoading && resultOfSave.originalArgs?.productId === productId,
+        [resultOfSave.data, resultOfSave.isLoading],
+    );
+
+    const getCartByStoreId = (storeId: number) => carts.find((cart) => cart.store.id === storeId);
+
     return {
         carts,
         getCarts,
+        getCartByStoreId,
         isPending,
+        isPendingFor,
         saveCartItem,
     };
 };

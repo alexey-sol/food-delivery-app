@@ -59,7 +59,7 @@ public interface OrderItemMapper {
 //    OrderItem map(CreateOrderItemDto dto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "products", source = "products")
+    @Mapping(target = "product", source = "productId")
 //    @Mapping(target = "order.orderItems", ignore = true) // TODO how to deal with recursion error?  https://stackoverflow.com/questions/60828011/when-is-used-onetomany-and-manytoone-and-with-mapstruct-i-get-recursion-infi
     OrderItem map(CreateOrderItemDto dto);
 }

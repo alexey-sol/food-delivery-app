@@ -48,7 +48,7 @@ public class CartItem {
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
 
-    @ManyToOne // TODO is this right relation? SHould be...
+    @ManyToOne(fetch = FetchType.LAZY)
     // https://stackoverflow.com/questions/66853058/hibernate-in-a-one-to-many-relationship-a-child-loses-references-to-the-paren
     @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
     private Cart cart;

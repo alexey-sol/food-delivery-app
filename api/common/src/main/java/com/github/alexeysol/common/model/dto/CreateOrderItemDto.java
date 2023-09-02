@@ -9,9 +9,9 @@ import java.util.Set;
 public class CreateOrderItemDto {
 //    @NotNull(message = "Product ID is required")
 //    private Long productId;
-    @NotNull(message = "Products are required")
-    private Set<Long> products;
+    @NotNull(message = "Product ID is required")
+    private Long productId;
 
-    @NotNull(message = "Quantity ID is required")
+    @NotNull(message = "Quantity is required")
     private Integer quantity;
 }

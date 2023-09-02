@@ -40,8 +40,8 @@ public class CartService {
         cartRepository.deleteById(id);
     }
 
-    public Optional<CartItem> findCartItemByProductId(long productId) {
-        return cartItemRepository.findByProductId(productId);
+    public Optional<CartItem> findCartItemByCartIdAndProductId(long cartId, long productId) {
+        return cartItemRepository.findByCartIdAndProductId(cartId, productId);
     }
 
     public CartItem saveCartItem(CartItem cartItem) {

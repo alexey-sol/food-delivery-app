@@ -4,7 +4,7 @@ import type { HasId } from "shared/models/props";
 
 export type OrderItem = HasId & {
     createdAt: string;
-    products: ProductPreview[];
+    product: ProductPreview;
     quantity: number;
     updatedAt: string;
 };

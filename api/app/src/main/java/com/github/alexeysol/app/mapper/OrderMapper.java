@@ -8,6 +8,7 @@ import com.github.alexeysol.common.model.dto.OrderDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,10 @@ import java.util.stream.Collectors;
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    default Set<OrderDto> map(Set<Order> orders) {
+    default List<OrderDto> map(List<Order> orders) {
         return orders.stream()
             .map(this::map)
-            .collect(Collectors.toSet());
+            .toList();
     }
 
 //    @Mapping(target = "store", source = "store")

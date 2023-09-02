@@ -1,6 +1,6 @@
 import React, { useCallback, type FC } from "react";
 import {
-    Card, CardContent, Typography, Button,
+    Card, CardContent, Typography, Button, Box, CircularProgress,
 } from "@mui/material";
 import { useUserContext } from "features/user/contexts/user";
 import type { ProductPreview } from "features/product/models";
@@ -16,41 +16,68 @@ export type ProductProps = {
 
 export const Product: FC<ProductProps> = ({ product }) => {
     const {
+        calories,
         description,
         id,
         name,
+        store,
     } = product;
 
-    const { carts: { saveCartItem } } = useUserContext();
+    const { carts: { getCartByStoreId, isPendingFor, saveCartItem } } = useUserContext();
+
+    const cart = getCartByStoreId(store.id);
+    const cartItem = cart?.cartItems.find((item) => item.product.id === id);
 
     const addItemToCart = useCallback(() => {
         saveCartItem({
             productId: id,
             quantity: QUANTITY_UPDATE_STEP,
+            storeId: store.id,
         });
-    }, [id, saveCartItem]);
+    }, [id, saveCartItem, store.id]);
 
     const removeItemFromCart = useCallback(() => {
         saveCartItem({
             productId: id,
             quantity: -QUANTITY_UPDATE_STEP,
+            storeId: store.id,
             // TODO + cartId
         });
-    }, [id, saveCartItem]);
+    }, [id, saveCartItem, store.id]);
+
+    const isPending = isPendingFor(id);
 
     return (
         <Card>
-            <CardContent>
+            <CardContent sx={{ display: "flex", flexDirection: "column", rowGap: 0.5 }}>
                 <Typography variant="h5" color="text.secondary" gutterBottom>
                     {name}
                 </Typography>
 
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" component="section">
+                <Typography sx={{ fontSize: 14 }} component="section">
                     {description ?? NO_DESCRIPTION_TEXT}
                 </Typography>
 
-                <Button onClick={addItemToCart}>{ADD_ITEM_TO_CART_TEXT}</Button>
-                <Button onClick={removeItemFromCart}>{REMOVE_ITEM_FROM_CART_TEXT}</Button>
+                {calories && (
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" component="section">
+                        {`Calories: ${calories}`}
+                    </Typography>
+                )}
+
+                <Box sx={{ display: "flex", alignItems: "center", height: "40px" }}>
+                    <Button disabled={isPending} onClick={removeItemFromCart}>{REMOVE_ITEM_FROM_CART_TEXT}</Button>
+
+                    <Typography sx={{ minWidth: "1.5rem", textAlign: "center" }}>
+                        {/* { !isPending ? (cartItem?.quantity ?? 0) : "  "} */}
+                        {cartItem?.quantity ?? 0}
+                    </Typography>
+
+                    <Button disabled={isPending} onClick={addItemToCart}>{ADD_ITEM_TO_CART_TEXT}</Button>
+
+                    {isPending && (
+                        <CircularProgress />
+                    )}
+                </Box>
             </CardContent>
         </Card>
     );

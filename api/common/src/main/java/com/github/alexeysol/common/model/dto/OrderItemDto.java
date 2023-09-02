@@ -11,7 +11,7 @@ public class OrderItemDto {
 
     private int quantity;
 
-    private Set<ProductDto> products; // TODO to singular
+    private ProductDto product;
 
 //    private OrderDto order;
 

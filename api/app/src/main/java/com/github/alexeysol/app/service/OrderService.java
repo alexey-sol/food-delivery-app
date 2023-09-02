@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -14,8 +15,8 @@ import java.util.Set;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public Set<Order> findAllOrdersByUserId(long userId) {
-        return new HashSet<>(orderRepository.findAllByUserIdOrderByIdDesc(userId));
+    public List<Order> findAllOrdersByUserId(long userId) {
+        return orderRepository.findAllByUserIdOrderByIdDesc(userId);
     }
 
     // boolean existsByUserIdAndStoreIdAndStatusIn(long userId, long storeId, List<OrderStatus> statuses);

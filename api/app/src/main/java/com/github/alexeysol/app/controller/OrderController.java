@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -36,7 +37,7 @@ public class OrderController {
     private final OrderMapper orderMapper;
 
     @GetMapping  // TODO query better: it's explicit
-    public Set<OrderDto> getAllOrdersByUserId(@RequestParam long userId) {
+    public List<OrderDto> getAllOrdersByUserId(@RequestParam long userId) {
         var orders = orderService.findAllOrdersByUserId(userId);
         return orderMapper.map(orders);
     }
@@ -71,11 +72,7 @@ public class OrderController {
 //            totalPrice += item.getQuantity() * item.getProduct().getPrice();
 //        }
                  for (var item : order.getOrderItems()) {
-                    var optionalProduct = item.getProducts().stream().findFirst();
-
-                    if (optionalProduct.isPresent()) {
-                        totalPrice += item.getQuantity() * optionalProduct.get().getPrice();
-                    }
+                    totalPrice += item.getQuantity() * item.getProduct().getPrice();
                 }
 
 //        long totalPrice = order.getOrderItems().stream().reduce(0L, item -> item.getQuantity() * item.getProduct().getPrice());

@@ -101,7 +101,7 @@ export const Cart: FC = () => {
                                         orders.createOrder({
                                             orderItems: cart.cartItems.map(({ product, quantity }) => ({
                                                 // productId: product.id,
-                                                products: [product.id],
+                                                productId: product.id,
                                                 quantity,
                                             })),
                                             storeId: cart.store.id,

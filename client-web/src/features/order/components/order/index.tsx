@@ -52,7 +52,7 @@ export const Order: FC = () => {
                                 <Box sx={{ display: "flex" }}>
                                     <Typography>
                                         {/* Always the 1st one TODO */}
-                                        {item.products[0]?.name}
+                                        {item.product.name}
                                     </Typography>
 
                                     {item.quantity > 1 && (
@@ -64,7 +64,7 @@ export const Order: FC = () => {
 
                                 <Typography>
                                     {/* Always the 1st one TODO */}
-                                    {(item.products[0]?.price * item.quantity) / 100}
+                                    {(item.product.price * item.quantity) / 100}
                                     {" "}
                                     rub
                                 </Typography>

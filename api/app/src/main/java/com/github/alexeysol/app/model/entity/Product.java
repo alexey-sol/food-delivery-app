@@ -61,7 +61,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<CartItem> cartItems = new HashSet<>();
 
-    @ManyToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "product")
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)

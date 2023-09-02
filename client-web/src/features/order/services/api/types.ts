@@ -1,7 +1,7 @@
 type CreateOrderItemDto = {
     quantity: number;
     // productId: number;
-    products: number[];
+    productId: number;
 };
 
 export type CreateOrderArg = {

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import { PagingOptions } from "shared/models";
 import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
+import { useAuth } from "features/auth/contexts/auth";
 import { useGetStoresQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
@@ -18,11 +19,14 @@ const INITIAL_STORES: StorePreview[] = [];
 type UseStoresArg = ReturnType<typeof usePagingOptions>;
 
 const useStores = ({ pagingOptions, setTotalElements }: UseStoresArg) => {
+    const { profile } = useAuth();
+    const cityId = profile?.address.city.id;
+
     const { page, size } = pagingOptions;
 
     const getStoresArg: GetStoresArg = useMemo(
-        () => ({ paging: { page, size } }),
-        [page, size],
+        () => ({ cityId, paging: { page, size } }),
+        [cityId, page, size],
     );
 
     const resultOfGet = useGetStoresQuery(getStoresArg, {
