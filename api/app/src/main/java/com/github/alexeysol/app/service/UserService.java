@@ -49,4 +49,8 @@ public class UserService implements UserDetailsService {
     public void deleteUserById(long id) {
         userRepository.deleteById(id);
     }
+
+    public boolean isValidPassword(String passwordToCheck, User user) {
+        return passwordEncoder.matches(passwordToCheck, user.getPassword());
+    }
 }

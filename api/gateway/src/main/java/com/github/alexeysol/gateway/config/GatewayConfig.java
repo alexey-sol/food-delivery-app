@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import reactor.core.publisher.Mono;
@@ -31,5 +33,10 @@ public class GatewayConfig {
                 response.bodyToMono(String.class)
                     .flatMap(json -> Mono.error(new ServiceResponseException(json))))
             .build();
+    }
+
+    @Bean
+    public PasswordEncoder encoder() { // TODO duplicated in app
+        return new BCryptPasswordEncoder();
     }
 }

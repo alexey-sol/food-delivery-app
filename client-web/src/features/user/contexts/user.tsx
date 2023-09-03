@@ -8,6 +8,11 @@ import { useLazyGetCartsByUserIdQuery, useSaveCartItemMutation } from "features/
 import type { SaveCartItemArg } from "features/cart/services/api/types";
 import type { Cart } from "features/cart/models";
 import type { User } from "../models";
+import { useNavigate } from "react-router-dom";
+import { useCreateOrderMutation, useLazyGetAllOrdersByUserIdQuery } from "features/order/services/api";
+import { url } from "shared/const";
+import type { CreateOrderArg } from "features/order/services/api/types";
+import type { Order } from "features/order/models";
 
 const INITIAL_CARTS: Cart[] = [];
 
@@ -83,18 +88,69 @@ const useCarts = ({ profile }: { profile?: User }) => {
 
     const getCartByStoreId = (storeId: number) => carts.find((cart) => cart.store.id === storeId);
 
-    return {
+    return useMemo(() => ({
         carts,
         getCarts,
         getCartByStoreId,
         isPending,
         isPendingFor,
         saveCartItem,
-    };
+    }), [carts, getCarts, getCartByStoreId, isPending, isPendingFor, saveCartItem])
+};
+
+const INITIAL_ORDERS: Order[] = [];
+
+const useOrders = ({ profile }: { profile?: User }) => {
+    const navigate = useNavigate()
+
+    // TODO make auth redux slice, select userId from there
+    // const resultOfGet = useGetCartsByUserIdQuery(userId);
+    const userId = profile?.id;
+
+    const [getOrdersByUserId, resultOfGet] = useLazyGetAllOrdersByUserIdQuery();
+    // const resultOfGet = useGetAllOrdersByUserIdQuery(userId, {
+    //     skip: !userId,
+    // });
+
+    const [createOrderMutation, resultOfCreate] = useCreateOrderMutation();
+
+    const getOrders = useCallback(() => {
+        if (userId) {
+            getOrdersByUserId(userId);
+        }
+    }, [userId]);
+
+    // const orders = profile?.orders ?? INITIAL_ORDERS;
+    // const orders = resultOfGet.data ?? profile?.orders ?? INITIAL_ORDERS;
+
+    // const createOrder = useCallback((arg: CreateOrderArg["orderItems"]) => {
+    const createOrder = useCallback((arg: Pick<CreateOrderArg, "storeId" | "orderItems">) => {
+        if (userId) {
+            createOrderMutation({ userId, ...arg });
+        }
+    }, [userId]);
+
+    // resultOfCreate.data - there wil be 1 cart which i shoud add to cart list with replacing the old cart
+    // const orders = resultOfGet.data; // TODO plural: orders
+    const isPending = resultOfCreate.isLoading;
+
+    useEffect(() => {
+        if (resultOfCreate.data) {
+            navigate(`/${url.ORDER}`)
+        }
+    }, [resultOfCreate.data]);
+
+    return useMemo(() => ({
+        createOrder,
+        getOrders,
+        isPending,
+        orders: resultOfGet.data ?? INITIAL_ORDERS,
+    }), [createOrder, getOrders, isPending, resultOfGet.data])
 };
 
 type Value = {
     carts: ReturnType<typeof useCarts>;
+    orders: ReturnType<typeof useOrders>;
     // user: ReturnType<typeof useUser>;
 };
 
@@ -104,10 +160,13 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
     const { profile } = useAuthContext(); // TODO not ideal: using ctx inside another ctx
 
     const carts = useCarts({ profile });
+    const orders = useOrders({ profile });
+
 
     const value = useMemo(() => ({
         carts,
-    }), [carts]);
+        orders,
+    }), [carts, orders]);
 
     return (
         <UserContext.Provider value={value}>

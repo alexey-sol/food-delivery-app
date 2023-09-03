@@ -5,11 +5,13 @@ import { getUseContextOrThrowError } from "shared/utils/helpers/context";
 
 import type { User } from "features/user/models";
 import { useAppDispatch } from "app/store/hooks";
+import { useNavigate } from "react-router-dom";
+import { cartApi } from "features/cart/services/api";
+import { orderApi } from "features/order/services/api";
+import type { City, SignInDto, SignUpDto } from "../models";
 import {
     authApi, useGetProfileQuery, useSignInMutation, useSignOutMutation, useSignUpMutation,
 } from "../services/api";
-import type { City, SignInDto, SignUpDto } from "../models";
-import { useNavigate } from "react-router-dom";
 
 // TODO need this context at all? Maybe use user context?
 const INITIAL_CITIES: City[] = [];
@@ -29,7 +31,12 @@ export const useAuth = (): UseAuthApiResult => {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
-    const resetAuthState = useCallback(() => dispatch(authApi.util.resetApiState()), [dispatch]);
+    const resetAuthState = useCallback(() => {
+        dispatch(authApi.util.resetApiState());
+        // TODO reset these here?:
+        dispatch(cartApi.util.resetApiState());
+        dispatch(orderApi.util.resetApiState());
+    }, [dispatch]);
 
     const getProfileResult = useGetProfileQuery(undefined); // TODO make void param
 

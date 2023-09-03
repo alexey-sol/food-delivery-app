@@ -1,6 +1,5 @@
 import React, { type FC, memo } from "react";
 import { Order } from "../components/order";
-import { OrderProvider } from "../contexts/order";
 
 export const OrderView: FC = () => (
     <Order />
@@ -8,7 +7,5 @@ export const OrderView: FC = () => (
 
 // eslint-disable-next-line import/no-default-export
 export default memo(() => (
-    <OrderProvider>
-        <OrderView />
-    </OrderProvider>
+    <OrderView />
 ));

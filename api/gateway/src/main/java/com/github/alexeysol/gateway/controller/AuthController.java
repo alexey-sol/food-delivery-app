@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,6 +31,7 @@ public class AuthController {
     private final static String CITY_RESOURCE = "city";
     private final static String USER_RESOURCE = "user";
 
+    private final PasswordEncoder passwordEncoder;
     private final GatewayConfig config;
 //    private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
@@ -141,6 +143,7 @@ public class AuthController {
             .get()
             .uri(builder -> builder.pathSegment(USER_RESOURCE)
                 .queryParam("phone", dto.getPhone())
+                .queryParam("password", dto.getPassword())
                 .build())
             .retrieve()
             .bodyToMono(UserDto.class)

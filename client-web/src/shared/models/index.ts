@@ -1,3 +1,5 @@
+import type { HasHttpStatus } from "./props";
+
 export type Page<E = unknown> = {
     content: E;
     size: number;
@@ -15,4 +17,9 @@ export type Address = {
         id: number;
         name: string;
     }
+};
+
+export type ApiError = HasHttpStatus & {
+    detail: string;
+    title: string;
 };

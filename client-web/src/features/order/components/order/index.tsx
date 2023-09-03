@@ -3,8 +3,8 @@ import { useAuthContext } from "features/auth/contexts/auth";
 import {
     Accordion, AccordionDetails, AccordionSummary, Box, Chip, List, ListItem, Paper, Typography,
 } from "@mui/material";
-import { useOrderContext } from "features/order/contexts/order";
 import { grey } from "@mui/material/colors";
+import { useUserContext } from "features/user/contexts/user";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
 const DELIVERY_PRICE = 20000; // TODO hardcoded
@@ -18,7 +18,7 @@ const statusTranslation: Record<string, string> = {
 };
 
 export const Order: FC = () => {
-    const { orders: { getOrders, orders } } = useOrderContext();
+    const { orders: { getOrders, orders } } = useUserContext();
     const { profile } = useAuthContext();
 
     if (!profile) {

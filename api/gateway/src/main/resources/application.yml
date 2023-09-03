@@ -2,6 +2,10 @@ server:
     port: ${GATEWAY_PORT}
     servlet:
         context-path: ${GATEWAY_PREFIX:/api}
+spring:
+    mvc:
+        problemdetails:
+            enabled: true
 service:
     app:
         base-url: "http://${APP_HOST}:${APP_PORT}"

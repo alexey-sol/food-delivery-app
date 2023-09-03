@@ -5,7 +5,6 @@ import {
 import { grey } from "@mui/material/colors";
 import { useAuthContext } from "features/auth/contexts/auth";
 import { useUserContext } from "features/user/contexts/user";
-import { useOrderContext } from "features/order/contexts/order";
 import { useNavigate } from "react-router-dom";
 import { url } from "shared/const";
 
@@ -16,8 +15,7 @@ export const Cart: FC = () => {
     const navigate = useNavigate();
 
     const { profile } = useAuthContext();
-    const { orders } = useOrderContext();
-    const { carts } = useUserContext();
+    const { carts, orders } = useUserContext();
 
     useEffect(() => {
         carts.getCarts();

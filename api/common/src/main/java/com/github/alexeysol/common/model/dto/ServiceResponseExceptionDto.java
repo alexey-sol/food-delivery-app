@@ -4,10 +4,9 @@ import lombok.Data;
 
 @Data
 public class ServiceResponseExceptionDto {
-    private String path;
-    private String trace; // TODO transient? production?
-    private String error;
-    private String message;
-    private String timestamp;
+    private String type;
+    private String title;
+    private String detail;
+    private String instance;
     private Integer status;
 }
