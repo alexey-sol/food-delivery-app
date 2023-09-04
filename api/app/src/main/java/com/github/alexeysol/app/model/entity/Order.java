@@ -38,10 +38,10 @@ public class Order {
     private User user;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-    // TODO added for convenience only, to make it easier to render orders page (with brief store info)
+    // TODO added for convenience only, to make it easier to render orders page (with brief place info)
     @ManyToOne
-    @JoinColumn(name = "store_id", referencedColumnName = "id")
-    private Store store;
+    @JoinColumn(name = "place_id", referencedColumnName = "id")
+    private Place place;
 //    @Column(name = "type", nullable = false)
 //    @Enumerated(EnumType.STRING)
 //    private OrderType type;

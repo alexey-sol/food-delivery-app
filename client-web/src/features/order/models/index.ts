@@ -1,5 +1,5 @@
 import type { ProductPreview } from "features/product/models";
-import type { StorePreview } from "features/store/models";
+import type { PlacePreview } from "features/place/models";
 import type { HasId } from "shared/models/props";
 
 export type OrderItem = HasId & {
@@ -12,8 +12,8 @@ export type OrderItem = HasId & {
 export type Order = HasId & {
     createdAt: string;
     orderItems: OrderItem[];
+    place: PlacePreview;
     status: string; // TODO enum
-    store: StorePreview;
     totalPrice: number;
     updatedAt: string;
 };

@@ -6,6 +6,6 @@ type CreateOrderItemDto = {
 
 export type CreateOrderArg = {
     orderItems: CreateOrderItemDto[];
-    storeId: number;
+    placeId: number;
     userId: number;
 };

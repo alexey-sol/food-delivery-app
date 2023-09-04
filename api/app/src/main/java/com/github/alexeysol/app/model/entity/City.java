@@ -30,7 +30,7 @@ public class City {
     private Set<UserAddress> userAddresses = new HashSet<>();
 
     @OneToMany(mappedBy = "city")
-    private Set<StoreAddress> storeAddresses = new HashSet<>();
+    private Set<PlaceAddress> placeAddresses = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

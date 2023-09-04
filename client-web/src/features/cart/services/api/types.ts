@@ -3,5 +3,5 @@ export type SaveCartItemArg = {
     productId: number;
     userId: number;
 
-    storeId: number; // TODO for now, it's getting past only for updating frontend cache in api
+    placeId: number; // TODO for now, it's getting past only for updating frontend cache in api
 };

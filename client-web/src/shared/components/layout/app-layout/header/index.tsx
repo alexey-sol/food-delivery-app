@@ -36,7 +36,7 @@ export const Header: FC = () => {
 
     return (
         <AppBar position="static">
-            <Container>
+            <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AppLink to="/">
                         <Typography
@@ -56,9 +56,9 @@ export const Header: FC = () => {
                     </AppLink>
 
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                        <AppLink to={`/${url.STORE}`}>
+                        <AppLink to={`/${url.PLACE}`}>
                             <Button sx={{ color: "white", display: "block" }}>
-                                Stores
+                                Places
                             </Button>
                         </AppLink>
 

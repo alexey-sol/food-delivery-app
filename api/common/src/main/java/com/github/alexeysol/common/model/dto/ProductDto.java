@@ -18,7 +18,7 @@ public class ProductDto {
 
     private Long price;
 
-    private StoreDto store;
+    private PlaceDto place;
 
     private Date createdAt;
 

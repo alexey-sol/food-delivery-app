@@ -6,8 +6,8 @@ import {
 import { url } from "shared/const";
 
 const CartView = lazy(() => import("features/cart/views/cart-view"));
-const StoreListView = lazy(() => import("features/store/views/store-list-view"));
 const OrderView = lazy(() => import("features/order/views/order-view"));
+const PlaceListView = lazy(() => import("features/place/views/place-list-view"));
 const ProductListView = lazy(() => import("features/product/views/product-list-view"));
 const SignInView = lazy(() => import("features/auth/views/sign-in-view"));
 const SignUpView = lazy(() => import("features/auth/views/sign-up-view"));
@@ -38,10 +38,10 @@ export const AppRoutes: FC = () => (
     <Routes>
         <Route index element={<div>Home</div>} />
 
-        <Route path={url.STORE}>
-            <Route index element={<AuthRoute><StoreListView /></AuthRoute>} />
+        <Route path={url.PLACE}>
+            <Route index element={<AuthRoute><PlaceListView /></AuthRoute>} />
 
-            <Route path=":storeId">
+            <Route path=":placeId">
                 <Route path={url.PRODUCT}>
                     <Route index element={<AuthRoute><ProductListView /></AuthRoute>} />
                 </Route>

@@ -45,7 +45,7 @@ public class OrderController {
     @PostMapping
     public OrderDto createOrder(@RequestBody CreateOrderDto dto) {
         // TODO throw 409 if there's active order
-        if (orderService.hasActiveOrderByUserIdAndStoreId(dto.getUserId(), dto.getStoreId())) {
+        if (orderService.hasActiveOrderByUserIdAndPlaceId(dto.getUserId(), dto.getPlaceId())) {
             var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER_RESOURCE);
             throw new ResponseStatusException(HttpStatus.CONFLICT, message);
         }
@@ -57,7 +57,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-        // TODO store exists? or else 404
+        // TODO place exists? or else 404
 
 
 //        var order = orderMapper.map(dto, user);
@@ -87,7 +87,7 @@ public class OrderController {
 
         orderService.save(order);
 
-        var optionalCart = cartService.findCartByUserIdAndStoreId(dto.getUserId(), dto.getStoreId());
+        var optionalCart = cartService.findCartByUserIdAndPlaceId(dto.getUserId(), dto.getPlaceId());
 
         if (optionalCart.isPresent()) {
             cartService.deleteCartById(optionalCart.get().getId());

@@ -15,7 +15,7 @@ public class OrderDto {
 
 //    private UserDto user;
 
-    private StoreDto store;
+    private PlaceDto place;
 
     private OrderStatus status;
 

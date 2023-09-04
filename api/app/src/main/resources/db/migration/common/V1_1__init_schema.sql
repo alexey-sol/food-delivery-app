@@ -12,9 +12,9 @@ create sequence order_seq start with 1 increment by 1;
 
 create sequence product_seq start with 1 increment by 1;
 
-create sequence store_address_seq start with 1 increment by 1;
+create sequence place_address_seq start with 1 increment by 1;
 
-create sequence store_seq start with 1 increment by 1;
+create sequence place_seq start with 1 increment by 1;
 
 create sequence user_address_seq start with 1 increment by 1;
 
@@ -23,7 +23,7 @@ create sequence user_seq start with 1 increment by 1;
 create table "order" (
     id bigint not null,
     user_id bigint,
-    store_id bigint,
+    place_id bigint,
     total_price bigint not null,
     status varchar(255) not null check (status in ('CANCELLED','COMPLETED','DELIVERING','FAILED','PROCESSING')),
     created_at timestamp(6),
@@ -51,7 +51,7 @@ create table "user_roles" (
 create table cart (
     id bigint not null,
     user_id bigint,
-    store_id bigint,
+    place_id bigint,
     total_price bigint not null,
     created_at timestamp(6),
     updated_at timestamp(6),
@@ -94,7 +94,7 @@ create table order_item (
 
 create table product (
     id bigint not null,
-    store_id bigint not null,
+    place_id bigint not null,
     price bigint not null,
     name varchar(255) not null,
     description varchar(255),
@@ -117,7 +117,7 @@ create table role (
     primary key (id)
 );
 
-create table store (
+create table place (
     id bigint not null,
     address_id bigint not null unique,
     name varchar(255) not null,
@@ -127,7 +127,7 @@ create table store (
     primary key (id)
 );
 
-create table store_address (
+create table place_address (
     id bigint not null,
     city_id bigint,
     address_line varchar(255) not null,
@@ -145,12 +145,12 @@ create index IDXjmivyxk9rmgysrmsqw15lqr5b
     on product (name);
 
 create index IDXj9qchw9ki2is6psdc7uuujyqx
-    on product (store_id);
+    on product (place_id);
 
 alter table if exists "order"
     add constraint FK90lxxrxlt4chf273vcm9pi8ak
-    foreign key (store_id)
-    references store;
+    foreign key (place_id)
+    references place;
 
 alter table if exists "order"
     add constraint FKrcaf946w0bh6qj0ljiw3pwpnu
@@ -174,8 +174,8 @@ alter table if exists "user_roles"
 
 alter table if exists cart
     add constraint FKd1x6ip1voqx475p471usgde93
-    foreign key (store_id)
-    references store;
+    foreign key (place_id)
+    references place;
 
 alter table if exists cart
     add constraint FKaf0wt8hgkk8v5rfpwdwq7se0t
@@ -204,8 +204,8 @@ alter table if exists order_item
 
 alter table if exists product
     add constraint FKjlfidudl1gwqem0flrlomvlcl
-    foreign key (store_id)
-    references store;
+    foreign key (place_id)
+    references place;
 
 alter table if exists product_category
     add constraint FKkud35ls1d40wpjb5htpp14q4e
@@ -217,12 +217,12 @@ alter table if exists product_category
     foreign key (product_id)
     references product;
 
-alter table if exists store
+alter table if exists place
     add constraint FKaclgjwpadibnrwyr3rdvwb45l
     foreign key (address_id)
-    references store_address;
+    references place_address;
 
-alter table if exists store_address
+alter table if exists place_address
     add constraint FKryg0psm2gvueonpbakr91vyst
     foreign key (city_id)
     references city;

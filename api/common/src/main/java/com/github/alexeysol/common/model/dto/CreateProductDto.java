@@ -19,6 +19,6 @@ public class CreateProductDto {
     @NotNull(message = "Price is required")
     private Long price;
 
-    @NotNull(message = "Store ID is required")
-    private Long storeId;
+    @NotNull(message = "Place ID is required")
+    private Long placeId;
 }

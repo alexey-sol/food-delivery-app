@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(indexes = {
     @Index(columnList = "name"),
-    @Index(columnList = "store_id")
+    @Index(columnList = "place_id")
 })
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -42,8 +42,8 @@ public class Product {
     private long price;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "store_id", nullable = false)
-    private Store store;
+    @JoinColumn(name = "place_id", nullable = false)
+    private Place place;
 
     // TODO maybe it should be many-to-one
     @ManyToMany(cascade = { CascadeType.MERGE })

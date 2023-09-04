@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long>, JpaRepository<Product, Long> {
-    Page<Product> findAllByStoreId(long storeId, Pageable pageable);
+    Page<Product> findAllByPlaceId(long placeId, Pageable pageable);
 }

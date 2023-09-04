@@ -12,8 +12,8 @@ public class CreateOrderDto {
     @NotNull(message = "Order items are required")
     private Set<CreateOrderItemDto> orderItems;
 
-    @NotNull(message = "Store ID is required")
-    private Long storeId;
+    @NotNull(message = "Place ID is required")
+    private Long placeId;
 
     @NotNull(message = "User ID is required")
     private Long userId;

@@ -1,4 +1,4 @@
-import type { StorePreview } from "features/store/models";
+import type { PlacePreview } from "features/place/models";
 import type { Page } from "shared/models";
 import type { HasId } from "shared/models/props";
 
@@ -8,7 +8,7 @@ export type ProductPreview = HasId & {
     description?: string;
     name: string;
     price: number;
-    store: StorePreview;
+    place: PlacePreview;
     updatedAt: string;
 };
 

@@ -51,12 +51,12 @@ public class CartController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-        var store = product.getStore();
+        var place = product.getPlace();
 
         // TODO if no cart then create cart
-        var optionalCart = cartService.findCartByUserIdAndStoreId(dto.getUserId(), store.getId());
+        var optionalCart = cartService.findCartByUserIdAndPlaceId(dto.getUserId(), place.getId());
 
-//        var carts = cartService.findAllCartsByStoreIdAndUserId(store.getId(), dto.getUserId()); // there may be only 1 user's cart related to the store
+//        var carts = cartService.findAllCartsByPlaceIdAndUserId(place.getId(), dto.getUserId()); // there may be only 1 user's cart related to the place
 
         Cart cart;
 
@@ -73,7 +73,7 @@ public class CartController {
             cart = Cart.builder()
 //                .cartItems(new ArrayList<>())
                 .cartItems(ccc)
-                .store(store)
+                .place(place)
                 .user(user)
                 .build();
             // TODO need to save cart here?

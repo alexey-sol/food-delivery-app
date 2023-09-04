@@ -42,8 +42,8 @@ export const Order: FC = () => {
             {orders.map((order) => (
                 <Paper key={order.id}>
                     <Box sx={{ px: 2, pt: 2 }}>
-                        <Typography gutterBottom>{order.store.name}</Typography>
-                        <Typography color={grey[500]}>{order.store.address.addressLine}</Typography>
+                        <Typography gutterBottom>{order.place.name}</Typography>
+                        <Typography color={grey[500]}>{order.place.address.addressLine}</Typography>
                     </Box>
 
                     <List sx={{ my: 1 }} component="nav" aria-label="mailbox folders">

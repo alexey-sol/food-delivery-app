@@ -19,8 +19,8 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> findAllProductsByStoreId(long storeId, Pageable pageable) {
-        return productRepository.findAllByStoreId(storeId, pageable);
+    public Page<Product> findAllProductsByPlaceId(long placeId, Pageable pageable) {
+        return productRepository.findAllByPlaceId(placeId, pageable);
     }
 
     public Optional<Product> findProductById(long id) {

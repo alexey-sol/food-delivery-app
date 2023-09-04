@@ -34,8 +34,8 @@ public class Cart {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "store_id", referencedColumnName = "id")
-    private Store store;
+    @JoinColumn(name = "place_id", referencedColumnName = "id")
+    private Place place;
 
     @Cascade({ DELETE_ORPHAN })
     @OneToMany(mappedBy = "cart")

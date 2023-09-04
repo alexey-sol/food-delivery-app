@@ -21,16 +21,16 @@ const useProducts = ({ pagingOptions, setTotalElements }: UseProductsArg) => {
     const params = useParams();
     const { page, size } = pagingOptions;
 
-    const storeId = params.storeId
-        ? +params.storeId
+    const placeId = params.placeId
+        ? +params.placeId
         : undefined;
 
     const getProductsArg: GetProductsArg = useMemo(
         () => ({
             paging: { page, size },
-            storeId,
+            placeId,
         }),
-        [page, size, storeId],
+        [page, size, placeId],
     );
 
     const resultOfGet = useGetProductsQuery(getProductsArg, {

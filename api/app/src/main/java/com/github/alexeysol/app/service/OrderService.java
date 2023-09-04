@@ -19,9 +19,9 @@ public class OrderService {
         return orderRepository.findAllByUserIdOrderByIdDesc(userId);
     }
 
-    // boolean existsByUserIdAndStoreIdAndStatusIn(long userId, long storeId, List<OrderStatus> statuses);
-    public boolean hasActiveOrderByUserIdAndStoreId(long userId, long storeId) {
-        return orderRepository.existsByUserIdAndStoreIdAndStatusIn(userId, storeId, OrderConstant.ACTIVE_STATUSES);
+    // boolean existsByUserIdAndPlaceIdAndStatusIn(long userId, long placeId, List<OrderStatus> statuses);
+    public boolean hasActiveOrderByUserIdAndPlaceId(long userId, long placeId) {
+        return orderRepository.existsByUserIdAndPlaceIdAndStatusIn(userId, placeId, OrderConstant.ACTIVE_STATUSES);
     }
 
     public Order save(Order order) {

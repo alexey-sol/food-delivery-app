@@ -24,12 +24,12 @@ public class CartService {
         return cartRepository.findById(id);
     }
 
-    public Optional<Cart> findCartByUserIdAndStoreId(long userId, long storeId) {
-        return cartRepository.findTopByUserIdAndStoreId(userId, storeId);
+    public Optional<Cart> findCartByUserIdAndPlaceId(long userId, long placeId) {
+        return cartRepository.findTopByUserIdAndPlaceId(userId, placeId);
     }
 
-    public List<Cart> findAllCartsByStoreIdAndUserId(long storeId, long userId) {
-        return cartRepository.findAllByStoreIdAndUserId(storeId, userId);
+    public List<Cart> findAllCartsByPlaceIdAndUserId(long placeId, long userId) {
+        return cartRepository.findAllByPlaceIdAndUserId(placeId, userId);
     }
 
     public Cart saveCart(Cart cart) {

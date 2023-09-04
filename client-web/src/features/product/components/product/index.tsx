@@ -20,30 +20,30 @@ export const Product: FC<ProductProps> = ({ product }) => {
         description,
         id,
         name,
-        store,
+        place,
     } = product;
 
-    const { carts: { getCartByStoreId, isPendingFor, saveCartItem } } = useUserContext();
+    const { carts: { getCartByPlaceId, isPendingFor, saveCartItem } } = useUserContext();
 
-    const cart = getCartByStoreId(store.id);
+    const cart = getCartByPlaceId(place.id);
     const cartItem = cart?.cartItems.find((item) => item.product.id === id);
 
     const addItemToCart = useCallback(() => {
         saveCartItem({
             productId: id,
             quantity: QUANTITY_UPDATE_STEP,
-            storeId: store.id,
+            placeId: place.id,
         });
-    }, [id, saveCartItem, store.id]);
+    }, [id, saveCartItem, place.id]);
 
     const removeItemFromCart = useCallback(() => {
         saveCartItem({
             productId: id,
             quantity: -QUANTITY_UPDATE_STEP,
-            storeId: store.id,
+            placeId: place.id,
             // TODO + cartId
         });
-    }, [id, saveCartItem, store.id]);
+    }, [id, saveCartItem, place.id]);
 
     const isPending = isPendingFor(id);
 

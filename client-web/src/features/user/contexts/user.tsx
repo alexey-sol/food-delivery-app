@@ -70,7 +70,7 @@ const useCarts = ({ profile }: { profile?: User }) => {
     //     }
     // }, [carts, resultOfSave.data]);
 
-    const saveCartItem = useCallback((arg: Pick<SaveCartItemArg, "quantity" | "productId" | "storeId">) => {
+    const saveCartItem = useCallback((arg: Pick<SaveCartItemArg, "quantity" | "productId" | "placeId">) => {
         if (userId) {
             saveCartItemMutation({ userId, ...arg });
         }
@@ -86,16 +86,16 @@ const useCarts = ({ profile }: { profile?: User }) => {
         [resultOfSave.data, resultOfSave.isLoading],
     );
 
-    const getCartByStoreId = (storeId: number) => carts.find((cart) => cart.store.id === storeId);
+    const getCartByPlaceId = (placeId: number) => carts.find((cart) => cart.place.id === placeId); // TODO check if user id is used
 
     return useMemo(() => ({
         carts,
         getCarts,
-        getCartByStoreId,
+        getCartByPlaceId,
         isPending,
         isPendingFor,
         saveCartItem,
-    }), [carts, getCarts, getCartByStoreId, isPending, isPendingFor, saveCartItem])
+    }), [carts, getCarts, getCartByPlaceId, isPending, isPendingFor, saveCartItem])
 };
 
 const INITIAL_ORDERS: Order[] = [];
@@ -124,7 +124,7 @@ const useOrders = ({ profile }: { profile?: User }) => {
     // const orders = resultOfGet.data ?? profile?.orders ?? INITIAL_ORDERS;
 
     // const createOrder = useCallback((arg: CreateOrderArg["orderItems"]) => {
-    const createOrder = useCallback((arg: Pick<CreateOrderArg, "storeId" | "orderItems">) => {
+    const createOrder = useCallback((arg: Pick<CreateOrderArg, "placeId" | "orderItems">) => {
         if (userId) {
             createOrderMutation({ userId, ...arg });
         }

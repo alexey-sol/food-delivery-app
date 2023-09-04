@@ -1,5 +1,5 @@
 import type { ProductPreview } from "features/product/models";
-import type { StorePreview } from "features/store/models";
+import type { PlacePreview } from "features/place/models";
 import type { HasId } from "shared/models/props";
 
 export type CartItem = HasId & {
@@ -9,6 +9,6 @@ export type CartItem = HasId & {
 
 export type Cart = HasId & {
     cartItems: CartItem[];
-    store: StorePreview;
+    place: PlacePreview;
     totalPrice: number;
 };

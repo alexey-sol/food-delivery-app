@@ -7,8 +7,8 @@ const config = {
     cartResource: process.env.CART_RESOURCE ?? "cart",
     nodeEnv: process.env.NODE_ENV,
     orderResource: process.env.ORDER_RESOURCE ?? "order",
+    placeResource: process.env.PLACE_RESOURCE ?? "place",
     productResource: process.env.PRODUCT_RESOURCE ?? "product",
-    storeResource: process.env.STORE_RESOURCE ?? "store",
     userResource: process.env.USER_RESOURCE ?? "user",
 } as const;
 

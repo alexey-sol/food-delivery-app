@@ -47,14 +47,14 @@ export const Cart: FC = () => {
                 <>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         {carts.carts.map((cart) => (
-                            <Tab key={cart.id} label={cart.store.name} />
+                            <Tab key={cart.id} label={cart.place.name} />
                         ))}
                     </Tabs>
 
                     {carts.carts.map((cart, index) =>
                         (value === index ? (
                             <Box key={cart.id} sx={{ py: 1 }}>
-                                <Typography color={grey[500]}>{cart.store.address.addressLine}</Typography>
+                                <Typography color={grey[500]}>{cart.place.address.addressLine}</Typography>
 
                                 <List sx={{ my: 1 }} component="nav" aria-label="mailbox folders">
                                     {cart.cartItems?.map((item) => (
@@ -102,7 +102,7 @@ export const Cart: FC = () => {
                                                 productId: product.id,
                                                 quantity,
                                             })),
-                                            storeId: cart.store.id,
+                                            placeId: cart.place.id,
                                         });
 
                                         // TODO what if error?

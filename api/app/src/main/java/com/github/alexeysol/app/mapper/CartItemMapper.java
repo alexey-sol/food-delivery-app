@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Mapper(uses = ProductMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CartItemMapper {
-    // TODO ignore cartItem.product.store
+    // TODO ignore cartItem.product.place
 
     // TODO return to list later if it'll work out
     default Set<CartItemDto> map(Set<CartItem> cartItems) {
@@ -30,8 +30,8 @@ public interface CartItemMapper {
 
     // TODO it doesnt add field to DTO but there are still redundant joins when querying DB
     // the field is still present in the result although it's null
-    // maybe i should add extra mapper and extra DTOs for mapping product inside cart item (where i skip product.store field)
-//    @Mapping(target = "product.store", ignore = true)
+    // maybe i should add extra mapper and extra DTOs for mapping product inside cart item (where i skip product.place field)
+//    @Mapping(target = "product.place", ignore = true)
     CartItemDto map(CartItem cartItem);
 
     CartItem map(CartItemDto dto);

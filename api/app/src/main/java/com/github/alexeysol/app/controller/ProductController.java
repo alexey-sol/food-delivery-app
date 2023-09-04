@@ -4,7 +4,7 @@ import com.github.alexeysol.app.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.ProductMapper;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.service.ProductService;
-import com.github.alexeysol.app.service.StoreService;
+import com.github.alexeysol.app.service.PlaceService;
 import com.github.alexeysol.common.model.dto.CreateProductDto;
 import com.github.alexeysol.common.model.dto.ProductDto;
 import com.github.alexeysol.common.model.dto.UpdateProductDto;
@@ -26,25 +26,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductController {
     private static final String PRODUCT = "Product";
-    private static final String STORE = "Store";
+    private static final String PLACE = "Place";
 
     private final ProductService productService;
-    private final StoreService storeService;
+    private final PlaceService placeService;
 
 //    private final ProductMapper productMapper = ProductMapper.INSTANCE;
     private final ProductMapper productMapper;
 
     @GetMapping
     public Page<ProductDto> getProducts(
-        @RequestParam Optional<Long> storeId,
+        @RequestParam Optional<Long> placeId,
         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
         @RequestParam(value = "size", defaultValue = "20", required = false) int size
     ) {
         var pageable = PageRequest.of(page, size);
         Page<Product> productPage;
 
-        if (storeId.isPresent()) {
-            productPage = getAllProductsByStoreId(storeId.get(), pageable);
+        if (placeId.isPresent()) {
+            productPage = getAllProductsByPlaceId(placeId.get(), pageable);
         } else {
             productPage = getAllProducts(pageable);
         }
@@ -52,13 +52,13 @@ public class ProductController {
         return productMapper.map(productPage, pageable);
     }
 
-    private Page<Product> getAllProductsByStoreId(long storeId, Pageable pageable) {
-        storeService.findStoreById(storeId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, STORE, storeId);
+    private Page<Product> getAllProductsByPlaceId(long placeId, Pageable pageable) {
+        placeService.findPlaceById(placeId).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PLACE, placeId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-        return productService.findAllProductsByStoreId(storeId, pageable);
+        return productService.findAllProductsByPlaceId(placeId, pageable);
     }
 
     private Page<Product> getAllProducts(Pageable pageable) {
@@ -77,14 +77,14 @@ public class ProductController {
 
     @PostMapping
     public ProductDto createProduct(@RequestBody @Valid CreateProductDto dto) {
-        var storeId = dto.getStoreId();
+        var placeId = dto.getPlaceId();
 
-        var store = storeService.findStoreById(storeId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, STORE, storeId);
+        var place = placeService.findPlaceById(placeId).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PLACE, placeId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-        Product product = productMapper.map(dto, store);
+        Product product = productMapper.map(dto, place);
         productService.saveProduct(product);
         return productMapper.map(product);
     }

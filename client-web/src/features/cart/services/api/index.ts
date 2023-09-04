@@ -27,7 +27,7 @@ export const cartApi = createApi({
                 method: "PATCH",
                 url: cartResource,
             }),
-            async onQueryStarted({ userId, storeId, ...patch }, { dispatch, queryFulfilled }) {
+            async onQueryStarted({ userId, placeId, ...patch }, { dispatch, queryFulfilled }) {
                 try {
                     const { data: savedCart } = await queryFulfilled;
 
@@ -35,7 +35,7 @@ export const cartApi = createApi({
 
                     dispatch(
                         cartApi.util.updateQueryData("getCartsByUserId", userId, (draft) => {
-                            const index = draft.findIndex((cart) => cart.store.id === storeId);
+                            const index = draft.findIndex((cart) => cart.place.id === placeId);
 
                             if (index >= 0) {
                                 Object.assign(draft[index], savedCart);

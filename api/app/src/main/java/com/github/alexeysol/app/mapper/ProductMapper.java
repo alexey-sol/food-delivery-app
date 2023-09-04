@@ -1,7 +1,7 @@
 package com.github.alexeysol.app.mapper;
 
 import com.github.alexeysol.app.model.entity.Product;
-import com.github.alexeysol.app.model.entity.Store;
+import com.github.alexeysol.app.model.entity.Place;
 import com.github.alexeysol.common.model.dto.CreateProductDto;
 import com.github.alexeysol.common.model.dto.ProductDto;
 import com.github.alexeysol.common.model.dto.UpdateProductDto;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(uses = StoreMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(uses = PlaceMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
@@ -46,11 +46,11 @@ public interface ProductMapper {
 
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "description", source = "dto.description")
-    @Mapping(target = "store", source = "store")
+    @Mapping(target = "place", source = "place")
     @Mapping(target = "id", ignore = true)
-    Product map(CreateProductDto dto, Store store);
+    Product map(CreateProductDto dto, Place place);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "store", ignore = true)
+    @Mapping(target = "place", ignore = true)
     Product map(UpdateProductDto dto, @MappingTarget Product product);
 }

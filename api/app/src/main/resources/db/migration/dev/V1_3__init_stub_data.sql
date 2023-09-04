@@ -8,13 +8,13 @@ begin
 end;
 $$ language 'plpgsql' strict;
 
--- Init "store_address" data
+-- Init "place_address" data
 
 do $$
 begin
 for i in 1..30 loop
-    insert into public."store_address" (id, city_id, address_line)
-        values (nextval('store_address_seq'), 1, 'This is a place address ' || currval('store_address_seq'));
+    insert into public."place_address" (id, city_id, address_line)
+        values (nextval('place_address_seq'), 1, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;
 $$;
@@ -22,8 +22,8 @@ $$;
 do $$
 begin
 for i in 1..20 loop
-    insert into public."store_address" (id, city_id, address_line)
-        values (nextval('store_address_seq'), 2, 'This is a place address ' || currval('store_address_seq'));
+    insert into public."place_address" (id, city_id, address_line)
+        values (nextval('place_address_seq'), 2, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;
 $$;
@@ -31,18 +31,18 @@ $$;
 do $$
 begin
 for i in 1..10 loop
-    insert into public."store_address" (id, city_id, address_line)
-        values (nextval('store_address_seq'), 3, 'This is a place address ' || currval('store_address_seq'));
+    insert into public."place_address" (id, city_id, address_line)
+        values (nextval('place_address_seq'), 3, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;
 $$;
 
--- Init "store" and "product" data
+-- Init "place" and "product" data
 
 do $$
 begin
 for i in 1..60 loop
-    insert into public."store" (
+    insert into public."place" (
         id,
         address_id,
         name,
@@ -50,17 +50,17 @@ for i in 1..60 loop
         created_at,
         updated_at
     ) values (
-        nextval('store_seq'),
-        currval('store_seq'),
-        'Place ' || currval('store_seq'),
-        'This is a brief description of the place ' || currval('store_seq'),
+        nextval('place_seq'),
+        currval('place_seq'),
+        'Place ' || currval('place_seq'),
+        'This is a brief description of the place ' || currval('place_seq'),
         current_timestamp,
         current_timestamp
     );
         for i in 1..1000 loop
             insert into public."product" (
                 id,
-                store_id,
+                place_id,
                 price,
                 name,
                 description,
@@ -70,7 +70,7 @@ for i in 1..60 loop
                 updated_at
             ) values (
                 nextval('product_seq'),
-                currval('store_seq'),
+                currval('place_seq'),
                 random_between(10000, 100000),
                 'Product ' || currval('product_seq'),
                 'This is a brief description of the product ' || currval('product_seq'),
