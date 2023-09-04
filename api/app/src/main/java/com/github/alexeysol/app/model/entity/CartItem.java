@@ -23,7 +23,8 @@ public class CartItem {
     private final static int INITIAL_QUANTITY = 0;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_item_seq")
+    @SequenceGenerator(name = "cart_item_seq", sequenceName = "cart_item_seq", allocationSize = 1)
     private long id;
 
     @Column(nullable = false)

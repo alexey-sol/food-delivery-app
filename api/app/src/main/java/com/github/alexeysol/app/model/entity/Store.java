@@ -19,7 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "store_seq")
+    @SequenceGenerator(name = "store_seq", sequenceName = "store_seq", allocationSize = 1)
     private long id;
 
     @Column(nullable = false)

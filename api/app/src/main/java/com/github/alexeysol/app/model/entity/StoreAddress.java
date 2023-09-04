@@ -12,7 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 public class StoreAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "store_address_seq")
+    @SequenceGenerator(name = "store_address_seq", sequenceName = "store_address_seq", allocationSize = 1)
     private long id;
 
     @Column(name = "address_line", nullable = false)

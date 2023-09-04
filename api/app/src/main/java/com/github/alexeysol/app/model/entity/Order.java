@@ -26,7 +26,8 @@ public class Order {
     private final static List<OrderStatus> ACTIVE_STATUSES = List.of(OrderStatus.DELIVERING, OrderStatus.PROCESSING);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq", allocationSize = 1)
     private long id;
 
     @Column(name = "total_price", nullable = false)

@@ -19,7 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class City {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
+    @SequenceGenerator(name = "city_seq", sequenceName = "city_seq", allocationSize = 1)
     private long id;
 
     @Column(nullable = false)

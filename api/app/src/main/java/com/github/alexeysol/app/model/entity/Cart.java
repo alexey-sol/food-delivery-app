@@ -20,7 +20,8 @@ import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 @NoArgsConstructor
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq")
+    @SequenceGenerator(name = "cart_seq", sequenceName = "cart_seq", allocationSize = 1)
     private long id;
 
     @Column(name = "total_price", nullable = false)

@@ -12,7 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 public class UserAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_address_seq")
+    @SequenceGenerator(name = "user_address_seq", sequenceName = "user_address_seq", allocationSize = 1)
     private long id;
 
     @Column(name = "address_line", nullable = false)
