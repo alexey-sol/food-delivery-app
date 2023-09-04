@@ -8,6 +8,9 @@
     "scripts": {
         "dev:up": "npm run dev -- up",
         "dev:down": "npm run dev -- down",
-        "dev": "docker-compose --env-file .env.dev -f docker-compose.yml -f docker-compose.dev.yml"
+        "dev": "docker-compose --env-file .env.dev -f docker-compose.yml -f docker-compose.dev.yml",
+        "prod:up": "npm run prod -- up -d",
+        "prod:down": "npm run prod -- down",
+        "prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml"
     }
 }

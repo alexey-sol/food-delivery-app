@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+    client-web:
+        build:
+            context: ../client-web
+            dockerfile: $PWD/builder/client-web/Dockerfile.prod
+        command: nginx -g "daemon off;"
+        ports:
+            - ${CLIENT_WEB_PORT_EXTERNAL}:${CLIENT_WEB_PORT}
+        depends_on:
+            - api
+        networks:
+            - food-delivery-external
+
+    api:
+        restart: always
+        build:
+            context: ../api
+            dockerfile: $PWD/builder/api/Dockerfile.prod
+        command: ./startup.sh
+        ports:
+            - ${GATEWAY_PORT_EXTERNAL}:${GATEWAY_PORT}
+            - ${APP_PORT_EXTERNAL}:${APP_PORT}
+        depends_on:
+            - db
+        tty: true
+        networks:
+            - food-delivery-external
+            - food-delivery-internal
+        environment:
+            - APP_HOST
+            - APP_PORT
+            - DB_HOST
+            - DB_PORT
+            - DB_NAME
+            - DB_USER
+            - DB_PASSWORD
+            - GATEWAY_PORT
+            - JWT_SECRET
+
+    db:
+        networks:
+            - food-delivery-internal
+        volumes:
+            - db-data_prod:${DB_DATA_PATH}
+
+volumes:
+    db-data_prod:
+        driver: local
+
+networks:
+    food-delivery-external:
+        driver: bridge
+    food-delivery-internal:
+        driver: bridge
