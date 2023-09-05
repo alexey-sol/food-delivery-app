@@ -6,17 +6,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CityMapper {
     CityMapper INSTANCE = Mappers.getMapper(CityMapper.class);
 
-    default Set<CityDto> map(Set<City> cities) {
+    default List<CityDto> map(List<City> cities) {
         return cities.stream()
             .map(this::map)
-            .collect(Collectors.toSet());
+            .toList();
     }
 
     CityDto map(City city);

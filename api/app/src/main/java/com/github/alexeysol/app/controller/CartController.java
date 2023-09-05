@@ -9,8 +9,10 @@ import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.UserService;
 import com.github.alexeysol.common.model.dto.CartDto;
 import com.github.alexeysol.common.model.dto.SaveCartItemDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cart", produces = "application/json")
+@Validated
 @RequiredArgsConstructor
 public class CartController {
     private final static String CART_RESOURCE = "Cart";
@@ -40,7 +43,7 @@ public class CartController {
 
     // TODO probably should be PUT since we adding/updating/deleting cart item entity
     @PatchMapping
-    public CartDto saveCartItem(@RequestBody SaveCartItemDto dto) {
+    public CartDto saveCartItem(@RequestBody @Valid SaveCartItemDto dto) {
         // dto.productId
         // dto.quantity
         // dto.userId

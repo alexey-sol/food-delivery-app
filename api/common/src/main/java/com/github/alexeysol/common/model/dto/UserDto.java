@@ -3,7 +3,7 @@ package com.github.alexeysol.common.model.dto;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class UserDto {
@@ -15,7 +15,7 @@ public class UserDto {
 
     private UserAddressDto address;
 
-    private Set<CartDto> carts;
+    private List<CartDto> carts;
 
     private Date createdAt;
 

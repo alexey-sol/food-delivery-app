@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/city", produces = "application/json")
@@ -18,11 +18,10 @@ import java.util.Set;
 public class CityController {
     private final CityService cityService;
 
-//    private final CityMapper cityMapper = CityMapper.INSTANCE;
     private final CityMapper cityMapper;
 
     @GetMapping
-    public Set<CityDto> getCities() {
+    public List<CityDto> getCities() {
         return cityMapper.map(cityService.findAllCities());
     }
 }

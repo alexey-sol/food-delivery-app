@@ -13,14 +13,15 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
-    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour - put in app properties TODO
 
-    @Value("${service.app.jwt.secret}") // TODO use Properties
+    @Value("${service.jwt.secret}")
     private String JWT_SECRET;
+
+    @Value("${service.jwt.expire-duration}")
+    private long EXPIRE_DURATION = 1;
 
     public String generateAccessToken(UserDto user) {
         return Jwts.builder()
-//            .setSubject(String.format("%s,%s", user.getId(), user.getEmail()))
             .setSubject(String.valueOf(user.getId()))
             .setIssuer("gateway") // TODO needed?
             .setIssuedAt(new Date())

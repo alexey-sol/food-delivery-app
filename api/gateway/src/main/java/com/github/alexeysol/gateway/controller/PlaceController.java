@@ -42,6 +42,7 @@ public class PlaceController {
             .block();
     }
 
+    // TODO use enum somehow?
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public PlaceDto createPlace(@RequestBody CreatePlaceDto dto) {

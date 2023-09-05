@@ -1,4 +1,4 @@
-insert into public."role" (id, name) values (1, 'ROLE_USER'), (2, 'ROLE_ADMIN');
+insert into public."role" (id, name) values (1, 'ADMIN'), (2, 'CUSTOMER');
 
 insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Moscow', current_timestamp, current_timestamp);
 insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Saint Petersburg', current_timestamp, current_timestamp);

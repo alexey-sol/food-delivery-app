@@ -10,10 +10,8 @@ import lombok.Data;
 public class SignUpDto {
     @NotNull(message = "Phone is required and must not be blank")
     @Size(min = 11, message = "Phone must have minimum 11 characters")
-    // TODO validation like in SignInDto
     private String phone;
 
-//    @NotEmpty(message = "Username is required and must not be blank")
     private String username;
 
     @Valid

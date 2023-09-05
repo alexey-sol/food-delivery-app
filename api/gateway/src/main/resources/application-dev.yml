@@ -1,7 +1,3 @@
 spring:
     config:
         import: optional:file:.env.dev[.properties]
-service:
-    app:
-        jwt:
-            secret: secret # TODO env

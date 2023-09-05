@@ -25,7 +25,7 @@ create table "order" (
     user_id bigint,
     place_id bigint,
     total_price bigint not null,
-    status varchar(255) not null check (status in ('CANCELLED','COMPLETED','DELIVERING','FAILED','PROCESSING')),
+    status varchar(255) not null check (status in ('PROCESSING','DELIVERING','COMPLETED','CANCELLED','FAILED')),
     created_at timestamp(6),
     updated_at timestamp(6),
     primary key (id)
@@ -112,8 +112,8 @@ create table product_category (
 );
 
 create table role (
-    id bigint not null,
-    name varchar(255),
+    id integer not null,
+    name varchar(255) not null check (name in ('ADMIN','CUSTOMER')),
     primary key (id)
 );
 

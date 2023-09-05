@@ -10,8 +10,11 @@ import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.UserService;
 import com.github.alexeysol.common.model.dto.CreateOrderDto;
 import com.github.alexeysol.common.model.dto.OrderDto;
+import com.github.alexeysol.common.model.dto.UpdateOrderDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,10 +23,10 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/order", produces = "application/json")
+@Validated
 @RequiredArgsConstructor
 public class OrderController {
     private final static String ORDER_RESOURCE = "Order";
-    private final static String PRODUCT_RESOURCE = "Product";
     private final static String USER_RESOURCE = "User";
 
     private final CartService cartService;
@@ -43,7 +46,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDto createOrder(@RequestBody CreateOrderDto dto) {
+    public OrderDto createOrder(@RequestBody @Valid CreateOrderDto dto) {
         // TODO throw 409 if there's active order
         if (orderService.hasActiveOrderByUserIdAndPlaceId(dto.getUserId(), dto.getPlaceId())) {
             var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER_RESOURCE);
@@ -95,5 +98,17 @@ public class OrderController {
 
 
         return orderMapper.map(order);
+    }
+
+    @PatchMapping("/{id}")
+    public OrderDto updateOrder(@PathVariable long id, @RequestBody @Valid UpdateOrderDto dto) {
+        var order = orderService.findOrderById(id).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, ORDER_RESOURCE, id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+        });
+
+        var updatedOrder = orderMapper.map(dto, order);
+        orderService.save(updatedOrder);
+        return orderMapper.map(updatedOrder);
     }
 }

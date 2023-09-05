@@ -1,5 +1,6 @@
 package com.github.alexeysol.app.model.entity;
 
+import com.github.alexeysol.common.model.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,16 +17,18 @@ import java.util.Set;
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     @Id
-    private long id;
+    private int id;
 
-    private String name; // TODO enum?
+    @Enumerated(EnumType.STRING)
+    private UserRole name; // TODO enum?
 
     @Transient
-    @ManyToMany(mappedBy = "roles")
+//    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();
 
     @Override
     public String getAuthority() {
-        return name;
+        return String.valueOf(name); // TODO ok?
     }
 }

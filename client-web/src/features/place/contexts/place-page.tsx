@@ -20,7 +20,10 @@ type UsePlacesArg = ReturnType<typeof usePagingOptions>;
 
 const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
     const { profile } = useAuth();
-    const cityId = profile?.address.city.id;
+
+    const city = profile?.address.city;
+    const cityId = city?.id;
+
 
     const { page, size } = pagingOptions;
 
@@ -39,20 +42,27 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     const { isFetching, totalElements, places } = resultOfGet;
 
+    const getPlaceById = useCallback( // TODO rename to not confuse with API method?
+        (id: number) => places.find((place) => place.id === id),
+        [places],
+    );
+
     useEffect(() => {
         setTotalElements(totalElements);
     }, [totalElements, setTotalElements]);
 
     return {
+        city,
+        getPlaceById,
         isPending: isFetching,
         places,
     };
 };
 
-type UsePlacePageResult = {
-    isPending: boolean;
+type UsePlacePageResult = ReturnType<typeof usePlaces> & {
+    // isPending: boolean;
     pagingOptions: PagingOptions;
-    places: PlacePreview[];
+    // places: PlacePreview[];
 };
 
 export const PlacePageContext = React.createContext<UsePlacePageResult | null>(null);
@@ -69,13 +79,13 @@ export const PlacePageProvider: FC<PropsWithChildren> = ({ children }) => {
         initialOptions,
         setPagingOptions: onSetPagingOptions,
     });
-    const { isPending, places } = usePlaces({ pagingOptions, setTotalElements });
+    const places = usePlaces({ pagingOptions, setTotalElements });
 
     const value = useMemo(() => ({
-        isPending,
+        // isPending,
         pagingOptions,
-        places,
-    }), [isPending, pagingOptions, places]);
+        ...places,
+    }), [pagingOptions, places]);
 
     return (
         <PlacePageContext.Provider value={value}>

@@ -4,8 +4,7 @@ import com.github.alexeysol.common.model.OrderStatus;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class OrderDto {
@@ -13,13 +12,11 @@ public class OrderDto {
 
     private long totalPrice;
 
-//    private UserDto user;
-
     private PlaceDto place;
 
     private OrderStatus status;
 
-    private Set<OrderItemDto> orderItems = new HashSet<>();
+    private List<OrderItemDto> orderItems;
 
     private Date createdAt;
 

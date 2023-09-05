@@ -3,6 +3,7 @@ package com.github.alexeysol.app.service;
 import com.github.alexeysol.app.model.entity.User;
 import com.github.alexeysol.app.model.entity.Role;
 import com.github.alexeysol.app.repository.UserRepository;
+import com.github.alexeysol.common.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,8 +37,8 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(User user) {
         var role = Role.builder()
-            .id(1L) // TODO really need to set id explicitly?
-            .name("ROLE_USER")
+            .id(2) // TODO really need to set id explicitly?
+            .name(UserRole.CUSTOMER) // TODO use factory? createCustomer, createAdmin
             .build();
         user.setRoles(Collections.singleton(role));
 //        user.setRoles(Collections.singleton(new UserRole(1L, "ROLE_USER"))); // TODO do this in mapper

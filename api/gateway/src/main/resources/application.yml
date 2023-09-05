@@ -7,7 +7,11 @@ spring:
         problemdetails:
             enabled: true
 service:
+    admin:
+        username: admin
+        password: password
     app:
         base-url: "http://${APP_HOST}:${APP_PORT}"
-        jwt:
-            secret: ${JWT_SECRET}
+    jwt:
+        expire-duration: 86400000
+        secret: ${JWT_SECRET}

@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.model.ServicePage;
+import com.github.alexeysol.common.exception.ServiceResponseException;
 import com.github.alexeysol.common.model.dto.*;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import com.github.alexeysol.gateway.util.JwtUtil;
@@ -10,11 +10,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/auth", produces = "application/json")
@@ -31,7 +25,7 @@ public class AuthController {
     private final static String CITY_RESOURCE = "city";
     private final static String USER_RESOURCE = "user";
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final GatewayConfig config;
 //    private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
@@ -45,19 +39,21 @@ public class AuthController {
             var claims = jwtUtil.getSubject(authToken.get());
             var userIdAsString = claims.getSubject(); // get user id from jwt
 
-            profile = config.appWebClient()
-                .get()
-                .uri(builder -> builder.pathSegment(USER_RESOURCE, userIdAsString).build())
-                .retrieve()
-                .bodyToMono(UserDto.class)
-                .block();
+            try {
+                profile = config.appWebClient()
+                    .get()
+                    .uri(builder -> builder.pathSegment(USER_RESOURCE, userIdAsString).build())
+                    .retrieve()
+                    .bodyToMono(UserDto.class)
+                    .block();
+            } catch (ServiceResponseException ignored) {}
         }
 
         var cities = config.appWebClient()
             .get()
             .uri(builder -> builder.pathSegment(CITY_RESOURCE).build())
             .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<Set<CityDto>>() {})
+            .bodyToMono(new ParameterizedTypeReference<List<CityDto>>() {})
             .block();
 
         return new InitDto(profile, cities);

@@ -57,7 +57,7 @@ for i in 1..60 loop
         current_timestamp,
         current_timestamp
     );
-        for i in 1..1000 loop
+        for i in 1..200 loop
             insert into public."product" (
                 id,
                 place_id,

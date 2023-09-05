@@ -4,13 +4,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class CreateOrderDto {
     @Valid
     @NotNull(message = "Order items are required")
-    private Set<CreateOrderItemDto> orderItems;
+    private List<CreateOrderItemDto> orderItems;
 
     @NotNull(message = "Place ID is required")
     private Long placeId;

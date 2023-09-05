@@ -17,10 +17,10 @@ public interface CartItemMapper {
     // TODO ignore cartItem.product.place
 
     // TODO return to list later if it'll work out
-    default Set<CartItemDto> map(Set<CartItem> cartItems) {
+    default List<CartItemDto> map(List<CartItem> cartItems) {
         return cartItems.stream()
             .map(this::map)
-            .collect(Collectors.toSet());
+            .toList();
     }
 //    default List<CartItemDto> map(List<CartItem> cartItems) {
 //        return cartItems.stream()

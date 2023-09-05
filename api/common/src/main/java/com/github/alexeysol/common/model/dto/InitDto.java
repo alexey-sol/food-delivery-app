@@ -3,12 +3,12 @@ package com.github.alexeysol.common.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class InitDto { // TODO rename
     private UserDto profile;
 
-    private Set<CityDto> cities;
+    private List<CityDto> cities;
 }

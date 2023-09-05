@@ -6,9 +6,8 @@ import com.github.alexeysol.app.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +16,10 @@ public class OrderService {
 
     public List<Order> findAllOrdersByUserId(long userId) {
         return orderRepository.findAllByUserIdOrderByIdDesc(userId);
+    }
+
+    public Optional<Order> findOrderById(long id) {
+        return orderRepository.findById(id);
     }
 
     // boolean existsByUserIdAndPlaceIdAndStatusIn(long userId, long placeId, List<OrderStatus> statuses);

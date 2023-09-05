@@ -5,6 +5,7 @@ import com.github.alexeysol.app.model.entity.User;
 import com.github.alexeysol.app.service.PlaceService;
 import com.github.alexeysol.common.model.dto.CreateOrderDto;
 import com.github.alexeysol.common.model.dto.OrderDto;
+import com.github.alexeysol.common.model.dto.UpdateOrderDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -34,4 +35,7 @@ public interface OrderMapper {
     @Mapping(target = "place", source = "dto.placeId") // TODO still need place id in dto
     @Mapping(target = "user", source = "user")
     Order map(CreateOrderDto dto, User user, @MappingTarget Order order); // TODO it seems that if i provide entity from ouside, as arg (MappingTarget order), then default fields don't get nullified. Fix everywhere
+
+    @Mapping(target = "id", ignore = true)
+    Order map(UpdateOrderDto dto, @MappingTarget Order order);
 }

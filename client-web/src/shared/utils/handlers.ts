@@ -1,7 +1,11 @@
-import type { AnyAction, ListenerEffect, ThunkDispatch } from "@reduxjs/toolkit";
+import {
+    type AnyAction, type ListenerEffect, type ThunkDispatch, isRejectedWithValue,
+} from "@reduxjs/toolkit";
 import { createFailureSnackbarArg } from "features/feedback/slice/utils";
 import { setSnackbar } from "features/feedback/slice";
 import { isApiError } from "./helpers/predicates";
+
+const DEFAULT_ERROR = "Something went wrong";
 
 type AppListenerEffect = ListenerEffect<
 AnyAction,
@@ -13,8 +17,13 @@ unknown
 export const handleFailureEffect: AppListenerEffect = (action, listenerApi) => {
     const error = action.payload?.data;
 
-    if (isApiError(error)) {
-        const arg = createFailureSnackbarArg(error.detail);
+    if (isRejectedWithValue(action)) {
+        const message = isApiError(error)
+            ? error.detail
+            : DEFAULT_ERROR;
+
+        const arg = createFailureSnackbarArg(message);
+
         listenerApi.dispatch(setSnackbar(arg));
     }
 };

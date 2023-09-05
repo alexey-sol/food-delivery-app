@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,10 +23,10 @@ import java.util.stream.Collectors;
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface OrderItemMapper {
-    default Set<OrderItemDto> map(Set<OrderItem> orderItems) {
+    default List<OrderItemDto> map(List<OrderItem> orderItems) {
         return orderItems.stream()
             .map(this::map)
-            .collect(Collectors.toSet());
+            .toList();
     }
 
 //    @Mapping(target = "order", ignore = true) // TODO either ignore = true here or delete field in DTO, otherwise there's a recursion

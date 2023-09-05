@@ -7,5 +7,5 @@ import java.util.List;
 
 @UtilityClass
 public class OrderConstant {
-    public final List<OrderStatus> ACTIVE_STATUSES = List.of(OrderStatus.DELIVERING, OrderStatus.PROCESSING);
+    public final List<OrderStatus> ACTIVE_STATUSES = List.of(OrderStatus.PROCESSING, OrderStatus.DELIVERING);
 }
