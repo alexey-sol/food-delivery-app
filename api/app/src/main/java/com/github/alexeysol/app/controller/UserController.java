@@ -1,11 +1,9 @@
 package com.github.alexeysol.app.controller;
 
-import com.github.alexeysol.app.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.UserMapper;
-import com.github.alexeysol.app.model.entity.User;
 import com.github.alexeysol.app.service.CityService;
 import com.github.alexeysol.app.service.UserService;
-import com.github.alexeysol.common.model.dto.SignInDto;
 import com.github.alexeysol.common.model.dto.SignUpDto;
 import com.github.alexeysol.common.model.dto.UserDto;
 import jakarta.validation.Valid;
@@ -21,19 +19,18 @@ import java.util.Optional;
 @RequestMapping(value = "/user", produces = "application/json")
 @RequiredArgsConstructor
 public class UserController {
-    private final static String CITY_RESOURCE = "City";
-    private final static String USER_RESOURCE = "User";
+    private final static String CITY = "City";
+    private final static String USER = "User";
 
     private final CityService cityService;
     private final UserService userService;
 
-//    private final UserMapper userMapper = UserMapper.INSTANCE;
     private final UserMapper userMapper;
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable long id) {
         var user = userService.findUserById(id).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER_RESOURCE, id);
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
@@ -59,7 +56,7 @@ public class UserController {
         var cityId = dto.getAddress().getCityId();
 
         var city = cityService.findCityById(cityId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, CITY_RESOURCE, cityId);
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, CITY, cityId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 

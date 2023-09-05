@@ -1,12 +1,10 @@
 package com.github.alexeysol.app.controller;
 
-import com.github.alexeysol.app.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.OrderMapper;
 import com.github.alexeysol.app.model.entity.Order;
-import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.service.CartService;
 import com.github.alexeysol.app.service.OrderService;
-import com.github.alexeysol.app.service.ProductService;
 import com.github.alexeysol.app.service.UserService;
 import com.github.alexeysol.common.model.dto.CreateOrderDto;
 import com.github.alexeysol.common.model.dto.OrderDto;
@@ -19,15 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/order", produces = "application/json")
 @Validated
 @RequiredArgsConstructor
 public class OrderController {
-    private final static String ORDER_RESOURCE = "Order";
-    private final static String USER_RESOURCE = "User";
+    private final static String ORDER = "Order";
+    private final static String USER = "User";
 
     private final CartService cartService;
     private final OrderService orderService;
@@ -49,14 +46,14 @@ public class OrderController {
     public OrderDto createOrder(@RequestBody @Valid CreateOrderDto dto) {
         // TODO throw 409 if there's active order
         if (orderService.hasActiveOrderByUserIdAndPlaceId(dto.getUserId(), dto.getPlaceId())) {
-            var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER_RESOURCE);
+            var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER);
             throw new ResponseStatusException(HttpStatus.CONFLICT, message);
         }
 
         var userId = dto.getUserId();
 
         var user = userService.findUserById(userId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER_RESOURCE, userId);
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, userId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
@@ -103,7 +100,7 @@ public class OrderController {
     @PatchMapping("/{id}")
     public OrderDto updateOrder(@PathVariable long id, @RequestBody @Valid UpdateOrderDto dto) {
         var order = orderService.findOrderById(id).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, ORDER_RESOURCE, id);
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, ORDER, id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 

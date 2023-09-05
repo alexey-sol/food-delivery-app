@@ -1,66 +1,40 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.gateway.config.GatewayConfig;
 import com.github.alexeysol.common.model.ServicePage;
-import com.github.alexeysol.common.model.dto.*;
+import com.github.alexeysol.common.model.dto.CreateProductDto;
+import com.github.alexeysol.common.model.dto.ProductDto;
+import com.github.alexeysol.common.model.dto.UpdateProductDto;
+import com.github.alexeysol.gateway.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.BodyInserters;
 
 @RestController
 @RequestMapping(value = "/product", produces = "application/json")
 @RequiredArgsConstructor
 public class ProductController {
-    private final static String PRODUCT_RESOURCE = "product";
-
-    private final GatewayConfig config;
+    private final ProductService productService;
 
     @GetMapping
     public ServicePage<ProductDto> getProducts(HttpServletRequest request) {
-        return config.appWebClient()
-            .get()
-            .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE)
-                .query(request.getQueryString())
-                .build())
-            .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<ServicePage<ProductDto>>() {})
-            .block();
+        return productService.getProducts(request.getQueryString());
     }
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable long id) {
-        return config.appWebClient()
-            .get()
-            .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE, String.valueOf(id)).build())
-            .retrieve()
-            .bodyToMono(ProductDto.class)
-            .block();
+        return productService.getProductById(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ProductDto createProduct(@RequestBody CreateProductDto dto) {
-        return config.appWebClient()
-            .post()
-            .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE).build())
-            .body(BodyInserters.fromValue(dto))
-            .retrieve()
-            .bodyToMono(ProductDto.class)
-            .block();
+        return productService.createProduct(dto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}")
     public ProductDto updateProductById(@PathVariable long id, @RequestBody UpdateProductDto dto) {
-        return config.appWebClient()
-            .patch()
-            .uri(builder -> builder.pathSegment(PRODUCT_RESOURCE, String.valueOf(id)).build())
-            .body(BodyInserters.fromValue(dto))
-            .retrieve()
-            .bodyToMono(ProductDto.class)
-            .block();
+        return productService.updateProductById(id, dto);
     }
 }

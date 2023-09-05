@@ -1,6 +1,6 @@
 package com.github.alexeysol.app.controller;
 
-import com.github.alexeysol.app.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.PlaceMapper;
 import com.github.alexeysol.app.model.entity.Place;
 import com.github.alexeysol.app.service.CityService;

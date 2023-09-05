@@ -1,6 +1,6 @@
 package com.github.alexeysol.app.controller;
 
-import com.github.alexeysol.app.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.ProductMapper;
 import com.github.alexeysol.app.model.entity.Product;
 import com.github.alexeysol.app.service.ProductService;

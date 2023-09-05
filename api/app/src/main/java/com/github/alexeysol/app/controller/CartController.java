@@ -1,6 +1,6 @@
 package com.github.alexeysol.app.controller;
 
-import com.github.alexeysol.app.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
 import com.github.alexeysol.app.mapper.CartMapper;
 import com.github.alexeysol.app.model.entity.Cart;
 import com.github.alexeysol.app.model.entity.CartItem;
@@ -24,9 +24,8 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 public class CartController {
-    private final static String CART_RESOURCE = "Cart";
-    private final static String PRODUCT_RESOURCE = "Product";
-    private final static String USER_RESOURCE = "User";
+    private final static String PRODUCT = "Product";
+    private final static String USER = "User";
 
     private final CartService cartService;
     private final ProductService productService;
@@ -50,7 +49,7 @@ public class CartController {
 
 
         var product = productService.findProductById(dto.getProductId()).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT_RESOURCE, dto.getProductId());
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT, dto.getProductId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
@@ -67,7 +66,7 @@ public class CartController {
             cart = optionalCart.get();
         } else {
             var user = userService.findUserById(dto.getUserId()).orElseThrow(() -> {
-                var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER_RESOURCE, dto.getUserId());
+                var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, dto.getUserId());
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
             });
 

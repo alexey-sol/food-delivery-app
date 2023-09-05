@@ -1,20 +1,21 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.exception.ServiceResponseException;
-import com.github.alexeysol.common.model.dto.*;
-import com.github.alexeysol.gateway.config.GatewayConfig;
-import com.github.alexeysol.gateway.util.JwtUtil;
-import jakarta.servlet.http.Cookie;
+import com.github.alexeysol.common.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.model.dto.InitDto;
+import com.github.alexeysol.common.model.dto.SignInDto;
+import com.github.alexeysol.common.model.dto.SignUpDto;
+import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.gateway.constant.AuthConstant;
+import com.github.alexeysol.gateway.service.AuthService;
+import com.github.alexeysol.gateway.service.CityService;
+import com.github.alexeysol.gateway.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,163 +23,61 @@ import java.util.Optional;
 @RequestMapping(value = "/auth", produces = "application/json")
 @RequiredArgsConstructor
 public class AuthController {
-    private final static String CITY_RESOURCE = "city";
-    private final static String USER_RESOURCE = "user";
+    private final static String USER = "User";
 
-//    private final PasswordEncoder passwordEncoder;
-    private final GatewayConfig config;
-//    private final AuthenticationManager authManager;
-    private final JwtUtil jwtUtil;
+    private final AuthService authService;
+    private final CityService cityService;
+    private final UserService userService;
 
     @GetMapping("/profile") // TODO rename to init or smthng?
-    public InitDto getProfile(@CookieValue("auth_token") Optional<String> authToken) {
-        UserDto profile = null;
-
-        // TODO what if authToken is null?
-        if (authToken.isPresent() && jwtUtil.isValidAccessToken(authToken.get())) {
-            var claims = jwtUtil.getSubject(authToken.get());
-            var userIdAsString = claims.getSubject(); // get user id from jwt
-
-            try {
-                profile = config.appWebClient()
-                    .get()
-                    .uri(builder -> builder.pathSegment(USER_RESOURCE, userIdAsString).build())
-                    .retrieve()
-                    .bodyToMono(UserDto.class)
-                    .block();
-            } catch (ServiceResponseException ignored) {}
-        }
-
-        var cities = config.appWebClient()
-            .get()
-            .uri(builder -> builder.pathSegment(CITY_RESOURCE).build())
-            .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<List<CityDto>>() {})
-            .block();
-
+    public InitDto getProfile(@CookieValue(AuthConstant.AUTH_COOKIE_NAME) Optional<String> authToken) {
+        var profile = authToken.map(authService::getProfileIfAvailable).orElse(null);
+        var cities = cityService.getAllCities();
         return new InitDto(profile, cities);
-//        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "f off"); // TODO message
     }
 
     @PostMapping("/sign-up")
     public UserDto signUp(@RequestBody @Valid SignUpDto dto, HttpServletResponse response) {
-//        try {
-            // TODO check if pass and passConfirm match
+        var userDto = userService.getUser(dto.getPhone());
 
-//            Authentication authentication = authManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
-//            );
+        if (Objects.nonNull(userDto)) {
+            var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, USER);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, message);
+        }
 
-            // TODO to private method
-            var existingUserDto = config.appWebClient()
-                .get()
-                .uri(builder -> builder.pathSegment(USER_RESOURCE)
-                    .queryParam("phone", dto.getPhone())
-                    .build())
-                .retrieve()
-                .bodyToMono(UserDto.class)
-                .block();
+        var createdUserDto = userService.createUser(dto);
 
-            if (Objects.nonNull(existingUserDto)) {
-//                var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER_RESOURCE, id); // TODO
-                var message = "f off";
-                throw new ResponseStatusException(HttpStatus.CONFLICT, message);
-            }
+        if (Objects.nonNull(createdUserDto)) {
+            response.addCookie(authService.getAuthCookie(createdUserDto));
+            return createdUserDto;
+        }
 
-            // TODO may return res 404 if city doen't exist
-            var createdUserDto = config.appWebClient()
-                .post()
-                .uri(builder -> builder.pathSegment(USER_RESOURCE).build())
-                .body(BodyInserters.fromValue(dto))
-                .retrieve()
-                .bodyToMono(UserDto.class)
-                .block();
-
-            // TODO create user in App service
-
-//            var principal = authentication.getPrincipal();
-            if (Objects.nonNull(createdUserDto)) {
-                // ...
-                String accessToken = jwtUtil.generateAccessToken(createdUserDto);
-                var authCookie = new Cookie("auth_token", accessToken);
-                authCookie.setHttpOnly(true);
-                authCookie.setMaxAge(24 * 60 * 60 * 1000); // TODO dayMs 24 * 60 * 60 * 1000; - probably should match jwt life period
-                response.addCookie(authCookie);
-                // ...
-
-                return createdUserDto;
-            }
-
-            return null;
-
-
-//            return ResponseEntity.ok().body(response);
-
-//        } catch (BadCredentialsException ex) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
+        return null;
     }
-    // TODO
-    //     private getMaxAge() {
-    //        const dayInMs = 24 * 60 * 60 * 1000;
-    //        const jwtExpiresIn = this.configService.get("auth.jwtExpiresIn", { infer: true });
-    //        const isExpirationTimeInDays = jwtExpiresIn?.endsWith("d");
-    //
-    //        if (isExpirationTimeInDays) {
-    //            const days = parseInt(jwtExpiresIn, 10);
-    //            return days * dayInMs;
-    //        }
-    //
-    //        return dayInMs;
-    //    }
 
     @PostMapping("/sign-in")
     public UserDto signIn(@RequestBody @Valid SignInDto dto, HttpServletResponse response) {
-        // TODO to private method
-        var existingUserDto = config.appWebClient()
-            .get()
-            .uri(builder -> builder.pathSegment(USER_RESOURCE)
-                .queryParam("phone", dto.getPhone())
-                .queryParam("password", dto.getPassword())
-                .build())
-            .retrieve()
-            .bodyToMono(UserDto.class)
-            .block();
+        var userDto = userService.getUser(dto.getPhone(), dto.getPassword());
 
-        if (Objects.isNull(existingUserDto)) {
-            var message = "f off";
+        if (Objects.isNull(userDto)) {
+            var message = String.format(ErrorMessageConstant.INVALID_CREDENTIALS);
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, message);
         }
 
-        // TODO check if pass matches
-
-        // ...
-        String accessToken = jwtUtil.generateAccessToken(existingUserDto);
-        var authCookie = new Cookie("auth_token", accessToken);
-        authCookie.setHttpOnly(true);
-        authCookie.setMaxAge(24 * 60 * 60 * 1000); // TODO dayMs 24 * 60 * 60 * 1000; - probably should match jwt life period
-        response.addCookie(authCookie);
-        // ...
-
-        return existingUserDto;
+        response.addCookie(authService.getAuthCookie(userDto));
+        return userDto;
     }
 
     @PostMapping("/sign-out")
-    public boolean signOut(@CookieValue("auth_token") Optional<String> authToken, HttpServletResponse response) {
-        // TODO remove "auth_token" cookie
+    public boolean signOut(
+        @CookieValue(AuthConstant.AUTH_COOKIE_NAME) Optional<String> authToken,
+        HttpServletResponse response
+    ) {
         if (authToken.isEmpty()) {
             return false;
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "f off"); // TODO message
         }
 
-        // ...
-//        String accessToken = jwtUtil.generateAccessToken(existingUserDto);
-        var authCookie = new Cookie("auth_token", null);
-        authCookie.setHttpOnly(true);
-        authCookie.setMaxAge(0);
-        response.addCookie(authCookie);
-        // ...
-
+        response.addCookie(authService.getExpiredAuthCookie());
         return true;
     }
 }

@@ -18,7 +18,7 @@ public class JwtUtil {
     private String JWT_SECRET;
 
     @Value("${service.jwt.expire-duration}")
-    private long EXPIRE_DURATION = 1;
+    private long EXPIRE_DURATION;
 
     public String generateAccessToken(UserDto user) {
         return Jwts.builder()
