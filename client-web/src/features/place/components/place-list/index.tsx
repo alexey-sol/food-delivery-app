@@ -6,16 +6,14 @@ import { usePlacePageContext } from "features/place/contexts/place-page";
 import { AppLink } from "shared/components/app-link";
 import { url } from "shared/const";
 import { DEFAULT_ITEM_SX } from "shared/components/layout";
-import type { City } from "features/auth/models";
 
 const NO_DESCRIPTION_TEXT = "No description";
 
 export type PlaceListProps = {
-    city?: City;
     itemSx?: SxProps<Theme>;
 };
 
-export const PlaceList: FC<PlaceListProps> = ({ city, itemSx = DEFAULT_ITEM_SX }) => {
+export const PlaceList: FC<PlaceListProps> = ({ itemSx = DEFAULT_ITEM_SX }) => {
     const { places } = usePlacePageContext();
 
     const resultItemSx = useMemo(() => ({
@@ -45,13 +43,7 @@ export const PlaceList: FC<PlaceListProps> = ({ city, itemSx = DEFAULT_ITEM_SX }
 
     return (
         <Box>
-            {city && (
-                <Typography gutterBottom variant="h5">{city.name}</Typography>
-            )}
-
-            <Box>
-                {placeOverviews}
-            </Box>
+            {placeOverviews}
         </Box>
     );
 };

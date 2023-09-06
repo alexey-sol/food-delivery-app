@@ -23,6 +23,10 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private UserAddress address;
+
     @Column(nullable = false)
     private String phone;
 
@@ -32,22 +36,9 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    // TODO really need this?
-//    @Transient
-//    private String passwordConfirm;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-//    @Column(name = "full_name")
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private UserAddress address;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
-//    private Cart cart;
     @OneToMany(mappedBy = "user")
     private Set<Cart> carts = new HashSet<>();
 

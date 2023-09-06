@@ -99,7 +99,6 @@ create table product (
     name varchar(255) not null,
     description varchar(255),
     calories integer not null,
-    quantity integer not null,
     created_at timestamp(6),
     updated_at timestamp(6),
     primary key (id)

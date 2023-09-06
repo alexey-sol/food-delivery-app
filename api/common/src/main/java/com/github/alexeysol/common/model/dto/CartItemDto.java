@@ -8,9 +8,9 @@ import java.util.Date;
 public class CartItemDto {
     private long id;
 
-    private int quantity;
-
     private ProductDto product;
+
+    private int quantity;
 
     private Date createdAt;
 

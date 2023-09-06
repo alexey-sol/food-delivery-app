@@ -27,6 +27,13 @@ public class Product {
     @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 1)
     private long id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "place_id", nullable = false)
+    private Place place;
+
+    @Column(nullable = false)
+    private long price;
+
     @Column(nullable = false)
     private String name;
 
@@ -34,18 +41,6 @@ public class Product {
 
     private int calories;
 
-    // TODO check if quantity = 0 then need to cook it up?
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
-    private long price;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "place_id", nullable = false)
-    private Place place;
-
-    // TODO maybe it should be many-to-one
     @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(
         name = "product_category",
@@ -58,7 +53,6 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "product")
     @OneToMany(mappedBy = "product")
     private Set<CartItem> cartItems = new HashSet<>();
 

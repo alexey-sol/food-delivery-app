@@ -1,10 +1,11 @@
-import React, { useEffect, type FC, useMemo } from "react";
+import React, { useEffect, type FC } from "react";
 import { useAuthContext } from "features/auth/contexts/auth";
 import {
-    Accordion, AccordionDetails, AccordionSummary, Box, Chip, List, ListItem, Paper, Typography,
+    Box, Chip, List, ListItem, Paper, Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useUserContext } from "features/user/contexts/user";
+import { amountToRub } from "shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
 const DELIVERY_PRICE = 20000; // TODO hardcoded
@@ -64,7 +65,7 @@ export const Order: FC = () => {
 
                                 <Typography>
                                     {/* Always the 1st one TODO */}
-                                    {(item.product.price * item.quantity) / 100}
+                                    {amountToRub(item.product.price * item.quantity)}
                                     {" "}
                                     rub
                                 </Typography>
@@ -76,9 +77,7 @@ export const Order: FC = () => {
                         px: 2, pb: 2, display: "flex", flexDirection: "column", rowGap: 1,
                     }}
                     >
-                        {/* <Typography>{`Total price: ${(order.totalPrice + DELIVERY_PRICE) / 100} rub`}</Typography> */}
-
-                        <Chip sx={{ width: "fit-content", my: 2 }} label={`Total price: ${(order.totalPrice + DELIVERY_PRICE) / 100} rub`} />
+                        <Chip sx={{ width: "fit-content", my: 2 }} label={`Total price: ${amountToRub(order.totalPrice + DELIVERY_PRICE)} rub`} />
 
                         <Typography color="secondary">
                             Status:

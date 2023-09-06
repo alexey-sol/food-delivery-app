@@ -1,19 +1,16 @@
-import React, { useEffect, type FC, useCallback } from "react";
+import React, { useEffect, type FC } from "react";
 import {
     Box, Button, Chip, List, ListItem, Tab, Tabs, Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useAuthContext } from "features/auth/contexts/auth";
 import { useUserContext } from "features/user/contexts/user";
-import { useNavigate } from "react-router-dom";
-import { url } from "shared/const";
+import { amountToRub } from "shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
 const DELIVERY_PRICE = 20000; // TODO hardcoded
 
 export const Cart: FC = () => {
-    const navigate = useNavigate();
-
     const { profile } = useAuthContext();
     const { carts, orders } = useUserContext();
 
@@ -72,7 +69,7 @@ export const Cart: FC = () => {
                                             </Box>
 
                                             <Typography>
-                                                {(item.product.price * item.quantity) / 100}
+                                                {amountToRub(item.product.price * item.quantity)}
                                                 {" "}
                                                 rub
                                             </Typography>
@@ -81,8 +78,8 @@ export const Cart: FC = () => {
                                 </List>
 
                                 <Box sx={{ my: 2, display: "flex", justifyContent: "space-between" }}>
-                                    <Chip label={`Total price: ${(cart.totalPrice + DELIVERY_PRICE) / 100} rub`} variant="outlined" />
-                                    <Chip label={`Delivery price: ${DELIVERY_PRICE / 100} rub`} />
+                                    <Chip label={`Total price: ${amountToRub(cart.totalPrice + DELIVERY_PRICE)} rub`} variant="outlined" />
+                                    <Chip label={`Delivery price: ${amountToRub(DELIVERY_PRICE)} rub`} />
                                 </Box>
 
                                 <Typography color={grey[500]} sx={{ my: 2 }}>

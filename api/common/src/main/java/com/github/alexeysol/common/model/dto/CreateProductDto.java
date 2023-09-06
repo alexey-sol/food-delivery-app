@@ -13,9 +13,6 @@ public class CreateProductDto {
 
     private Integer calories;
 
-    @NotNull(message = "Quantity is required")
-    private Integer quantity;
-
     @NotNull(message = "Price is required")
     private Long price;
 

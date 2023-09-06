@@ -10,9 +10,9 @@ import java.util.List;
 public class OrderDto {
     private long id;
 
-    private long totalPrice;
-
     private PlaceDto place;
+
+    private long totalPrice;
 
     private OrderStatus status;
 

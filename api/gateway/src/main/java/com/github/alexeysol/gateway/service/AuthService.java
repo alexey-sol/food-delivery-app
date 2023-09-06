@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final static int COOKIE_EXPIRED_MAX_AGE = 0;
+    private final static int EXPIRED_COOKIE_MAX_AGE_SECONDS = 0;
 
-    @Value("${service.auth-cookie.expire-duration}")
-    private int AUTH_COOKIE_EXPIRE_DURATION_SECONDS;
+    @Value("${service.auth-cookie.max-age}")
+    private int AUTH_COOKIE_MAX_AGE_SECONDS;
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
@@ -37,14 +37,14 @@ public class AuthService {
             String accessToken = jwtUtil.generateAccessToken(dto);
             var authCookie = new Cookie(AuthConstant.AUTH_COOKIE_NAME, accessToken);
             authCookie.setHttpOnly(true);
-            authCookie.setMaxAge(AUTH_COOKIE_EXPIRE_DURATION_SECONDS);
+            authCookie.setMaxAge(AUTH_COOKIE_MAX_AGE_SECONDS);
             return authCookie;
     }
 
     public Cookie getExpiredAuthCookie() {
         var authCookie = new Cookie(AuthConstant.AUTH_COOKIE_NAME, null);
         authCookie.setHttpOnly(true);
-        authCookie.setMaxAge(COOKIE_EXPIRED_MAX_AGE);
+        authCookie.setMaxAge(EXPIRED_COOKIE_MAX_AGE_SECONDS);
         return authCookie;
     }
 }

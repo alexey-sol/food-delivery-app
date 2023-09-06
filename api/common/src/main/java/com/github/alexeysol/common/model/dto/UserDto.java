@@ -9,11 +9,11 @@ import java.util.List;
 public class UserDto {
     private long id;
 
+    private UserAddressDto address;
+
     private String phone;
 
     private String username;
-
-    private UserAddressDto address;
 
     private List<CartDto> carts;
 

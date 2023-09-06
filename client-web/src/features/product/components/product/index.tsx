@@ -3,6 +3,7 @@ import {
     Card, CardContent, Typography, Button, Box, CircularProgress,
 } from "@mui/material";
 import { useUserContext } from "features/user/contexts/user";
+import { amountToRub } from "shared/utils/formatters/number";
 import type { ProductPreview } from "features/product/models";
 
 const QUANTITY_UPDATE_STEP = 1;
@@ -21,6 +22,7 @@ export const Product: FC<ProductProps> = ({ product }) => {
         id,
         name,
         place,
+        price,
     } = product;
 
     const { carts: { getCartByPlaceId, isPendingFor, saveCartItem } } = useUserContext();
@@ -63,6 +65,10 @@ export const Product: FC<ProductProps> = ({ product }) => {
                         {`Calories: ${calories}`}
                     </Typography>
                 )}
+
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" component="section">
+                    {`Item price: ${amountToRub(price)} rub`}
+                </Typography>
 
                 <Box sx={{ display: "flex", alignItems: "center", height: "40px" }}>
                     <Button disabled={isPending} onClick={removeItemFromCart}>{REMOVE_ITEM_FROM_CART_TEXT}</Button>

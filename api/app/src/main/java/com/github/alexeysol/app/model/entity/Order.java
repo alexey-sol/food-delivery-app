@@ -30,21 +30,17 @@ public class Order {
     @SequenceGenerator(name = "order_seq", sequenceName = "order_seq", allocationSize = 1)
     private long id;
 
-    @Column(name = "total_price", nullable = false)
-    private long totalPrice;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
     // TODO added for convenience only, to make it easier to render orders page (with brief place info)
     @ManyToOne
     @JoinColumn(name = "place_id", referencedColumnName = "id")
     private Place place;
-//    @Column(name = "type", nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private OrderType type;
+
+    @Column(name = "total_price", nullable = false)
+    private long totalPrice;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -63,13 +59,4 @@ public class Order {
     @Column(name = "updated_at")
     @LastModifiedDate
     private Date updatedAt;
-
-    //     CANCELLED,
-    //    COMPLETED,
-    //    DELIVERING,
-    //    FAILED,
-    //    PROCESSING,
-    public boolean isActive() {
-        return ACTIVE_STATUSES.contains(status);
-    }
 }

@@ -23,14 +23,14 @@ public class Place {
     @SequenceGenerator(name = "place_seq", sequenceName = "place_seq", allocationSize = 1)
     private long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    private PlaceAddress address;
+
     @Column(nullable = false)
     private String name;
 
     private String description;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-    private PlaceAddress address;
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();

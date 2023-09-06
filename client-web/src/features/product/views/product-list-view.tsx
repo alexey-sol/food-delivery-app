@@ -6,7 +6,7 @@ import { ProductList } from "features/product/components/product-list";
 import { PageLayout, type PageLayoutProps } from "shared/components/layout";
 import { url } from "shared/const";
 import { useUserContext } from "features/user/contexts/user";
-import { PlacePageContext, PlacePageProvider, usePlacePageContext } from "features/place/contexts/place-page";
+import { PlacePageProvider, usePlacePageContext } from "features/place/contexts/place-page";
 import { ProductPageProvider, useProductPageContext } from "../contexts/product-page";
 
 type HandlePageChange = NonNullable<PageLayoutProps["handlePageChange"]>;
@@ -36,8 +36,9 @@ export const ProductListView: FC = () => {
             isPending={isPending}
             pagingOptions={pagingOptions}
             skeletonSx={{ minHeight: 122 }}
+            title={place?.name}
         >
-            <ProductList place={place} />
+            <ProductList />
         </PageLayout>
     );
 };

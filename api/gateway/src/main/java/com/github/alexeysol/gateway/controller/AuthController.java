@@ -31,7 +31,7 @@ public class AuthController {
 
     @GetMapping("/profile") // TODO rename to init or smthng?
     public InitDto getProfile(@CookieValue(AuthConstant.AUTH_COOKIE_NAME) Optional<String> authToken) {
-        var profile = authToken.map(authService::getProfileIfAvailable).orElse(null);
+        var profile = authToken.map(authService::getProfileIfAvailable).orElse(null); // TODO what if return optional?
         var cities = cityService.getAllCities();
         return new InitDto(profile, cities);
     }

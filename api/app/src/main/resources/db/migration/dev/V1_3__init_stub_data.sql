@@ -65,7 +65,6 @@ for i in 1..60 loop
                 name,
                 description,
                 calories,
-                quantity,
                 created_at,
                 updated_at
             ) values (
@@ -75,7 +74,6 @@ for i in 1..60 loop
                 'Product ' || currval('product_seq'),
                 'This is a brief description of the product ' || currval('product_seq'),
                 random_between(10000, 100000),
-                0,
                 current_timestamp,
                 current_timestamp
             );

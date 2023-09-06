@@ -21,8 +21,9 @@ export const PlaceListView: FC = () => {
             isPending={isPending}
             pagingOptions={pagingOptions}
             skeletonSx={{ minHeight: 122 }}
+            title={city?.name}
         >
-            <PlaceList city={city} />
+            <PlaceList />
         </PageLayout>
     );
 };

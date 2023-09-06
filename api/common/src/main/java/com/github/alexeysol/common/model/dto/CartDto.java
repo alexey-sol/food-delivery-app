@@ -9,9 +9,9 @@ import java.util.List;
 public class CartDto {
     private long id;
 
-    private long totalPrice;
-
     private PlaceDto place;
+
+    private long totalPrice;
 
     private List<CartItemDto> cartItems;
 

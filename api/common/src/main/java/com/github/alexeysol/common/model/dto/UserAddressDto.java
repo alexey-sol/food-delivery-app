@@ -6,7 +6,7 @@ import lombok.Data;
 public class UserAddressDto {
     private Long id;
 
-    private String addressLine;
-
     private CityDto city;
+
+    private String addressLine;
 }

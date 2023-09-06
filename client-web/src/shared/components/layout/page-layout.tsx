@@ -12,6 +12,7 @@ export type PageLayoutProps = PropsWithChildren<{
     isPending: boolean;
     pagingOptions: PagingOptions;
     skeletonSx?: SxProps<Theme>;
+    title?: string;
 }>;
 
 const NOTHING_FOUND_TEXT = "Nothing found";
@@ -30,6 +31,7 @@ export const PageLayout = memo(({
     handlePageChange,
     pagingOptions,
     skeletonSx = DEFAULT_SKELETON_SX,
+    title,
 }: PageLayoutProps) => {
     const { page, size, totalElements } = pagingOptions;
 
@@ -53,25 +55,33 @@ export const PageLayout = memo(({
             height: "100%",
         }}
         >
-            {totalElements === 0 && (
+            <Box>
+                {title && (
+                    <Typography variant="h5" gutterBottom>{title}</Typography>
+                )}
+
+                {totalElements === 0 && (
+                    <Box>
+                        <Typography>
+                            {NOTHING_FOUND_TEXT}
+                        </Typography>
+                    </Box>
+                )}
+
                 <Box>
-                    <Typography>
-                        {NOTHING_FOUND_TEXT}
-                    </Typography>
+                    {isPending ? skeletons : children}
+                </Box>
+            </Box>
+
+            {paginationCount > 0 && (
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Pagination
+                        count={paginationCount}
+                        page={page}
+                        onChange={handlePageChange}
+                    />
                 </Box>
             )}
-
-            <Box>
-                {isPending ? skeletons : children}
-            </Box>
-
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Pagination
-                    count={paginationCount}
-                    page={page}
-                    onChange={handlePageChange}
-                />
-            </Box>
         </Box>
     );
 });

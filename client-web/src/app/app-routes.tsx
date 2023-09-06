@@ -12,7 +12,9 @@ const ProductListView = lazy(() => import("features/product/views/product-list-v
 const SignInView = lazy(() => import("features/auth/views/sign-in-view"));
 const SignUpView = lazy(() => import("features/auth/views/sign-up-view"));
 
-const GuestRoute = ({ children }: { children: any }) => { // TODO
+const RootRoute = () => <Navigate to={url.PLACE} />;
+
+const GuestRoute = ({ children }: { children: any }) => { // TODO any: fix everywhere
     const auth = useAuthContext();
     const location = useLocation();
 
@@ -23,7 +25,7 @@ const GuestRoute = ({ children }: { children: any }) => { // TODO
     return children;
 };
 
-const AuthRoute = ({ children }: { children: any }) => { // TODO
+const AuthRoute = ({ children }: { children: any }) => {
     const auth = useAuthContext();
     const location = useLocation();
 
@@ -36,7 +38,7 @@ const AuthRoute = ({ children }: { children: any }) => { // TODO
 
 export const AppRoutes: FC = () => (
     <Routes>
-        <Route index element={<div>Home</div>} />
+        <Route index element={<RootRoute />} />
 
         <Route path={url.PLACE}>
             <Route index element={<AuthRoute><PlaceListView /></AuthRoute>} />

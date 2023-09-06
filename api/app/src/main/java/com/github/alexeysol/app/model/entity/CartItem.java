@@ -27,32 +27,16 @@ public class CartItem {
     @SequenceGenerator(name = "cart_item_seq", sequenceName = "cart_item_seq", allocationSize = 1)
     private long id;
 
-    @Column(nullable = false)
-    private int quantity = INITIAL_QUANTITY;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
+    private Cart cart;
 
-
-//    @ManyToMany(cascade = { CascadeType.MERGE })
-//    @JoinTable(
-//        name = "cart_item_product",
-//        joinColumns = {
-//            @JoinColumn(name = "product_id", referencedColumnName = "id")
-//        },
-//        inverseJoinColumns = {
-//            @JoinColumn(name = "cart_item_id", referencedColumnName = "id")
-//        }
-//    )
-    // private Set<Product> products
-
-    // TODO ideally make it many-to-many
-//    @OneToOne(cascade = CascadeType.ALL)
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    // https://stackoverflow.com/questions/66853058/hibernate-in-a-one-to-many-relationship-a-child-loses-references-to-the-paren
-    @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
-    private Cart cart;
+    @Column(nullable = false)
+    private int quantity = INITIAL_QUANTITY;
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate

@@ -8,17 +8,15 @@ import java.util.Date;
 public class ProductDto {
     private long id;
 
+    private PlaceDto place;
+
+    private Long price;
+
     private String name;
 
     private String description;
 
     private Integer calories;
-
-    private Integer quantity;
-
-    private Long price;
-
-    private PlaceDto place;
 
     private Date createdAt;
 

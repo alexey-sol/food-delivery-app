@@ -10,7 +10,5 @@ public class UpdateProductDto {
 
     private Integer calories;
 
-    private Integer quantity;
-
     private Long price;
 }

@@ -13,7 +13,7 @@ service:
     app:
         base-url: "http://${APP_HOST}:${APP_PORT}"
     auth-cookie:
-        expire-duration: 86400
+        max-age: 86400
     jwt:
         expire-duration: 86400000
         secret: ${JWT_SECRET}

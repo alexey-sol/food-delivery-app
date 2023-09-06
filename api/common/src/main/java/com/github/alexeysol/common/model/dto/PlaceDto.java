@@ -8,11 +8,11 @@ import java.util.Date;
 public class PlaceDto {
     private Long id;
 
+    private PlaceAddressDto address;
+
     private String name;
 
     private String description;
-
-    private PlaceAddressDto address;
 
     private Date createdAt;
 
