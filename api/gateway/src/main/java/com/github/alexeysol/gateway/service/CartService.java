@@ -1,8 +1,8 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.constant.ResourceConstant;
-import com.github.alexeysol.common.model.dto.CartDto;
-import com.github.alexeysol.common.model.dto.SaveCartItemDto;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
+import com.github.alexeysol.common.feature.cart.model.dto.CartDto;
+import com.github.alexeysol.common.feature.cart.model.dto.SaveCartItemDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

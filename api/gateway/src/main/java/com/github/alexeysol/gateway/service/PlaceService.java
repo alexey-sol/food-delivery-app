@@ -1,10 +1,10 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.constant.ResourceConstant;
-import com.github.alexeysol.common.model.ServicePage;
-import com.github.alexeysol.common.model.dto.CreatePlaceDto;
-import com.github.alexeysol.common.model.dto.PlaceDto;
-import com.github.alexeysol.common.model.dto.UpdatePlaceDto;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
+import com.github.alexeysol.common.shared.model.ServicePage;
+import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.UpdatePlaceDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

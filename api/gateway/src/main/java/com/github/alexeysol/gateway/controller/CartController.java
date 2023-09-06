@@ -1,7 +1,7 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.model.dto.CartDto;
-import com.github.alexeysol.common.model.dto.SaveCartItemDto;
+import com.github.alexeysol.common.feature.cart.model.dto.CartDto;
+import com.github.alexeysol.common.feature.cart.model.dto.SaveCartItemDto;
 import com.github.alexeysol.gateway.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

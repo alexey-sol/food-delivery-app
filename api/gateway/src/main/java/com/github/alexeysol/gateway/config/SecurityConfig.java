@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.config;
 
-import com.github.alexeysol.common.model.UserRole;
+import com.github.alexeysol.common.shared.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

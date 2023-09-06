@@ -1,10 +1,10 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.constant.ErrorMessageConstant;
-import com.github.alexeysol.common.model.dto.InitDto;
-import com.github.alexeysol.common.model.dto.SignInDto;
-import com.github.alexeysol.common.model.dto.SignUpDto;
-import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
+import com.github.alexeysol.common.shared.model.dto.InitDto;
+import com.github.alexeysol.common.feature.user.model.dto.SignInDto;
+import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
+import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.gateway.constant.AuthConstant;
 import com.github.alexeysol.gateway.service.AuthService;
 import com.github.alexeysol.gateway.service.CityService;

@@ -1,10 +1,10 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.constant.ResourceConstant;
-import com.github.alexeysol.common.model.ServicePage;
-import com.github.alexeysol.common.model.dto.CreateProductDto;
-import com.github.alexeysol.common.model.dto.ProductDto;
-import com.github.alexeysol.common.model.dto.UpdateProductDto;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
+import com.github.alexeysol.common.shared.model.ServicePage;
+import com.github.alexeysol.common.feature.product.model.dto.CreateProductDto;
+import com.github.alexeysol.common.feature.product.model.dto.ProductDto;
+import com.github.alexeysol.common.feature.product.model.dto.UpdateProductDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

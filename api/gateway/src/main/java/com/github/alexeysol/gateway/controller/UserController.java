@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.gateway.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

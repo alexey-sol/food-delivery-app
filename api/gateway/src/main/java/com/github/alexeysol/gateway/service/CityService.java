@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.model.dto.CityDto;
+import com.github.alexeysol.common.feature.city.model.dto.CityDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

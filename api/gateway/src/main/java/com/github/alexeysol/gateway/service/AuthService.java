@@ -1,7 +1,7 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.exception.ServiceResponseException;
-import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.common.shared.exception.ServiceResponseException;
+import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.gateway.constant.AuthConstant;
 import com.github.alexeysol.gateway.util.JwtUtil;
 import jakarta.servlet.http.Cookie;

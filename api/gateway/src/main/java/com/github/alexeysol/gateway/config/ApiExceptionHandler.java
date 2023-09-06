@@ -1,9 +1,9 @@
 package com.github.alexeysol.gateway.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.alexeysol.common.exception.ServiceResponseException;
-import com.github.alexeysol.common.model.dto.ServiceResponseExceptionDto;
-import com.github.alexeysol.common.util.JsonUtil;
+import com.github.alexeysol.common.shared.exception.ServiceResponseException;
+import com.github.alexeysol.common.shared.model.dto.ServiceResponseExceptionDto;
+import com.github.alexeysol.common.shared.util.JsonUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

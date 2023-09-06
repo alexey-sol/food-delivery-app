@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.util;
 
-import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

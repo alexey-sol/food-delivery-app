@@ -1,8 +1,8 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.model.dto.CreateOrderDto;
-import com.github.alexeysol.common.model.dto.OrderDto;
-import com.github.alexeysol.common.model.dto.UpdateOrderDto;
+import com.github.alexeysol.common.feature.order.model.dto.CreateOrderDto;
+import com.github.alexeysol.common.feature.order.model.dto.OrderDto;
+import com.github.alexeysol.common.feature.order.model.dto.UpdateOrderDto;
 import com.github.alexeysol.gateway.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

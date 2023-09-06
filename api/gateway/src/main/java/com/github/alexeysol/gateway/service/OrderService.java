@@ -1,9 +1,9 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.constant.ResourceConstant;
-import com.github.alexeysol.common.model.dto.CreateOrderDto;
-import com.github.alexeysol.common.model.dto.OrderDto;
-import com.github.alexeysol.common.model.dto.UpdateOrderDto;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
+import com.github.alexeysol.common.feature.order.model.dto.CreateOrderDto;
+import com.github.alexeysol.common.feature.order.model.dto.OrderDto;
+import com.github.alexeysol.common.feature.order.model.dto.UpdateOrderDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

@@ -1,9 +1,9 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.model.ServicePage;
-import com.github.alexeysol.common.model.dto.CreatePlaceDto;
-import com.github.alexeysol.common.model.dto.PlaceDto;
-import com.github.alexeysol.common.model.dto.UpdatePlaceDto;
+import com.github.alexeysol.common.shared.model.ServicePage;
+import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.UpdatePlaceDto;
 import com.github.alexeysol.gateway.service.PlaceService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

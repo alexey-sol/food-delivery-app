@@ -1,8 +1,8 @@
 package com.github.alexeysol.gateway.service;
 
-import com.github.alexeysol.common.constant.ResourceConstant;
-import com.github.alexeysol.common.model.dto.SignUpDto;
-import com.github.alexeysol.common.model.dto.UserDto;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
+import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
+import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.gateway.config.GatewayConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
