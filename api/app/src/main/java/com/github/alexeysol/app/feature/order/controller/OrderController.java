@@ -28,12 +28,8 @@ public class OrderController {
 
     private final CartService cartService;
     private final OrderService orderService;
-//    private final ProductService productService;
     private final UserService userService;
 
-//    private final Order
-
-//    private final OrderMapper orderMapper = OrderMapper.INSTANCE;
     private final OrderMapper orderMapper;
 
     @GetMapping  // TODO query better: it's explicit
@@ -44,7 +40,6 @@ public class OrderController {
 
     @PostMapping
     public OrderDto createOrder(@RequestBody @Valid CreateOrderDto dto) {
-        // TODO throw 409 if there's active order
         if (orderService.hasActiveOrderByUserIdAndPlaceId(dto.getUserId(), dto.getPlaceId())) {
             var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER);
             throw new ResponseStatusException(HttpStatus.CONFLICT, message);

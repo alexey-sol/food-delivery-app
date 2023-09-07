@@ -14,4 +14,11 @@
         <artifactId>java-graduate-food-delivery</artifactId>
         <version>0.1.0</version>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
 </project>

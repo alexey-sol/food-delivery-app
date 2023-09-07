@@ -30,8 +30,6 @@ public class PlaceController {
 
     private final CityService cityService;
     private final PlaceService placeService;
-
-//    private final PlaceMapper placeMapper = PlaceMapper.INSTANCE;
     private final PlaceMapper placeMapper;
 
     @GetMapping
@@ -79,10 +77,7 @@ public class PlaceController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-//        Place place = placeMapper.map(dto, city);
         Place place = placeMapper.map(dto, city);
-//        place.getAddress().setCity(city); // TODO set city via mapper
-
         placeService.savePlace(place);
         return placeMapper.map(place);
     }

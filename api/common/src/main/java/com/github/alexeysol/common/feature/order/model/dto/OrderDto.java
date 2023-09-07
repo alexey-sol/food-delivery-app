@@ -2,12 +2,14 @@ package com.github.alexeysol.common.feature.order.model.dto;
 
 import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
 import com.github.alexeysol.common.shared.model.OrderStatus;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 public class OrderDto {
     private long id;
 
