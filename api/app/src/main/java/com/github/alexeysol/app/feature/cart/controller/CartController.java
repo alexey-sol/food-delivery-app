@@ -30,11 +30,9 @@ public class CartController {
     private final CartService cartService;
     private final ProductService productService;
     private final UserService userService;
-
-//    private final CartMapper cartMapper = CartMapper.INSTANCE;
     private final CartMapper cartMapper;
 
-    @GetMapping  // TODO query better: it's explicit
+    @GetMapping
     public List<CartDto> getAllCartsByUserId(@RequestParam long userId) {
         var carts = cartService.findAllCartsByUserId(userId);
         return cartMapper.map(carts);
@@ -43,11 +41,6 @@ public class CartController {
     // TODO probably should be PUT since we adding/updating/deleting cart item entity
     @PatchMapping
     public CartDto saveCartItem(@RequestBody @Valid SaveCartItemDto dto) {
-        // dto.productId
-        // dto.quantity
-        // dto.userId
-
-
         var product = productService.findProductById(dto.getProductId()).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT, dto.getProductId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
@@ -55,10 +48,7 @@ public class CartController {
 
         var place = product.getPlace();
 
-        // TODO if no cart then create cart
         var optionalCart = cartService.findCartByUserIdAndPlaceId(dto.getUserId(), place.getId());
-
-//        var carts = cartService.findAllCartsByPlaceIdAndUserId(place.getId(), dto.getUserId()); // there may be only 1 user's cart related to the place
 
         Cart cart;
 
@@ -70,11 +60,8 @@ public class CartController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
             });
 
-            var ccc = new HashSet<CartItem>();
-
             cart = Cart.builder()
-//                .cartItems(new ArrayList<>())
-                .cartItems(ccc)
+                .cartItems(new HashSet<>())
                 .place(place)
                 .user(user)
                 .build();
@@ -99,8 +86,6 @@ public class CartController {
             .build());
 
 
-
-
 //        var quantity = cartItem.getQuantity();
         var newPriceModulus = Math.abs(product.getPrice() * dto.getQuantity());
 
@@ -121,12 +106,6 @@ public class CartController {
             cartItem.decrementQuantity(quantityModulus);
         }
 
-
-
-
-
-//        cartService.saveCart(cart);
-
         // TODO update cart.totalPrice as well
 
         // TODO cartItem.quantity == 0 ? delete
@@ -139,17 +118,13 @@ public class CartController {
 
             var updatedCartItems = cart.getCartItems();
             updatedCartItems.add(cartItem);
-
-
         }
-
 
         if (cart.getCartItems().isEmpty()) { // TODO add isIdle method
             // TODO do i need delete cart if there's nothing left?
             cartService.deleteCartById(cart.getId());
             // TODO return null in this case? bit it will be inconvinietn in front
         }
-
 
         return cartMapper.map(cart);
     }

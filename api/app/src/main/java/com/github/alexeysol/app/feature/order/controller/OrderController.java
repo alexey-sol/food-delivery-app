@@ -29,10 +29,9 @@ public class OrderController {
     private final CartService cartService;
     private final OrderService orderService;
     private final UserService userService;
-
     private final OrderMapper orderMapper;
 
-    @GetMapping  // TODO query better: it's explicit
+    @GetMapping
     public List<OrderDto> getAllOrdersByUserId(@RequestParam long userId) {
         var orders = orderService.findAllOrdersByUserId(userId);
         return orderMapper.map(orders);
@@ -51,9 +50,6 @@ public class OrderController {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, userId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
-
-        // TODO place exists? or else 404
-
 
 //        var order = orderMapper.map(dto, user);
 //        var order = new Order();
@@ -93,7 +89,7 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}")
-    public OrderDto updateOrder(@PathVariable long id, @RequestBody @Valid UpdateOrderDto dto) {
+    public OrderDto updateOrderById(@PathVariable long id, @RequestBody @Valid UpdateOrderDto dto) {
         var order = orderService.findOrderById(id).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, ORDER, id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);

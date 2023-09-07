@@ -25,18 +25,14 @@ public class UpdatePlaceByIdTest extends BasePlaceControllerTest {
 
     @Test
     @SneakyThrows
-    public void providedValidDto_whenUpdateByIdPlace_thenReturnsPlaceDto() {
-        var updatePlaceDto = UpdatePlaceDto.builder()
-            .name("Updated place")
-            .description("Updated description")
-            .build();
+    public void givenValidDto_whenUpdatePlaceById_thenReturnsPlaceDto() {
+        var updatePlaceDto = UpdatePlaceDto.builder().build();
 
         var place = new Place();
         var placeDto = PlaceDto.builder().build();
 
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.of(place));
         when(placeMapper.map(Mockito.any(UpdatePlaceDto.class), Mockito.any(Place.class))).thenReturn(place);
-        when(placeService.savePlace(Mockito.any(Place.class))).thenReturn(place);
         when(placeMapper.map(Mockito.any(Place.class))).thenReturn(placeDto);
 
         mockMvc.perform(TestUtil.mockPatchRequest(getUrl(1), updatePlaceDto))
@@ -50,15 +46,13 @@ public class UpdatePlaceByIdTest extends BasePlaceControllerTest {
 
     @Test
     @SneakyThrows
-    public void providedAbsentPlace_whenUpdateByIdPlace_thenThrowsNotFoundResponseStatusException() {
+    public void givenAbsentPlace_whenUpdatePlaceById_thenThrowsResponseStatusException() {
         var updatePlaceDto = UpdatePlaceDto.builder().build();
 
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         mockMvc.perform(TestUtil.mockPatchRequest(getUrl(0), updatePlaceDto))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
-            .andExpect(result -> {
-                Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException);
-            });
+            .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
 }

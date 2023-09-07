@@ -44,13 +44,11 @@ public class GetPlaceByIdTest extends BasePlaceControllerTest {
 
     @Test
     @SneakyThrows
-    public void givenPlaceDoesntExist_whenGetPlaceById_thenThrowsNotFoundResponseStatusException() {
+    public void givenPlaceDoesntExist_whenGetPlaceById_thenThrowsResponseStatusException() {
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get(getUrl(0)))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
-            .andExpect(result -> {
-                Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException);
-            });
+            .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
 }

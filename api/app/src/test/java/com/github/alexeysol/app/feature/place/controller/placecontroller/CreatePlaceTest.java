@@ -27,7 +27,7 @@ public class CreatePlaceTest extends BasePlaceControllerTest {
 
     @Test
     @SneakyThrows
-    public void providedValidDto_whenCreatePlace_thenReturnsPlaceDto() {
+    public void givenValidDto_whenCreatePlace_thenReturnsPlaceDto() {
         var createPlaceAddressDto = CreateAddressDto.builder()
             .cityId(1L)
             .addressLine("Address line")
@@ -43,7 +43,6 @@ public class CreatePlaceTest extends BasePlaceControllerTest {
 
         when(cityService.findCityById(Mockito.anyLong())).thenReturn(Optional.of(city));
         when(placeMapper.map(Mockito.any(CreatePlaceDto.class), Mockito.any(City.class))).thenReturn(place);
-        when(placeService.savePlace(Mockito.any(Place.class))).thenReturn(place);
         when(placeMapper.map(Mockito.any(Place.class))).thenReturn(placeDto);
 
         mockMvc.perform(TestUtil.mockPostRequest(getUrl(), createPlaceDto))
@@ -57,13 +56,11 @@ public class CreatePlaceTest extends BasePlaceControllerTest {
 
     @Test
     @SneakyThrows
-    public void providedInvalidDto_whenCreatePlace_thenThrowsMethodArgumentNotValidException() {
+    public void givenInvalidDto_whenCreatePlace_thenThrowsMethodArgumentNotValidException() {
         var createPlaceDto = CreatePlaceDto.builder().build();
 
         mockMvc.perform(TestUtil.mockPostRequest(getUrl(), createPlaceDto))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
-            .andExpect(result -> {
-                Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException);
-            });
+            .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
     }
 }

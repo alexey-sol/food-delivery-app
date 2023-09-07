@@ -30,8 +30,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final PlaceService placeService;
-
-//    private final ProductMapper productMapper = ProductMapper.INSTANCE;
     private final ProductMapper productMapper;
 
     @GetMapping

@@ -12,6 +12,11 @@ public class TestUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @SneakyThrows
+    public MockHttpServletRequestBuilder mockPostRequest(String url) {
+        return mockPostRequest(url, null);
+    }
+
+    @SneakyThrows
     public <T> MockHttpServletRequestBuilder mockPostRequest(String url, T value) {
         return MockMvcRequestBuilders.post(url)
             .contentType(MediaType.APPLICATION_JSON)

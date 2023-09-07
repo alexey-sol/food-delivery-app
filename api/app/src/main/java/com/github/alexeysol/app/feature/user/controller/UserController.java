@@ -37,6 +37,7 @@ public class UserController {
         return userMapper.map(user);
     }
 
+    // TODO probably it's better to throw 404 | 401 instead of returning null
     @GetMapping
     public UserDto getUser(@RequestParam String phone, @RequestParam Optional<String> password) {
         var user = userService.findUserByPhone(phone).orElse(null);
@@ -50,9 +51,8 @@ public class UserController {
             .orElse(null);
     }
 
-    // TODO move to auth controller? sign up and sign in
     @PostMapping
-    public UserDto createUser(@RequestBody @Valid SignUpDto dto) { // TODO create CreateUserDto? like SignUpDto but without passwordConfirm
+    public UserDto createUser(@RequestBody @Valid SignUpDto dto) {
         var cityId = dto.getAddress().getCityId();
 
         var city = cityService.findCityById(cityId).orElseThrow(() -> {
@@ -62,7 +62,6 @@ public class UserController {
 
         var userToCreate = userMapper.map(dto, city);
         userService.saveUser(userToCreate);
-
         return userMapper.map(userToCreate);
     }
 }
