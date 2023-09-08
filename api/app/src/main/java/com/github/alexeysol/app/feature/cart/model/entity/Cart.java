@@ -21,6 +21,8 @@ import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
+    private static final long INITIAL_TOTAL_PRICE = 0L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq")
     @SequenceGenerator(name = "cart_seq", sequenceName = "cart_seq", allocationSize = 1)
@@ -35,10 +37,10 @@ public class Cart {
     private Place place;
 
     @Column(name = "total_price", nullable = false)
-    private long totalPrice;
+    private long totalPrice = INITIAL_TOTAL_PRICE;
 
     @Cascade({ DELETE_ORPHAN })
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)
@@ -49,22 +51,23 @@ public class Cart {
     @LastModifiedDate
     private Date updatedAt;
 
-    // TODO price pos or neg
-    public long addPrice(long price) {
-        totalPrice += price;
+    public void incrementTotalPrice(long amount) {
+        totalPrice += amount;
         normalizeTotalPriceIfNeeded();
-        return totalPrice;
     }
 
-    public long subtractPrice(long price) {
-        totalPrice -= price;
+    public void decrementTotalPrice(long amount) {
+        totalPrice -= amount;
         normalizeTotalPriceIfNeeded();
-        return totalPrice;
     }
 
     private void normalizeTotalPriceIfNeeded() {
-        if (totalPrice < 0) { // TODO const INITIAL_PRICE
-            totalPrice = 0;
+        if (totalPrice < INITIAL_TOTAL_PRICE) {
+            totalPrice = INITIAL_TOTAL_PRICE;
         }
+    }
+
+    public boolean isIdle() {
+        return cartItems.isEmpty();
     }
 }

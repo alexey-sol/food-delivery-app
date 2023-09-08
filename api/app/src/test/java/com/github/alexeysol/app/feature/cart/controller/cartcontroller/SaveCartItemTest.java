@@ -5,6 +5,7 @@ import com.github.alexeysol.app.feature.cart.model.entity.CartItem;
 import com.github.alexeysol.app.feature.place.model.entity.Place;
 import com.github.alexeysol.app.feature.product.model.entity.Product;
 import com.github.alexeysol.app.feature.user.model.entity.User;
+import com.github.alexeysol.common.feature.cart.model.SaveCartItemOperation;
 import com.github.alexeysol.common.feature.cart.model.dto.CartDto;
 import com.github.alexeysol.common.feature.cart.model.dto.SaveCartItemDto;
 import com.github.alexeysol.common.shared.util.TestUtil;
@@ -24,9 +25,11 @@ import static org.mockito.Mockito.when;
 
 public class SaveCartItemTest extends BaseCartControllerTest {
     private static final SaveCartItemDto SAVE_CART_ITEM_DTO = SaveCartItemDto.builder()
+        .placeId(1L)
         .productId(1L)
         .userId(1L)
-        .quantity(10)
+        .count(1)
+        .operation(SaveCartItemOperation.ADD)
         .build();
 
     public SaveCartItemTest(@Autowired MockMvc mockMvc) {
@@ -36,21 +39,20 @@ public class SaveCartItemTest extends BaseCartControllerTest {
     @Test
     @SneakyThrows
     public void givenValidDto_whenSaveCartItem_thenReturnsCartDto() {
-        var place = Place.builder()
-            .id(1L)
-            .build();
-        var product = Product.builder()
-            .place(place)
-            .build();
         var user = new User();
-        var cart = new Cart();
+        var place = new Place();
+        var product = new Product();
         var cartItem = new CartItem();
+        var cart = new Cart();
         var cartDto = CartDto.builder().build();
 
-        when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.of(product));
-        when(cartService.findCartByUserIdAndPlaceId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.of(cart));
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.of(user));
-        when(cartService.findCartItemByCartIdAndProductId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.of(cartItem));
+        when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.of(place));
+        when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.of(product));
+        when(cartService.getOrCreateCartItem(Mockito.any(User.class), Mockito.any(Place.class),
+            Mockito.any(Product.class))).thenReturn(cartItem);
+        when(cartService.saveCartItemInCart(Mockito.any(CartItem.class), Mockito.any(),
+            Mockito.anyInt())).thenReturn(cart);
         when(cartMapper.map(Mockito.any(Cart.class))).thenReturn(cartDto);
 
         mockMvc.perform(TestUtil.mockPatchRequest(getUrl(), SAVE_CART_ITEM_DTO))
@@ -66,15 +68,6 @@ public class SaveCartItemTest extends BaseCartControllerTest {
     @Test
     @SneakyThrows
     public void givenUserDoesntExist_whenSaveCartItem_thenThrowsResponseStatusException() {
-        var place = Place.builder()
-            .id(1L)
-            .build();
-        var product = Product.builder()
-            .place(place)
-            .build();
-
-        when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.of(product));
-        when(cartService.findCartByUserIdAndPlaceId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.empty());
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         mockMvc.perform(TestUtil.mockPatchRequest(getUrl(), SAVE_CART_ITEM_DTO))

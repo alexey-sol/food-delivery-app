@@ -3,6 +3,7 @@ package com.github.alexeysol.app.feature.cart.controller.cartcontroller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.alexeysol.app.feature.cart.mapper.CartMapper;
 import com.github.alexeysol.app.feature.cart.service.CartService;
+import com.github.alexeysol.app.feature.place.service.PlaceService;
 import com.github.alexeysol.app.feature.product.service.ProductService;
 import com.github.alexeysol.app.feature.user.service.UserService;
 import com.github.alexeysol.common.shared.constant.ResourceConstant;
@@ -25,6 +26,9 @@ public abstract class BaseCartControllerTest {
 
     @MockBean
     protected UserService userService;
+
+    @MockBean
+    protected PlaceService placeService;
 
     @MockBean
     protected CartMapper cartMapper;

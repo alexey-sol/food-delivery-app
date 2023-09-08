@@ -45,24 +45,14 @@ public class CartItem {
     @LastModifiedDate
     private Date updatedAt;
 
-    public int incrementQuantity() {
-        return incrementQuantity(QUANTITY_UPDATE_STEP);
-    }
-
-    public int incrementQuantity(int count) {
-        this.quantity += count;
+    public void incrementQuantity(int amount) {
+        this.quantity += amount;
         normalizeQuantityIfNeeded();
-        return this.quantity;
     }
 
-    public int decrementQuantity() {
-        return decrementQuantity(QUANTITY_UPDATE_STEP);
-    }
-
-    public int decrementQuantity(int count) {
-        this.quantity -= count;
+    public void decrementQuantity(int amount) {
+        this.quantity -= amount;
         normalizeQuantityIfNeeded();
-        return this.quantity;
     }
 
     private void normalizeQuantityIfNeeded() {

@@ -6,7 +6,7 @@ import { useUserContext } from "features/user/contexts/user";
 import { amountToRub } from "shared/utils/formatters/number";
 import type { ProductPreview } from "features/product/models";
 
-const QUANTITY_UPDATE_STEP = 1;
+const COUNT_UPDATE_STEP = 1;
 const ADD_ITEM_TO_CART_TEXT = "+";
 const REMOVE_ITEM_FROM_CART_TEXT = "-";
 const NO_DESCRIPTION_TEXT = "No description";
@@ -32,16 +32,18 @@ export const Product: FC<ProductProps> = ({ product }) => {
 
     const addItemToCart = useCallback(() => {
         saveCartItem({
+            count: COUNT_UPDATE_STEP,
+            operation: "ADD",
             productId: id,
-            quantity: QUANTITY_UPDATE_STEP,
             placeId: place.id,
         });
     }, [id, saveCartItem, place.id]);
 
     const removeItemFromCart = useCallback(() => {
         saveCartItem({
+            count: COUNT_UPDATE_STEP,
+            operation: "REMOVE",
             productId: id,
-            quantity: -QUANTITY_UPDATE_STEP,
             placeId: place.id,
             // TODO + cartId
         });

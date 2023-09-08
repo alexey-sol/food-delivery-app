@@ -1,7 +1,7 @@
 export type SaveCartItemArg = {
-    quantity: number; // TODO positive | neg
+    count: number;
+    operation: "ADD" | "REMOVE";
+    placeId: number;
     productId: number;
     userId: number;
-
-    placeId: number; // TODO for now, it's getting past only for updating frontend cache in api
 };

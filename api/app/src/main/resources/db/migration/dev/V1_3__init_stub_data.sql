@@ -73,7 +73,7 @@ for i in 1..60 loop
                 random_between(10000, 100000),
                 'Product ' || currval('product_seq'),
                 'This is a brief description of the product ' || currval('product_seq'),
-                random_between(10000, 100000),
+                random_between(100, 2000),
                 current_timestamp,
                 current_timestamp
             );

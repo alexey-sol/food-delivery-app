@@ -32,6 +32,6 @@ public class PlaceService {
 
     // TODO test for mapping:
     public Place findById(Long id) {
-        return placeRepository.findById(id).get();
+        return placeRepository.findById(id).orElse(null);
     }
 }

@@ -1,14 +1,19 @@
 package com.github.alexeysol.app.feature.cart.mapper;
 
+import com.github.alexeysol.app.feature.cart.model.entity.Cart;
 import com.github.alexeysol.app.feature.cart.model.entity.CartItem;
 import com.github.alexeysol.app.feature.product.mapper.ProductMapper;
+import com.github.alexeysol.app.feature.product.model.entity.Product;
 import com.github.alexeysol.common.feature.cart.model.dto.CartItemDto;
+import com.github.alexeysol.common.feature.cart.model.dto.SaveCartItemDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(uses = ProductMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CartItemMapper {
     // TODO ignore cartItem.product.place
 
@@ -31,4 +36,11 @@ public interface CartItemMapper {
     CartItemDto map(CartItem cartItem);
 
     CartItem map(CartItemDto dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "product", source = "product")
+    @Mapping(target = "cart", source = "cart")
+    CartItem map(Cart cart, Product product, @MappingTarget CartItem cartItem);
 }

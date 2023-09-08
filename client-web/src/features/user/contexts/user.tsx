@@ -70,7 +70,7 @@ const useCarts = ({ profile }: { profile?: User }) => {
     //     }
     // }, [carts, resultOfSave.data]);
 
-    const saveCartItem = useCallback((arg: Pick<SaveCartItemArg, "quantity" | "productId" | "placeId">) => {
+    const saveCartItem = useCallback((arg: Omit<SaveCartItemArg, "userId">) => {
         if (userId) {
             saveCartItemMutation({ userId, ...arg });
         }
