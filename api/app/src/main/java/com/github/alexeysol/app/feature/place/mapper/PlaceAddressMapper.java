@@ -16,7 +16,6 @@ public interface PlaceAddressMapper {
 
     PlaceAddress map(PlaceAddressDto dto);
 
-    // TODO there's a cleaner way to get an entity (city in this case) from the mapper itself: https://stackoverflow.com/a/48973435
     @Mapping(target = "id", ignore = true)
     PlaceAddress map(CreateAddressDto dto);
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InitDto { // TODO rename
+public class InitDto {
     private UserDto profile;
 
     private List<CityDto> cities;

@@ -45,7 +45,6 @@ export const Product: FC<ProductProps> = ({ product }) => {
             operation: "REMOVE",
             productId: id,
             placeId: place.id,
-            // TODO + cartId
         });
     }, [id, saveCartItem, place.id]);
 

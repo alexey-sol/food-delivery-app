@@ -20,15 +20,14 @@ public class Role implements GrantedAuthority {
     private int id;
 
     @Enumerated(EnumType.STRING)
-    private UserRole name; // TODO enum?
+    private UserRole name;
 
     @Transient
-//    @ManyToMany(mappedBy = "roles")
     @ManyToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();
 
     @Override
     public String getAuthority() {
-        return String.valueOf(name); // TODO ok?
+        return String.valueOf(name);
     }
 }

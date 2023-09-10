@@ -14,7 +14,7 @@ const SignUpView = lazy(() => import("features/auth/views/sign-up-view"));
 
 const RootRoute = () => <Navigate to={url.PLACE} />;
 
-const GuestRoute = ({ children }: { children: any }) => { // TODO any: fix everywhere
+const GuestRoute = ({ children }: { children: any }) => {
     const auth = useAuthContext();
     const location = useLocation();
 

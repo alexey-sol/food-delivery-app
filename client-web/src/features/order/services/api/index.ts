@@ -9,10 +9,9 @@ const { orderResource } = appConfig;
 
 export const orderApi = createApi({
     reducerPath: "orderApi",
-    // tagTypes: [cn.ORDER_TAG_TYPE],
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getAllOrdersByUserId: builder.query<Order[], number | undefined>({ // TODO OR undefined? otherwise there's an issue when passing arg despite presence of skip token
+        getAllOrdersByUserId: builder.query<Order[], number | undefined>({
             query: (userId) => ({
                 params: { userId },
                 url: orderResource,

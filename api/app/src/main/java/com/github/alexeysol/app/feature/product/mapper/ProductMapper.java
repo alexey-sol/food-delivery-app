@@ -10,7 +10,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,19 +19,10 @@ import java.util.stream.Collectors;
 
 @Mapper(uses = PlaceMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ProductMapper {
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
-
     default Page<ProductDto> map(Page<Product> productPage, Pageable pageable) {
         var productDtoList = map(productPage.getContent());
         return new PageImpl<>(productDtoList, pageable, productPage.getTotalElements());
     }
-
-    // TODO either List or Set
-//    default Set<ProductDto> map(Set<Product> products) {
-//        return products.stream()
-//            .map(this::map)
-//            .collect(Collectors.toSet());
-//    }
 
     default List<ProductDto> map(List<Product> products) {
         return products.stream()

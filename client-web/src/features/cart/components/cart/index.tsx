@@ -8,7 +8,7 @@ import { useUserContext } from "features/user/contexts/user";
 import { amountToRub } from "shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
-const DELIVERY_PRICE = 20000; // TODO hardcoded
+const DELIVERY_PRICE = 20000;
 
 export const Cart: FC = () => {
     const { profile } = useAuthContext();
@@ -89,28 +89,21 @@ export const Cart: FC = () => {
                                     . Paying upon delivery, with cash or POS terminal.
                                 </Typography>
 
-                                {/* <AppLink to={`/${url.ORDER}`}> */}
                                 <Button
                                     variant="contained"
                                     onClick={() => {
                                         orders.createOrder({
                                             orderItems: cart.cartItems.map(({ product, quantity }) => ({
-                                                // productId: product.id,
                                                 productId: product.id,
                                                 quantity,
                                             })),
                                             placeId: cart.place.id,
                                         });
-
-                                        // TODO what if error?
-
-                                        // navigate(`/${url.ORDER}`);
                                     }}
                                 >
                                     Order
 
                                 </Button>
-                                {/* </AppLink> */}
                             </Box>
                         ) : null))}
                 </>

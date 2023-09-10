@@ -13,7 +13,7 @@ export type Order = HasId & {
     createdAt: string;
     orderItems: OrderItem[];
     place: PlacePreview;
-    status: string; // TODO enum
+    status: string;
     totalPrice: number;
     updatedAt: string;
 };

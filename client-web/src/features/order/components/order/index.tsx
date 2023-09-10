@@ -8,7 +8,7 @@ import { useUserContext } from "features/user/contexts/user";
 import { amountToRub } from "shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
-const DELIVERY_PRICE = 20000; // TODO hardcoded
+const DELIVERY_PRICE = 20000;
 
 const statusTranslation: Record<string, string> = {
     CANCELLED: "Cancelled",
@@ -52,7 +52,6 @@ export const Order: FC = () => {
                             <ListItem key={item.id} divider sx={{ display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{ display: "flex" }}>
                                     <Typography>
-                                        {/* Always the 1st one TODO */}
                                         {item.product.name}
                                     </Typography>
 
@@ -64,7 +63,6 @@ export const Order: FC = () => {
                                 </Box>
 
                                 <Typography>
-                                    {/* Always the 1st one TODO */}
                                     {amountToRub(item.product.price * item.quantity)}
                                     {" "}
                                     rub

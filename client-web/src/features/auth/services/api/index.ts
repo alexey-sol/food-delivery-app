@@ -13,7 +13,7 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         getProfile: builder.query<InitDto, void>({
             query: () => ({
-                url: `${authResource}/profile`, // TODO provide res in base url
+                url: `${authResource}/profile`,
             }),
         }),
         signIn: builder.mutation<User, SignInDto>({

@@ -40,7 +40,6 @@ public class CartController {
 
     @PatchMapping
     public CartDto saveCartItem(@RequestBody @Valid SaveCartItemDto dto) {
-        // TODO create some sort of aggregator to query all these objects (user, place, product) in one go, with joins?
         var user = userService.findUserById(dto.getUserId()).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, dto.getUserId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);

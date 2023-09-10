@@ -9,17 +9,13 @@ import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(
-    componentModel = "spring", // TODO remove everywhere
     uses = { CartMapper.class, UserAddressMapper.class },
     builder = @Builder(disableBuilder = true),
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     UserDto map(User user);
 
     User map(UserDto dto);

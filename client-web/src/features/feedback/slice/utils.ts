@@ -7,7 +7,7 @@ export const createSuccessSnackbarArg: CreateSnackbarArg = (message) => ({
     view: "success",
 });
 
-export const createFailureSnackbarArg: CreateSnackbarArg = (message) => ({ // TODO failure -> error
+export const createFailureSnackbarArg: CreateSnackbarArg = (message) => ({
     message,
     view: "error",
 });

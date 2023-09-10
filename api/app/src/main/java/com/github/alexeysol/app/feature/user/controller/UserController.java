@@ -37,7 +37,6 @@ public class UserController {
         return userMapper.map(user);
     }
 
-    // TODO probably it's better to throw 404 | 401 instead of returning null
     @GetMapping
     public UserDto getUser(@RequestParam String phone, @RequestParam Optional<String> password) {
         var user = userService.findUserByPhone(phone).orElse(null);

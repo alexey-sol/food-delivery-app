@@ -30,7 +30,7 @@ public class GatewayConfig {
             .defaultStatusHandler(HttpStatusCode::isError, (response) ->
                 response
                     .bodyToMono(String.class)
-                    .defaultIfEmpty("") // TODO doesn't persist res status code and details (gives just 500). TO test this behavior, delete security config from app - so that it always returns 401
+                    .defaultIfEmpty("")
                     .flatMap(json -> Mono.error(new ServiceResponseException(json))))
             .build();
     }

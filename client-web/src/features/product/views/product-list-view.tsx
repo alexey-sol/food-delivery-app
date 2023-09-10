@@ -25,7 +25,6 @@ export const ProductListView: FC = () => {
         setSearchParams({ [url.PAGE]: String(newPage) });
     }, [setSearchParams]);
 
-    // TODO should it be here?
     useEffect(() => {
         carts.getCarts();
     }, [carts.getCarts]);

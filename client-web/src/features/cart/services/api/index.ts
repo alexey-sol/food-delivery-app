@@ -2,11 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { appConfig } from "app/app-config";
 import type { Cart } from "features/cart/models";
 
-import { current } from "@reduxjs/toolkit";
 import { baseUrl } from "./utils";
 import * as cn from "./const";
 import type * as tp from "./types";
-import { authApi } from "features/auth/services/api";
 
 const { cartResource } = appConfig;
 
@@ -30,8 +28,6 @@ export const cartApi = createApi({
             async onQueryStarted({ userId, placeId, ...patch }, { dispatch, queryFulfilled }) {
                 try {
                     const { data: savedCart } = await queryFulfilled;
-
-                    // console.log("-- ", savedCart);
 
                     dispatch(
                         cartApi.util.updateQueryData("getCartsByUserId", userId, (draft) => {

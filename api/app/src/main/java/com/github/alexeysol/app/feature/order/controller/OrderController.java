@@ -51,29 +51,18 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 
-//        var order = orderMapper.map(dto, user);
-//        var order = new Order();
         var order = orderMapper.map(dto, user, new Order());
-//        orderMapper.map(dto, order);
 
-        // TODO how to set orderItem.product with productId?
         long totalPrice = 0;
 
-//        for (var item : order.getOrderItems()) {
-//            totalPrice += item.getQuantity() * item.getProduct().getPrice();
-//        }
-                 for (var item : order.getOrderItems()) {
-                    totalPrice += item.getQuantity() * item.getProduct().getPrice();
-                }
-
-//        long totalPrice = order.getOrderItems().stream().reduce(0L, item -> item.getQuantity() * item.getProduct().getPrice());
+         for (var item : order.getOrderItems()) {
+            totalPrice += item.getQuantity() * item.getProduct().getPrice();
+        }
 
         order.setTotalPrice(totalPrice);
 
         order.getOrderItems().forEach(item -> {
             item.setOrder(order);
-            // TODO set parent order in mapper somehow?
-
         });
 
         orderService.save(order);
@@ -83,7 +72,6 @@ public class OrderController {
         if (optionalCart.isPresent()) {
             cartService.deleteCartById(optionalCart.get().getId());
         }
-
 
         return orderMapper.map(order);
     }

@@ -30,7 +30,6 @@ public class PlaceService {
         return placeRepository.save(place);
     }
 
-    // TODO test for mapping:
     public Place findById(Long id) {
         return placeRepository.findById(id).orElse(null);
     }

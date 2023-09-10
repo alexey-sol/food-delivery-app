@@ -42,7 +42,7 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     const { isFetching, totalElements, places } = resultOfGet;
 
-    const getPlaceById = useCallback( // TODO rename to not confuse with API method?
+    const getPlaceById = useCallback(
         (id: number) => places.find((place) => place.id === id),
         [places],
     );
@@ -60,9 +60,7 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 };
 
 type UsePlacePageResult = ReturnType<typeof usePlaces> & {
-    // isPending: boolean;
     pagingOptions: PagingOptions;
-    // places: PlacePreview[];
 };
 
 export const PlacePageContext = React.createContext<UsePlacePageResult | null>(null);
@@ -82,7 +80,6 @@ export const PlacePageProvider: FC<PropsWithChildren> = ({ children }) => {
     const places = usePlaces({ pagingOptions, setTotalElements });
 
     const value = useMemo(() => ({
-        // isPending,
         pagingOptions,
         ...places,
     }), [pagingOptions, places]);

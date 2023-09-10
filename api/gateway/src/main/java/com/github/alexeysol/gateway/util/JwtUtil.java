@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-// TODO UtilityClass?
 @Component
 public class JwtUtil {
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
@@ -23,7 +22,7 @@ public class JwtUtil {
     public String generateAccessToken(UserDto user) {
         return Jwts.builder()
             .setSubject(String.valueOf(user.getId()))
-            .setIssuer("gateway") // TODO needed?
+            .setIssuer("gateway")
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
             .signWith(SIGNATURE_ALGORITHM, JWT_SECRET)
@@ -35,19 +34,8 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(accessToken);
             return true;
         } catch (Exception exception) {
-            // TODO log or smthng
+            System.out.println(exception.getMessage());
         }
-//        } catch (ExpiredJwtException ex) {
-//            LOGGER.error("JWT expired", ex.getMessage());
-//        } catch (IllegalArgumentException ex) {
-//            LOGGER.error("Token is null, empty or only whitespace", ex.getMessage());
-//        } catch (MalformedJwtException ex) {
-//            LOGGER.error("JWT is invalid", ex);
-//        } catch (UnsupportedJwtException ex) {
-//            LOGGER.error("JWT is not supported", ex);
-//        } catch (SignatureException ex) {
-//            LOGGER.error("Signature validation failed");
-//        }
 
         return false;
     }

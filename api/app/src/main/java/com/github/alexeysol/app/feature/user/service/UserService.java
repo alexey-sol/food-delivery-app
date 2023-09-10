@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> {
-            throw new UsernameNotFoundException("User not found"); // TODO
+            throw new UsernameNotFoundException("User not found");
         });
     }
 
@@ -37,18 +37,13 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(User user) {
         var role = Role.builder()
-            .id(2) // TODO really need to set id explicitly?
-            .name(UserRole.CUSTOMER) // TODO use factory? createCustomer, createAdmin
+            .id(2)
+            .name(UserRole.CUSTOMER)
             .build();
         user.setRoles(Collections.singleton(role));
-//        user.setRoles(Collections.singleton(new UserRole(1L, "ROLE_USER"))); // TODO do this in mapper
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
-    }
-
-    public void deleteUserById(long id) {
-        userRepository.deleteById(id);
     }
 
     public boolean isValidPassword(String passwordToCheck, User user) {

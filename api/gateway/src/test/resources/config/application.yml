@@ -6,4 +6,3 @@ service:
     jwt:
         expire-duration: 1000
         secret: secret
-# TODO is there a better way to init all this stuff?

@@ -22,7 +22,6 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    // boolean existsByUserIdAndPlaceIdAndStatusIn(long userId, long placeId, List<OrderStatus> statuses);
     public boolean hasActiveOrderByUserIdAndPlaceId(long userId, long placeId) {
         return orderRepository.existsByUserIdAndPlaceIdAndStatusIn(userId, placeId, OrderConstant.ACTIVE_STATUSES);
     }

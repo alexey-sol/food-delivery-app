@@ -1,4 +1,4 @@
-import React, { useEffect, type FC, useCallback } from "react";
+import React, { type FC, useCallback } from "react";
 import {
     AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography,
 } from "@mui/material";
@@ -21,18 +21,12 @@ export const Header: FC = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        // TODO
         setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseUserMenu = useCallback(() => {
         setAnchorElUser(null);
     }, []);
-
-    // TODO clutch
-    // useEffect(() => {
-    //     handleCloseUserMenu();
-    // }, [handleCloseUserMenu]);
 
     return (
         <AppBar position="static">
@@ -61,14 +55,6 @@ export const Header: FC = () => {
                                 Places
                             </Button>
                         </AppLink>
-
-                        {/* {!profile && (
-                            <AppLink to={`/${url.SIGN_IN}`}>
-                                <Button sx={{ color: "white", display: "block" }}>
-                                    Sign In
-                                </Button>
-                            </AppLink>
-                        )} */}
                     </Box>
 
                     {profile && (

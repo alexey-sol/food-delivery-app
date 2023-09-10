@@ -8,8 +8,7 @@ import type { CreateAddressDto, SignInDto, SignUpDto } from "features/auth/model
 import { useAuthContext } from "features/auth/contexts/auth";
 import { IMaskInput } from "react-imask";
 
-// ... copypasted
-const TextMaskCustom = React.forwardRef<HTMLElement, any>( // TODO any -> CustomProps
+const TextMaskCustom = React.forwardRef<HTMLElement, any>(
     (props, ref) => {
         const { onChange, ...other } = props;
         return (
@@ -27,25 +26,22 @@ const TextMaskCustom = React.forwardRef<HTMLElement, any>( // TODO any -> Custom
     },
 );
 
-const PASSWORD_MAX_LENGTH = 50; // TODO unify with sign up
-// ...
+const PASSWORD_MAX_LENGTH = 50;
 const USERNAME_MAX_LENGTH = 200;
 const ADDRESS_LINE_MAX_LENGTH = 500;
 
-// TODO rename
 type Data = Pick<SignInDto, "password"> & Pick<SignUpDto, "username"> & CreateAddressDto & {
     phone: string;
 };
 
 const DEFAULT_DATA: Data = {
     addressLine: "",
-    cityId: 1, // TODO 1?
+    cityId: 1,
     password: "",
     phone: "7",
     username: "",
 };
 
-// TODO minWidth duplicated
 export const SignUpForm: FC = () => {
     const { cities, signUp } = useAuthContext();
 
@@ -75,13 +71,12 @@ export const SignUpForm: FC = () => {
         event.preventDefault();
 
         const dto: SignUpDto = {
-            // ...data,
             address: {
                 addressLine: data.addressLine,
                 cityId: data.cityId,
             },
             password: data.password,
-            phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""), // TODO copypasted
+            phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""),
             username: data.username
         };
 
@@ -121,7 +116,7 @@ export const SignUpForm: FC = () => {
                 <TextField
                     value={data.cityId}
                     onChange={handleCityChange}
-                    select // tell TextField to render select
+                    select
                     label="Your city"
                 >
                     {cities.map(({ id, name }) => (

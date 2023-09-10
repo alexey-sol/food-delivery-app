@@ -2,7 +2,6 @@ import type { User } from "features/user/models";
 import type { Address } from "shared/models";
 import type { HasId } from "shared/models/props";
 
-// TODO move
 export type City = HasId & {
     name: string;
 };

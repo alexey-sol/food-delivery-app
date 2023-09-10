@@ -30,7 +30,6 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    // TODO test for mapping:
     public Product findById(Long id) {
         return productRepository.findById(id).orElse(null);
     }

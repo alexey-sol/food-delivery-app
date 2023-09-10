@@ -15,7 +15,7 @@ interface CustomProps {
     name: string;
 }
 
-const TextMaskCustom = React.forwardRef<HTMLElement, any>( // TODO any -> CustomProps
+const TextMaskCustom = React.forwardRef<HTMLElement, any>(
     (props, ref) => {
         const { onChange, ...other } = props;
         return (
@@ -33,9 +33,8 @@ const TextMaskCustom = React.forwardRef<HTMLElement, any>( // TODO any -> Custom
     },
 );
 
-const PASSWORD_MAX_LENGTH = 50; // TODO unify with sign up
+const PASSWORD_MAX_LENGTH = 50;
 
-// TODO rename
 type Data = Pick<SignInDto, "password"> & {
     phone: string;
 };
@@ -63,12 +62,11 @@ export const SignInForm: FC = () => {
 
         const dto: SignInDto = {
             ...data,
-            phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""), // TODO refactor, need mapper
+            phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""),
         };
 
         signIn(dto);
     };
-    // TODO '+7 (342) 423-42-3'.replaceAll(/\+|\ |\(|\)|\-/gi, '')
 
     return (
         <form onSubmit={handleSubmit}>

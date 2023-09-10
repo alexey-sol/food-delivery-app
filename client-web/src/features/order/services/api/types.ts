@@ -1,6 +1,5 @@
 type CreateOrderItemDto = {
     quantity: number;
-    // productId: number;
     productId: number;
 };
 

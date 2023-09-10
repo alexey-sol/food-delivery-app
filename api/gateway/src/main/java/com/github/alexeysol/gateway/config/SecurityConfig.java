@@ -37,7 +37,6 @@ public class SecurityConfig {
         UserDetails adminUser = User.withDefaultPasswordEncoder()
             .username(adminProperties.getUsername())
             .password(adminProperties.getPassword())
-//            .passwordEncoder(passwordEncoder::encode) // TODO write down: if we used a custom bean (passwordEncoder like in app), then we would need to specify it here
             .roles(String.valueOf(UserRole.ADMIN))
             .build();
 

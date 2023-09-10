@@ -36,7 +36,6 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    // TODO added for convenience only, to make it easier to render orders page (with brief place info)
     @ManyToOne
     @JoinColumn(name = "place_id", referencedColumnName = "id")
     private Place place;
@@ -48,10 +47,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.PROCESSING;
 
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-//    @Cascade({ CascadeType.PERSIST, CascadeType.MERGE })
     @Cascade({ DELETE_ORPHAN })
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // TODO Cascade PERSIST - when saving order, order items get saved as well automatically
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)

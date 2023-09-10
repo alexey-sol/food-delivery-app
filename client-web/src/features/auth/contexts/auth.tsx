@@ -13,14 +13,12 @@ import {
     authApi, useGetProfileQuery, useSignInMutation, useSignOutMutation, useSignUpMutation,
 } from "../services/api";
 
-// TODO need this context at all? Maybe use user context?
 const INITIAL_CITIES: City[] = [];
 
 export type AuthPending = "get-profile" | "sign-in" | "sign-up" | "sign-out";
 
 export type UseAuthApiResult = {
     cities: City[];
-    // pending?: AuthPending;
     profile?: User;
     signIn: (arg: SignInDto) => void;
     signOut: () => void;
@@ -33,33 +31,17 @@ export const useAuth = (): UseAuthApiResult => {
     const dispatch = useAppDispatch();
     const resetAuthState = useCallback(() => {
         dispatch(authApi.util.resetApiState());
-        // TODO reset these here?:
         dispatch(cartApi.util.resetApiState());
         dispatch(orderApi.util.resetApiState());
     }, [dispatch]);
 
-    const getProfileResult = useGetProfileQuery(undefined); // TODO make void param
+    const getProfileResult = useGetProfileQuery(undefined);
 
     const [signIn, signInResult] = useSignInMutation();
 
     const [signOut, signOutResult] = useSignOutMutation();
 
     const [signUp, signUpResult] = useSignUpMutation();
-
-    // const pending = useMemo<AuthPending | undefined>(() => {
-    //     if (getProfileResult.isFetching) {
-    //         return "get-profile";
-    //     } else if (signInResult.isLoading) {
-    //         return "sign-in";
-    //     } else if (signUpResult.isLoading) {
-    //         return "sign-up";
-    //     } else if (signOutResult.isLoading) {
-    //         return "sign-out";
-    //     }
-
-    //     return undefined;
-    // }, [getProfileResult.isFetching, signInResult.isLoading, signOutResult.isLoading,
-    //     signUpResult.isLoading]);
 
     useEffect(() => {
         const signedOut = !!signOutResult.data;
@@ -80,7 +62,6 @@ export const useAuth = (): UseAuthApiResult => {
     );
 
     return useMemo(() => ({
-        // pending,
         cities,
         profile,
         signIn,
