@@ -8,9 +8,10 @@
     "scripts": {
         "dev:up": "npm run dev -- up",
         "dev:down": "npm run dev -- down",
-        "dev": "docker-compose --env-file .env.dev -f docker-compose.yml -f docker-compose.dev.yml",
-        "prod:up": "npm run prod -- up -d",
+        "dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev",
+        "prod:up": "npm run prod -- up",
         "prod:down": "npm run prod -- down",
-        "prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml"
+        "prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml",
+        "lib:build": "docker-compose -f docker-compose.lib.yml build --no-cache api-common"
     }
 }

@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+    api-common:
+        image: ${DOCKER_NAMESPACE}/${DOCKER_API_COMMON_REPOSITORY}:${API_COMMON_VERSION}
+        build:
+            context: ../api
+            dockerfile: $PWD/builder/api/api-common/Dockerfile
+            args:
+                MODULE: api-common
+                PROFILE: prod

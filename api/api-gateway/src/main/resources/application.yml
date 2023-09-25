@@ -1,0 +1,19 @@
+server:
+    port: ${API_GATEWAY_PORT}
+    servlet:
+        context-path: ${API_GATEWAY_PREFIX:/api}
+spring:
+    mvc:
+        problemdetails:
+            enabled: true
+service:
+    admin:
+        username: admin
+        password: password
+    app:
+        base-url: "http://${API_FOOD_DELIVERY_HOST}:${API_FOOD_DELIVERY_PORT}"
+    auth-cookie:
+        max-age: 86400
+    jwt:
+        expire-duration: 86400000
+        secret: ${JWT_SECRET}

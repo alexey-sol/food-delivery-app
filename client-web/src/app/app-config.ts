@@ -1,7 +1,7 @@
 import { InvalidConfigError } from "shared/errors";
 
 const config = {
-    apiPrefix: process.env.GATEWAY_PREFIX?.replace("/", "") ?? "api",
+    apiPrefix: process.env.API_GATEWAY_PREFIX?.replace("/", "") ?? "api",
     appName: process.env.APP_NAME ?? "Food Delivery",
     authResource: process.env.AUTH_RESOURCE ?? "auth",
     cartResource: process.env.CART_RESOURCE ?? "cart",
