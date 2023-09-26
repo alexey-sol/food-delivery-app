@@ -1,7 +1,9 @@
 package com.github.alexeysol.fooddelivery.feature.product.controller;
 
+import com.github.alexeysol.common.feature.product.model.dto.ProductPreviewDto;
 import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
 import com.github.alexeysol.fooddelivery.feature.product.mapper.ProductMapper;
+import com.github.alexeysol.fooddelivery.feature.product.mapper.ProductPreviewMapper;
 import com.github.alexeysol.fooddelivery.feature.product.model.entity.Product;
 import com.github.alexeysol.fooddelivery.feature.product.service.ProductService;
 import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
@@ -31,9 +33,10 @@ public class ProductController {
     private final ProductService productService;
     private final PlaceService placeService;
     private final ProductMapper productMapper;
+    private final ProductPreviewMapper productPreviewMapper;
 
     @GetMapping
-    public Page<ProductDto> getProducts(
+    public Page<ProductPreviewDto> getProducts(
         @RequestParam Optional<Long> placeId,
         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
         @RequestParam(value = "size", defaultValue = "20", required = false) int size
@@ -47,7 +50,7 @@ public class ProductController {
             productPage = getAllProducts(pageable);
         }
 
-        return productMapper.map(productPage, pageable);
+        return productPreviewMapper.map(productPage, pageable);
     }
 
     private Page<Product> getAllProductsByPlaceId(long placeId, Pageable pageable) {

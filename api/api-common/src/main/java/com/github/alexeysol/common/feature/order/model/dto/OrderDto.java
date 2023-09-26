@@ -1,6 +1,6 @@
 package com.github.alexeysol.common.feature.order.model.dto;
 
-import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.PlacePreviewDto;
 import com.github.alexeysol.common.shared.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import java.util.List;
 public class OrderDto {
     private long id;
 
-    private PlaceDto place;
+    private PlacePreviewDto place;
 
     private long totalPrice;
 

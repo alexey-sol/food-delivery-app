@@ -1,7 +1,9 @@
 package com.github.alexeysol.fooddelivery.feature.place.controller;
 
+import com.github.alexeysol.common.feature.place.model.dto.PlacePreviewDto;
 import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
 import com.github.alexeysol.fooddelivery.feature.place.mapper.PlaceMapper;
+import com.github.alexeysol.fooddelivery.feature.place.mapper.PlacePreviewMapper;
 import com.github.alexeysol.fooddelivery.feature.place.model.entity.Place;
 import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
 import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
@@ -31,9 +33,10 @@ public class PlaceController {
     private final CityService cityService;
     private final PlaceService placeService;
     private final PlaceMapper placeMapper;
+    private final PlacePreviewMapper placePreviewMapper;
 
     @GetMapping
-    public Page<PlaceDto> getPlaces(
+    public Page<PlacePreviewDto> getPlaces(
         @RequestParam Optional<Long> cityId,
         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
         @RequestParam(value = "size", defaultValue = "20", required = false) int size
@@ -47,7 +50,7 @@ public class PlaceController {
             placePage = getAllPlaces(pageable);
         }
 
-        return placeMapper.map(placePage, pageable);
+        return placePreviewMapper.map(placePage, pageable);
     }
 
     private Page<Place> getAllPlacesByCityId(long cityId, Pageable pageable) {

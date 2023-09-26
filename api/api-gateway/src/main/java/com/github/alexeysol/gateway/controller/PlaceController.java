@@ -1,5 +1,6 @@
 package com.github.alexeysol.gateway.controller;
 
+import com.github.alexeysol.common.feature.place.model.dto.PlacePreviewDto;
 import com.github.alexeysol.common.shared.model.ServicePage;
 import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
@@ -17,7 +18,7 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping
-    public ServicePage<PlaceDto> getPlaces(HttpServletRequest request) {
+    public ServicePage<PlacePreviewDto> getPlaces(HttpServletRequest request) {
         return placeService.getPlaces(request.getQueryString());
     }
 

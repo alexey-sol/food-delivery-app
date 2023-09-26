@@ -1,6 +1,5 @@
-package com.github.alexeysol.common.feature.cart.model.dto;
+package com.github.alexeysol.common.feature.product.model.dto;
 
-import com.github.alexeysol.common.feature.product.model.dto.ProductPreviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +11,16 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemDto {
+public class ProductPreviewDto {
     private long id;
 
-    private ProductPreviewDto product;
+    private Long price;
 
-    private int quantity;
+    private String name;
+
+    private String description;
+
+    private Integer calories;
 
     private Date createdAt;
 

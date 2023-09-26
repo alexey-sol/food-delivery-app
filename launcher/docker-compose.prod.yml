@@ -1,17 +1,17 @@
 version: "3.9"
 
 services:
-#    client-web:
-#        build:
-#            context: ../client-web
-#            dockerfile: $PWD/builder/client-web/Dockerfile.prod
-#        command: nginx -g "daemon off;"
-#        ports:
-#            - ${CLIENT_WEB_PORT_EXTERNAL}:${CLIENT_WEB_PORT}
-#        depends_on:
-#            - api-gateway
-#        networks:
-#            - food-delivery-app-external
+    client-web:
+        build:
+            context: ../client-web
+            dockerfile: $PWD/builder/client-web/Dockerfile.prod
+        command: nginx -g "daemon off;"
+        ports:
+            - ${CLIENT_WEB_PORT_EXTERNAL}:${CLIENT_WEB_PORT}
+        depends_on:
+            - api-gateway
+        networks:
+            - food-delivery-app-external
 
     api-gateway:
         restart: always

@@ -28,11 +28,11 @@ public class Cart {
     @SequenceGenerator(name = "cart_seq", sequenceName = "cart_seq", allocationSize = 1)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id", referencedColumnName = "id")
     private Place place;
 
@@ -40,7 +40,7 @@ public class Cart {
     private long totalPrice = INITIAL_TOTAL_PRICE;
 
     @Cascade({ DELETE_ORPHAN })
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)

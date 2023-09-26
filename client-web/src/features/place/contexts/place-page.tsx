@@ -8,6 +8,7 @@ import { PagingOptions } from "shared/models";
 import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
 import { useAuth } from "features/auth/contexts/auth";
+import { useParams } from "react-router-dom";
 import { useGetPlacesQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
@@ -19,11 +20,16 @@ const INITIAL_PLACES: PlacePreview[] = [];
 type UsePlacesArg = ReturnType<typeof usePagingOptions>;
 
 const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
+    const params = useParams();
+
+    const placeId = params.placeId // TODO duplicated from product-page
+        ? +params.placeId
+        : undefined;
+
     const { profile } = useAuth();
 
     const city = profile?.address.city;
     const cityId = city?.id;
-
 
     const { page, size } = pagingOptions;
 
@@ -42,9 +48,9 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     const { isFetching, totalElements, places } = resultOfGet;
 
-    const getPlaceById = useCallback(
-        (id: number) => places.find((place) => place.id === id),
-        [places],
+    const currentPlace = useMemo(
+        () => (placeId ? places.find((place) => place.id === placeId) : undefined),
+        [placeId, places],
     );
 
     useEffect(() => {
@@ -53,7 +59,7 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     return {
         city,
-        getPlaceById,
+        currentPlace,
         isPending: isFetching,
         places,
     };

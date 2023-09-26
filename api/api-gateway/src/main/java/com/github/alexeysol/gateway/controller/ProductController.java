@@ -1,5 +1,6 @@
 package com.github.alexeysol.gateway.controller;
 
+import com.github.alexeysol.common.feature.product.model.dto.ProductPreviewDto;
 import com.github.alexeysol.common.shared.model.ServicePage;
 import com.github.alexeysol.common.feature.product.model.dto.CreateProductDto;
 import com.github.alexeysol.common.feature.product.model.dto.ProductDto;
@@ -17,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ServicePage<ProductDto> getProducts(HttpServletRequest request) {
+    public ServicePage<ProductPreviewDto> getProducts(HttpServletRequest request) {
         return productService.getProducts(request.getQueryString());
     }
 

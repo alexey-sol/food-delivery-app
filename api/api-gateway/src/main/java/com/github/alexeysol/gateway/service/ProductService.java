@@ -1,5 +1,6 @@
 package com.github.alexeysol.gateway.service;
 
+import com.github.alexeysol.common.feature.product.model.dto.ProductPreviewDto;
 import com.github.alexeysol.common.shared.constant.ResourceConstant;
 import com.github.alexeysol.common.shared.model.ServicePage;
 import com.github.alexeysol.common.feature.product.model.dto.CreateProductDto;
@@ -16,14 +17,14 @@ import org.springframework.web.reactive.function.BodyInserters;
 public class ProductService {
     private final GatewayConfig config;
 
-    public ServicePage<ProductDto> getProducts(String query) {
+    public ServicePage<ProductPreviewDto> getProducts(String query) {
         return config.appWebClient()
             .get()
             .uri(builder -> builder.pathSegment(ResourceConstant.PRODUCT)
                 .query(query)
                 .build())
             .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<ServicePage<ProductDto>>() {})
+            .bodyToMono(new ParameterizedTypeReference<ServicePage<ProductPreviewDto>>() {})
             .block();
     }
 

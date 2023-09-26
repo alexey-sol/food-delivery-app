@@ -36,7 +36,7 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id", referencedColumnName = "id")
     private Place place;
 
@@ -48,7 +48,7 @@ public class Order {
     private OrderStatus status = OrderStatus.PROCESSING;
 
     @Cascade({ DELETE_ORPHAN })
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)

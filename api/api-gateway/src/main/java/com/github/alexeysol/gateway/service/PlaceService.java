@@ -1,5 +1,6 @@
 package com.github.alexeysol.gateway.service;
 
+import com.github.alexeysol.common.feature.place.model.dto.PlacePreviewDto;
 import com.github.alexeysol.common.shared.constant.ResourceConstant;
 import com.github.alexeysol.common.shared.model.ServicePage;
 import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
@@ -16,14 +17,14 @@ import org.springframework.web.reactive.function.BodyInserters;
 public class PlaceService {
     private final GatewayConfig config;
 
-    public ServicePage<PlaceDto> getPlaces(String query) {
+    public ServicePage<PlacePreviewDto> getPlaces(String query) {
         return config.appWebClient()
             .get()
             .uri(builder -> builder.pathSegment(ResourceConstant.PLACE)
                 .query(query)
                 .build())
             .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<ServicePage<PlaceDto>>() {})
+            .bodyToMono(new ParameterizedTypeReference<ServicePage<PlacePreviewDto>>() {})
             .block();
     }
 

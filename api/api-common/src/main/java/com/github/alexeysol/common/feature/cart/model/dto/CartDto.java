@@ -1,6 +1,6 @@
 package com.github.alexeysol.common.feature.cart.model.dto;
 
-import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
+import com.github.alexeysol.common.feature.place.model.dto.PlacePreviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CartDto {
     private long id;
 
-    private PlaceDto place;
+    private PlacePreviewDto place;
 
     private long totalPrice;
 

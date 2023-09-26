@@ -1,18 +1,11 @@
 package com.github.alexeysol.fooddelivery.feature.place.mapper;
 
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
-import com.github.alexeysol.fooddelivery.feature.place.model.entity.Place;
 import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.UpdatePlaceDto;
+import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.place.model.entity.Place;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(
     uses = PlaceAddressMapper.class,
@@ -20,19 +13,6 @@ import java.util.stream.Collectors;
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface PlaceMapper {
-    PlaceMapper INSTANCE = Mappers.getMapper(PlaceMapper.class);
-
-    default Page<PlaceDto> map(Page<Place> placePage, Pageable pageable) {
-        var placeDtoList = map(placePage.getContent());
-        return new PageImpl<>(placeDtoList, pageable, placePage.getTotalElements());
-    }
-
-    default List<PlaceDto> map(List<Place> places) {
-        return places.stream()
-            .map(this::map)
-            .collect(Collectors.toList());
-    }
-
     PlaceDto map(Place place);
 
     Place map(PlaceDto dto);

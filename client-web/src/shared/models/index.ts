@@ -1,4 +1,4 @@
-import type { HasHttpStatus } from "./props";
+import type { HasHttpStatus, HasId } from "./props";
 
 export type Page<E = unknown> = {
     content: E;
@@ -10,11 +10,12 @@ export type PagingOptions = Pick<Page, "size" | "totalElements"> & {
     page: number;
 };
 
-export type Address = {
-    id: number;
+export type AddressPreview = HasId & {
     addressLine: string;
-    city: {
-        id: number;
+};
+
+export type Address = AddressPreview & {
+    city: HasId & {
         name: string;
     }
 };

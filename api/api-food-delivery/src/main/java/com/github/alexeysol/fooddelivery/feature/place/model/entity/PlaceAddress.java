@@ -17,7 +17,7 @@ public class PlaceAddress {
     @SequenceGenerator(name = "place_address_seq", sequenceName = "place_address_seq", allocationSize = 1)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 

@@ -5,6 +5,7 @@ import {
 import { useUserContext } from "features/user/contexts/user";
 import { amountToRub } from "shared/utils/formatters/number";
 import type { ProductPreview } from "features/product/models";
+import { usePlacePageContext } from "features/place/contexts/place-page";
 
 const COUNT_UPDATE_STEP = 1;
 const ADD_ITEM_TO_CART_TEXT = "+";
@@ -21,13 +22,17 @@ export const Product: FC<ProductProps> = ({ product }) => {
         description,
         id,
         name,
-        place,
         price,
     } = product;
 
+    const { currentPlace: place } = usePlacePageContext()
     const { carts: { getCartByPlaceId, isPendingFor, saveCartItem } } = useUserContext();
 
-    const cart = getCartByPlaceId(place.id);
+    if (!place) {
+        return null;
+    }
+
+    const cart = getCartByPlaceId(place.id); // TODO no product.place now
     const cartItem = cart?.cartItems.find((item) => item.product.id === id);
 
     const addItemToCart = useCallback(() => {

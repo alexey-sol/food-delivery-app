@@ -17,13 +17,13 @@ public class UserAddress {
     @SequenceGenerator(name = "user_address_seq", sequenceName = "user_address_seq", allocationSize = 1)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
     @Column(name = "address_line", nullable = false)
     private String addressLine;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private User user;
 }

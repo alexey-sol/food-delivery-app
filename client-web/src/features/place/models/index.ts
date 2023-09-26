@@ -1,8 +1,8 @@
-import type { Address, Page } from "shared/models";
+import type { AddressPreview, Page } from "shared/models";
 import type { HasId } from "shared/models/props";
 
 export type PlacePreview = HasId & {
-    address: Address;
+    address: AddressPreview;
     createdAt: string;
     description?: string;
     name: string;
