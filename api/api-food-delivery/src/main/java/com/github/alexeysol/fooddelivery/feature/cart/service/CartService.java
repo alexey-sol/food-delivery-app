@@ -79,8 +79,8 @@ public class CartService {
         return cart;
     }
 
-    public Cart saveCart(Cart cart) {
-        return cartRepository.save(cart);
+    public void saveCart(Cart cart) {
+        cartRepository.save(cart);
     }
 
     public void deleteCartById(long id) {
@@ -91,8 +91,8 @@ public class CartService {
         return cartItemRepository.findByCartIdAndProductId(cartId, productId);
     }
 
-    public CartItem saveCartItem(CartItem cartItem) {
-        return cartItemRepository.save(cartItem);
+    public void saveCartItem(CartItem cartItem) {
+        cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItemById(long id) {
