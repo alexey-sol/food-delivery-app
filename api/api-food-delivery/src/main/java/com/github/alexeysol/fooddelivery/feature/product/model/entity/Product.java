@@ -15,7 +15,6 @@ import java.util.Set;
 
 @Entity
 @Table(indexes = {
-    @Index(columnList = "name"),
     @Index(columnList = "place_id")
 })
 @EntityListeners(AuditingEntityListener.class)

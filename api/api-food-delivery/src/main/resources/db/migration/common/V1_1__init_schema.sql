@@ -140,11 +140,23 @@ create table user_address (
     primary key (id)
 );
 
-create index IDXjmivyxk9rmgysrmsqw15lqr5b
-    on product (name);
+create index IDXab2gqa6fgbndvi4s8xsexlu70 on "order" (user_id);
 
-create index IDXj9qchw9ki2is6psdc7uuujyqx
-    on product (place_id);
+create index IDXj2p75fh8fffujkl53neyijiv0 on "order" (user_id, place_id, status);
+
+create index IDX5c856itaihtmi69ni04cmpc4m on "user" (username);
+
+create index IDXjo7caqjoviq8vdo3f967kcj75 on "user" (phone);
+
+create index IDX9emlp6m95v5er2bcqkjsw48he on cart (user_id);
+
+create index IDX7ot2xiq5gkyyvx8bu7lbcd0y2 on cart (user_id, place_id);
+
+create index IDX2fypguoq8qc1uigt9i6em0t07 on cart_item (cart_id, product_id);
+
+create index IDXlejodabacstkd042ij5ilx6tl on place_address (city_id);
+
+create index IDXd3m1iper28s5bxu61usj4ein9 on product (place_id);
 
 alter table if exists "order"
     add constraint FK90lxxrxlt4chf273vcm9pi8ak

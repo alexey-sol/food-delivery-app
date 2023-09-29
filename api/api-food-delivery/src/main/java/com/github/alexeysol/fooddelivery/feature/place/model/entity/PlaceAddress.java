@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "place_address")
+@Table(
+    name = "place_address",
+    indexes = {
+        @Index(columnList = "city_id"),
+    })
 @Getter
 @Setter
 @Builder

@@ -13,6 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 
 @Entity
+@Table(indexes = {
+    @Index(columnList = "username"),
+    @Index(columnList = "phone")
+})
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

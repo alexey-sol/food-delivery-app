@@ -14,6 +14,10 @@ import java.util.*;
 import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 @Entity
+@Table(indexes = {
+    @Index(columnList = "user_id"),
+    @Index(columnList = "user_id, place_id")
+})
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

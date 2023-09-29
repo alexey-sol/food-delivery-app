@@ -10,7 +10,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 @Entity
-@Table(name = "cart_item")
+@Table(
+    name = "cart_item",
+    indexes = {
+        @Index(columnList = "cart_id, product_id")
+    })
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

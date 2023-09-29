@@ -1,6 +1,7 @@
 package com.github.alexeysol.gateway.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.alexeysol.common.config.BaseApiExceptionHandler;
 import com.github.alexeysol.common.shared.exception.ServiceResponseException;
 import com.github.alexeysol.common.shared.model.dto.ServiceResponseExceptionDto;
 import com.github.alexeysol.common.shared.util.JsonUtil;
@@ -10,10 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+public class ApiExceptionHandler extends BaseApiExceptionHandler {
     @ExceptionHandler(value = { ServiceResponseException.class })
     protected ResponseEntity<Object> handleResponseStatus(ServiceResponseException exception, WebRequest request) {
         var dto = JsonUtil.deserialize(exception.getJson(),
