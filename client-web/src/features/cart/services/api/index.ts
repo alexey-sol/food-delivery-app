@@ -6,7 +6,7 @@ import { baseUrl } from "./utils";
 import * as cn from "./const";
 import type * as tp from "./types";
 
-const { cartResource } = appConfig;
+const { cartResource, userResource } = appConfig;
 
 export const cartApi = createApi({
     reducerPath: "cartApi",
@@ -16,14 +16,14 @@ export const cartApi = createApi({
         getCartsByUserId: builder.query<Cart[], number>({
             query: (userId) => ({
                 params: { userId },
-                url: cartResource,
+                url: `${userResource}/${userId}/${cartResource}`,
             }),
         }),
         saveCartItem: builder.mutation<Cart, tp.SaveCartItemArg>({
             query: (arg) => ({
                 body: arg,
                 method: "PATCH",
-                url: cartResource,
+                url: `${userResource}/${arg.userId}/${cartResource}`,
             }),
             async onQueryStarted({ userId, placeId, ...patch }, { dispatch, queryFulfilled }) {
                 try {

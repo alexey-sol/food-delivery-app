@@ -1,6 +1,6 @@
 import type { PagingOptions } from "shared/models";
 
-export type GetProductsArg = {
+export type GetProductsByPlaceIdArg = {
     paging: Pick<PagingOptions, "page" | "size">;
     placeId?: number;
 };

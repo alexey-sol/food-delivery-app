@@ -9,10 +9,10 @@ import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
 import { useAuth } from "features/auth/contexts/auth";
 import { useParams } from "react-router-dom";
-import { useGetPlacesQuery } from "../services/api";
+import { useGetPlacesByCityIdQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
-import { GetPlacesArg } from "../services/api/types";
+import { GetPlacesByIdArg } from "../services/api/types";
 import type { PlacePreview } from "../models";
 
 const INITIAL_PLACES: PlacePreview[] = [];
@@ -33,12 +33,13 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     const { page, size } = pagingOptions;
 
-    const getPlacesArg: GetPlacesArg = useMemo(
+    const getPlacesByIdArg: GetPlacesByIdArg = useMemo(
         () => ({ cityId, paging: { page, size } }),
         [cityId, page, size],
     );
 
-    const resultOfGet = useGetPlacesQuery(getPlacesArg, {
+    const resultOfGet = useGetPlacesByCityIdQuery(getPlacesByIdArg, {
+        skip: !cityId,
         selectFromResult: ({ data, isFetching }) => ({
             isFetching,
             places: data?.content ?? INITIAL_PLACES,

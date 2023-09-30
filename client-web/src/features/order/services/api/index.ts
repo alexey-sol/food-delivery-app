@@ -5,23 +5,23 @@ import type { Order } from "features/order/models";
 import { baseUrl } from "./utils";
 import type * as tp from "./types";
 
-const { orderResource } = appConfig;
+const { orderResource, userResource } = appConfig;
 
 export const orderApi = createApi({
     reducerPath: "orderApi",
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getAllOrdersByUserId: builder.query<Order[], number | undefined>({
+        getOrdersByUserId: builder.query<Order[], number | undefined>({
             query: (userId) => ({
                 params: { userId },
-                url: orderResource,
+                url: `${userResource}/${userId}/${orderResource}`,
             }),
         }),
         createOrder: builder.mutation<Order, tp.CreateOrderArg>({
             query: (arg) => ({
                 body: arg,
                 method: "POST",
-                url: orderResource,
+                url: `${userResource}/${arg.userId}/${orderResource}`,
             }),
         }),
     }),
@@ -29,5 +29,5 @@ export const orderApi = createApi({
 
 export const {
     useCreateOrderMutation,
-    useLazyGetAllOrdersByUserIdQuery,
+    useLazyGetOrdersByUserIdQuery,
 } = orderApi;

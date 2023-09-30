@@ -2,7 +2,7 @@ import React, {
     memo, type FC, type ChangeEventHandler, useState, FormEventHandler,
 } from "react";
 import {
-    Box, MenuItem, Select, type SelectChangeEvent, TextField, Typography, Button,
+    Box, MenuItem, TextField, Typography, Button,
 } from "@mui/material";
 import type { CreateAddressDto, SignInDto, SignUpDto } from "features/auth/models";
 import { useAuthContext } from "features/auth/contexts/auth";
@@ -31,6 +31,7 @@ const USERNAME_MAX_LENGTH = 200;
 const ADDRESS_LINE_MAX_LENGTH = 500;
 
 type Data = Pick<SignInDto, "password"> & Pick<SignUpDto, "username"> & CreateAddressDto & {
+    cityId: number;
     phone: string;
 };
 
@@ -73,11 +74,11 @@ export const SignUpForm: FC = () => {
         const dto: SignUpDto = {
             address: {
                 addressLine: data.addressLine,
-                cityId: data.cityId,
             },
+            cityId: data.cityId,
             password: data.password,
             phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""),
-            username: data.username
+            username: data.username,
         };
 
         signUp(dto);

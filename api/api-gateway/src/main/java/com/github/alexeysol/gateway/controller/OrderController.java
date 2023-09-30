@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/order", produces = "application/json")
+@RequestMapping(produces = "application/json")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping
-    public List<OrderDto> getAllOrdersByUserId(HttpServletRequest request) {
-        return orderService.getAllOrdersByUserId(request.getQueryString());
-    }
-
-    @PostMapping
-    public OrderDto createOrder(@RequestBody CreateOrderDto dto) {
-        return orderService.createOrder(dto);
-    }
-
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}")
+    @PatchMapping("/order/{id}")
     public OrderDto updateOrder(@PathVariable long id, @RequestBody UpdateOrderDto dto) {
         return orderService.updateOrder(id, dto);
+    }
+
+    @GetMapping("/user/{userId}/order")
+    public List<OrderDto> getAllOrdersByUserId(@PathVariable long userId, HttpServletRequest request) {
+        return orderService.getAllOrdersByUserId(userId, request.getQueryString());
+    }
+
+    @PostMapping("/user/{userId}/order")
+    public OrderDto createOrder(@PathVariable long userId, @RequestBody CreateOrderDto dto) {
+        return orderService.createOrder(userId, dto);
     }
 }

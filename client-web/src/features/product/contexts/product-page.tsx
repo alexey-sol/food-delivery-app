@@ -7,10 +7,10 @@ import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import { PagingOptions } from "shared/models";
 import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
-import { useGetProductsQuery } from "../services/api";
+import { useGetProductsByPlaceIdQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
-import { GetProductsArg } from "../services/api/types";
+import { GetProductsByPlaceIdArg } from "../services/api/types";
 import type { ProductPreview } from "../models";
 
 const INITIAL_PRODUCTS: ProductPreview[] = [];
@@ -25,7 +25,7 @@ const useProducts = ({ pagingOptions, setTotalElements }: UseProductsArg) => {
         ? +params.placeId
         : undefined;
 
-    const getProductsArg: GetProductsArg = useMemo(
+    const getProductsByIdArg: GetProductsByPlaceIdArg = useMemo(
         () => ({
             paging: { page, size },
             placeId,
@@ -33,7 +33,8 @@ const useProducts = ({ pagingOptions, setTotalElements }: UseProductsArg) => {
         [page, size, placeId],
     );
 
-    const resultOfGet = useGetProductsQuery(getProductsArg, {
+    const resultOfGet = useGetProductsByPlaceIdQuery(getProductsByIdArg, {
+        skip: !placeId,
         selectFromResult: ({ data, isFetching }) => ({
             isFetching,
             products: data?.content ?? INITIAL_PRODUCTS,

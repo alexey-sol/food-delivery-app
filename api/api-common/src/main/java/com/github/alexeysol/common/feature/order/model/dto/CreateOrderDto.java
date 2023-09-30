@@ -20,7 +20,4 @@ public class CreateOrderDto {
 
     @NotNull(message = "Place ID is required")
     private Long placeId;
-
-    @NotNull(message = "User ID is required")
-    private Long userId;
 }

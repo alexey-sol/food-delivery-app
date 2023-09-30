@@ -25,14 +25,14 @@ export const Product: FC<ProductProps> = ({ product }) => {
         price,
     } = product;
 
-    const { currentPlace: place } = usePlacePageContext()
+    const { currentPlace: place } = usePlacePageContext();
     const { carts: { getCartByPlaceId, isPendingFor, saveCartItem } } = useUserContext();
 
     if (!place) {
         return null;
     }
 
-    const cart = getCartByPlaceId(place.id); // TODO no product.place now
+    const cart = getCartByPlaceId(place.id);
     const cartItem = cart?.cartItems.find((item) => item.product.id === id);
 
     const addItemToCart = useCallback(() => {

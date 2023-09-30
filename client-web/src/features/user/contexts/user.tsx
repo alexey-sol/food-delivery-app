@@ -7,12 +7,12 @@ import { useAuthContext } from "features/auth/contexts/auth";
 import { useLazyGetCartsByUserIdQuery, useSaveCartItemMutation } from "features/cart/services/api";
 import type { SaveCartItemArg } from "features/cart/services/api/types";
 import type { Cart } from "features/cart/models";
-import type { User } from "../models";
 import { useNavigate } from "react-router-dom";
-import { useCreateOrderMutation, useLazyGetAllOrdersByUserIdQuery } from "features/order/services/api";
+import { useCreateOrderMutation, useLazyGetOrdersByUserIdQuery } from "features/order/services/api";
 import { url } from "shared/const";
 import type { CreateOrderArg } from "features/order/services/api/types";
 import type { Order } from "features/order/models";
+import type { User } from "../models";
 
 const INITIAL_CARTS: Cart[] = [];
 
@@ -61,17 +61,17 @@ const useCarts = ({ profile }: { profile?: User }) => {
         isPending,
         isPendingFor,
         saveCartItem,
-    }), [carts, getCarts, getCartByPlaceId, isPending, isPendingFor, saveCartItem])
+    }), [carts, getCarts, getCartByPlaceId, isPending, isPendingFor, saveCartItem]);
 };
 
 const INITIAL_ORDERS: Order[] = [];
 
 const useOrders = ({ profile }: { profile?: User }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const userId = profile?.id;
 
-    const [getOrdersByUserId, resultOfGet] = useLazyGetAllOrdersByUserIdQuery();
+    const [getOrdersByUserId, resultOfGet] = useLazyGetOrdersByUserIdQuery();
 
     const [createOrderMutation, resultOfCreate] = useCreateOrderMutation();
 
@@ -91,7 +91,7 @@ const useOrders = ({ profile }: { profile?: User }) => {
 
     useEffect(() => {
         if (resultOfCreate.data) {
-            navigate(`/${url.ORDER}`)
+            navigate(`/${url.ORDER}`);
         }
     }, [resultOfCreate.data]);
 
@@ -100,7 +100,7 @@ const useOrders = ({ profile }: { profile?: User }) => {
         getOrders,
         isPending,
         orders: resultOfGet.data ?? INITIAL_ORDERS,
-    }), [createOrder, getOrders, isPending, resultOfGet.data])
+    }), [createOrder, getOrders, isPending, resultOfGet.data]);
 };
 
 type Value = {
@@ -115,7 +115,6 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const carts = useCarts({ profile });
     const orders = useOrders({ profile });
-
 
     const value = useMemo(() => ({
         carts,

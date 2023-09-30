@@ -52,7 +52,7 @@ public class UserController {
 
     @PostMapping
     public UserDto createUser(@RequestBody @Valid SignUpDto dto) {
-        var cityId = dto.getAddress().getCityId();
+        var cityId = dto.getCityId();
 
         var city = cityService.findCityById(cityId).orElseThrow(() -> {
             var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, CITY, cityId);

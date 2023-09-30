@@ -9,15 +9,17 @@ import type * as tp from "./types";
 
 const { placeResource } = appConfig;
 
+const CITY = "city"; // TODO shared const
+
 export const placeApi = createApi({
     reducerPath: "placeApi",
     tagTypes: [cn.PLACE_TAG_TYPE],
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getPlaces: builder.query<PlacePage, tp.GetPlacesArg>({
+        getPlacesByCityId: builder.query<PlacePage, tp.GetPlacesByIdArg>({
             query: (arg) => ({
                 params: transformGetItemsArg(arg),
-                url: placeResource,
+                url: `${CITY}/${arg.cityId}/${placeResource}`,
             }),
             providesTags: (result) => {
                 const tag = createTag();
@@ -31,5 +33,5 @@ export const placeApi = createApi({
 });
 
 export const {
-    useGetPlacesQuery,
+    useGetPlacesByCityIdQuery,
 } = placeApi;

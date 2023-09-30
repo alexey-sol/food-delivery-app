@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/cart", produces = "application/json")
+@RequestMapping(value = "/user/{userId}/cart", produces = "application/json")
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public List<CartDto> getAllCartsByUserId(HttpServletRequest request) {
-        return cartService.getAllCartsByUserId(request.getQueryString());
+    public List<CartDto> getCartsByUserId(@PathVariable("userId") long userId, HttpServletRequest request) {
+        return cartService.getCartsByUserId(userId, request.getQueryString());
     }
 
     @PatchMapping
-    public CartDto saveCartItem(@RequestBody SaveCartItemDto dto) {
-        return cartService.saveCartItem(dto);
+    public CartDto saveCartItem(@PathVariable("userId") long userId, @RequestBody SaveCartItemDto dto) {
+        return cartService.saveCartItem(userId, dto);
     }
 }

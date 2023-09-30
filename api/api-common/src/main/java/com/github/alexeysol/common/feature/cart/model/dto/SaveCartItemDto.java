@@ -18,9 +18,6 @@ public class SaveCartItemDto {
     @NotNull(message = "Place ID is required")
     private Long placeId;
 
-    @NotNull(message = "User ID is required")
-    private Long userId;
-
     @NotNull(message = "Count is required")
     private Integer count;
 

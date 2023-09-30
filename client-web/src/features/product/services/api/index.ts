@@ -7,17 +7,17 @@ import { createTag, baseUrl } from "./utils";
 import * as cn from "./const";
 import type * as tp from "./types";
 
-const { productResource } = appConfig;
+const { placeResource, productResource } = appConfig;
 
 export const productApi = createApi({
     reducerPath: "productApi",
     tagTypes: [cn.PRODUCT_TAG_TYPE],
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getProducts: builder.query<ProductPage, tp.GetProductsArg>({
+        getProductsByPlaceId: builder.query<ProductPage, tp.GetProductsByPlaceIdArg>({
             query: (arg) => ({
                 params: transformGetItemsArg(arg),
-                url: productResource,
+                url: `${placeResource}/${arg.placeId}/${productResource}`,
             }),
             providesTags: (result) => {
                 const tag = createTag();
@@ -31,5 +31,5 @@ export const productApi = createApi({
 });
 
 export const {
-    useGetProductsQuery,
+    useGetProductsByPlaceIdQuery,
 } = productApi;

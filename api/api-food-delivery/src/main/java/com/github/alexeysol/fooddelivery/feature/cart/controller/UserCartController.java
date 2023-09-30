@@ -18,10 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/cart", produces = "application/json")
+@RequestMapping(value = "/user/{userId}/cart", produces = "application/json")
 @Validated
 @RequiredArgsConstructor
-public class CartController {
+public class UserCartController {
     private final static String PLACE = "Place";
     private final static String PRODUCT = "Product";
     private final static String USER = "User";
@@ -33,15 +33,18 @@ public class CartController {
     private final CartMapper cartMapper;
 
     @GetMapping
-    public List<CartDto> getAllCartsByUserId(@RequestParam long userId) {
+    public List<CartDto> getCartsByUserId(@PathVariable("userId") long userId) {
         var carts = cartService.findAllCartsByUserId(userId);
         return cartMapper.map(carts);
     }
 
     @PatchMapping
-    public CartDto saveCartItem(@RequestBody @Valid SaveCartItemDto dto) {
-        var user = userService.findUserById(dto.getUserId()).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, dto.getUserId());
+    public CartDto saveCartItem(
+        @PathVariable("userId") long userId,
+        @RequestBody @Valid SaveCartItemDto dto
+    ) {
+        var user = userService.findUserById(userId).orElseThrow(() -> {
+            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, userId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         });
 

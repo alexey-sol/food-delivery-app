@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.util.UriBuilder;
 
 import java.util.List;
 
@@ -17,10 +18,24 @@ import java.util.List;
 public class OrderService {
     private final GatewayConfig config;
 
-    public List<OrderDto> getAllOrdersByUserId(String query) {
+    public OrderDto updateOrder(long id, UpdateOrderDto dto) {
+        return config.appWebClient()
+            .patch()
+            .uri(builder -> getOrderUri(builder, id).build())
+            .body(BodyInserters.fromValue(dto))
+            .retrieve()
+            .bodyToMono(OrderDto.class)
+            .block();
+    }
+
+    private UriBuilder getOrderUri(UriBuilder builder, long id) {
+        return builder.pathSegment(ResourceConstant.ORDER, String.valueOf(id));
+    }
+
+    public List<OrderDto> getAllOrdersByUserId(long userId, String query) {
         return config.appWebClient()
             .get()
-            .uri(builder -> builder.pathSegment(ResourceConstant.ORDER)
+            .uri(builder -> getUserOrderUri(builder, userId)
                 .query(query)
                 .build())
             .retrieve()
@@ -28,23 +43,17 @@ public class OrderService {
             .block();
     }
 
-    public OrderDto createOrder(CreateOrderDto dto) {
+    public OrderDto createOrder(long userId, CreateOrderDto dto) {
         return config.appWebClient()
             .post()
-            .uri(builder -> builder.pathSegment(ResourceConstant.ORDER).build())
+            .uri(builder -> getUserOrderUri(builder, userId).build())
             .body(BodyInserters.fromValue(dto))
             .retrieve()
             .bodyToMono(OrderDto.class)
             .block();
     }
 
-    public OrderDto updateOrder(long id, UpdateOrderDto dto) {
-        return config.appWebClient()
-            .patch()
-            .uri(builder -> builder.pathSegment(ResourceConstant.ORDER, String.valueOf(id)).build())
-            .body(BodyInserters.fromValue(dto))
-            .retrieve()
-            .bodyToMono(OrderDto.class)
-            .block();
+    private UriBuilder getUserOrderUri(UriBuilder builder, long userId) {
+        return builder.pathSegment(ResourceConstant.USER, String.valueOf(userId), ResourceConstant.ORDER);
     }
 }

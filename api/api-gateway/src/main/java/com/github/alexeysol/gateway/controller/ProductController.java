@@ -12,30 +12,35 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/product", produces = "application/json")
+@RequestMapping(produces = "application/json")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping("/product")
     public ServicePage<ProductPreviewDto> getProducts(HttpServletRequest request) {
         return productService.getProducts(request.getQueryString());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public ProductDto getProductById(@PathVariable long id) {
         return productService.getProductById(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public ProductDto createProduct(@RequestBody CreateProductDto dto) {
-        return productService.createProduct(dto);
+    @PatchMapping("/product/{id}")
+    public ProductDto updateProductById(@PathVariable long id, @RequestBody UpdateProductDto dto) {
+        return productService.updateProductById(id, dto);
+    }
+
+    @GetMapping("/place/{placeId}/product")
+    public ServicePage<ProductPreviewDto> getProductsByPlaceId(@PathVariable long placeId, HttpServletRequest request) {
+        return productService.getProductsByPlaceId(placeId, request.getQueryString());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}")
-    public ProductDto updateProductById(@PathVariable long id, @RequestBody UpdateProductDto dto) {
-        return productService.updateProductById(id, dto);
+    @PostMapping("/place/{placeId}/product")
+    public ProductDto createProduct(@PathVariable long placeId, @RequestBody CreateProductDto dto) {
+        return productService.createProduct(placeId, dto);
     }
 }

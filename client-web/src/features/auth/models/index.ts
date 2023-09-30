@@ -6,12 +6,11 @@ export type City = HasId & {
     name: string;
 };
 
-export type CreateAddressDto = Pick<Address, "addressLine"> & {
-    cityId: number;
-};
+export type CreateAddressDto = Pick<Address, "addressLine">;
 
 export type SignUpDto = {
     address: CreateAddressDto;
+    cityId: number;
     password: string;
     phone: string;
     username?: string;

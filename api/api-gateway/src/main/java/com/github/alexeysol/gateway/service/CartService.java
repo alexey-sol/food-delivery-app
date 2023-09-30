@@ -9,6 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.util.UriBuilder;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
 public class CartService {
     private final GatewayConfig config;
 
-    public List<CartDto> getAllCartsByUserId(String query) {
+    public List<CartDto> getCartsByUserId(long userId, String query) {
         return config.appWebClient()
             .get()
-            .uri(builder -> builder.pathSegment(ResourceConstant.CART)
+            .uri(builder -> getUserCartUri(builder, userId)
                 .query(query)
                 .build())
             .retrieve()
@@ -28,13 +29,17 @@ public class CartService {
             .block();
     }
 
-    public CartDto saveCartItem(@RequestBody SaveCartItemDto dto) {
+    public CartDto saveCartItem(long userId, @RequestBody SaveCartItemDto dto) {
         return config.appWebClient()
             .patch()
-            .uri(builder -> builder.pathSegment(ResourceConstant.CART).build())
+            .uri(builder -> getUserCartUri(builder, userId).build())
             .body(BodyInserters.fromValue(dto))
             .retrieve()
             .bodyToMono(CartDto.class)
             .block();
+    }
+
+    private UriBuilder getUserCartUri(UriBuilder builder, long userId) {
+        return builder.pathSegment(ResourceConstant.USER, String.valueOf(userId), ResourceConstant.CART);
     }
 }
