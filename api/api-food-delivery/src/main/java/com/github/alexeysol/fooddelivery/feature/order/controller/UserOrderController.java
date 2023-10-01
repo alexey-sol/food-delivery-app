@@ -2,18 +2,17 @@ package com.github.alexeysol.fooddelivery.feature.order.controller;
 
 import com.github.alexeysol.common.feature.order.model.dto.CreateOrderDto;
 import com.github.alexeysol.common.feature.order.model.dto.OrderDto;
-import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
 import com.github.alexeysol.fooddelivery.feature.cart.service.CartService;
+import com.github.alexeysol.common.feature.order.exception.OrderAlreadyExistsException;
 import com.github.alexeysol.fooddelivery.feature.order.mapper.OrderMapper;
 import com.github.alexeysol.fooddelivery.feature.order.model.entity.Order;
 import com.github.alexeysol.fooddelivery.feature.order.service.OrderService;
+import com.github.alexeysol.common.feature.user.exception.UserNotFoundException;
 import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,9 +21,6 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 public class UserOrderController {
-    private final static String ORDER = "Order";
-    private final static String USER = "User";
-
     private final CartService cartService;
     private final OrderService orderService;
     private final UserService userService;
@@ -39,13 +35,11 @@ public class UserOrderController {
     @PostMapping
     public OrderDto createOrder(@PathVariable long userId, @RequestBody @Valid CreateOrderDto dto) {
         if (orderService.hasActiveOrderByUserIdAndPlaceId(userId, dto.getPlaceId())) {
-            var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, ORDER);
-            throw new ResponseStatusException(HttpStatus.CONFLICT, message);
+            throw new OrderAlreadyExistsException();
         }
 
         var user = userService.findUserById(userId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, userId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new UserNotFoundException();
         });
 
         var order = orderMapper.map(dto, user, new Order());

@@ -1,16 +1,15 @@
 package com.github.alexeysol.fooddelivery.feature.user.controller;
 
-import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
-import com.github.alexeysol.fooddelivery.feature.user.mapper.UserMapper;
-import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
-import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
+import com.github.alexeysol.common.feature.city.exception.CityNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
+import com.github.alexeysol.common.feature.user.exception.UserNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.user.mapper.UserMapper;
+import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -19,9 +18,6 @@ import java.util.Optional;
 @RequestMapping(value = "/user", produces = "application/json")
 @RequiredArgsConstructor
 public class UserController {
-    private final static String CITY = "City";
-    private final static String USER = "User";
-
     private final CityService cityService;
     private final UserService userService;
 
@@ -30,8 +26,7 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable long id) {
         var user = userService.findUserById(id).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, id);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new UserNotFoundException();
         });
 
         return userMapper.map(user);
@@ -55,8 +50,7 @@ public class UserController {
         var cityId = dto.getCityId();
 
         var city = cityService.findCityById(cityId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, CITY, cityId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new CityNotFoundException();
         });
 
         var userToCreate = userMapper.map(dto, city);

@@ -1,19 +1,19 @@
 package com.github.alexeysol.fooddelivery.feature.cart.controller;
 
-import com.github.alexeysol.fooddelivery.feature.cart.mapper.CartMapper;
-import com.github.alexeysol.fooddelivery.feature.cart.service.CartService;
-import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
-import com.github.alexeysol.fooddelivery.feature.product.service.ProductService;
-import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import com.github.alexeysol.common.feature.cart.model.dto.CartDto;
 import com.github.alexeysol.common.feature.cart.model.dto.SaveCartItemDto;
-import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
+import com.github.alexeysol.fooddelivery.feature.cart.mapper.CartMapper;
+import com.github.alexeysol.fooddelivery.feature.cart.service.CartService;
+import com.github.alexeysol.common.feature.place.exception.PlaceNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
+import com.github.alexeysol.common.feature.product.exception.ProductNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.product.service.ProductService;
+import com.github.alexeysol.common.feature.user.exception.UserNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,10 +22,6 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 public class UserCartController {
-    private final static String PLACE = "Place";
-    private final static String PRODUCT = "Product";
-    private final static String USER = "User";
-
     private final CartService cartService;
     private final PlaceService placeService;
     private final ProductService productService;
@@ -39,23 +35,17 @@ public class UserCartController {
     }
 
     @PatchMapping
-    public CartDto saveCartItem(
-        @PathVariable("userId") long userId,
-        @RequestBody @Valid SaveCartItemDto dto
-    ) {
+    public CartDto saveCartItem(@PathVariable("userId") long userId, @RequestBody @Valid SaveCartItemDto dto) {
         var user = userService.findUserById(userId).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, USER, userId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new UserNotFoundException();
         });
 
         var place = placeService.findPlaceById(dto.getPlaceId()).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PLACE, dto.getPlaceId());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new PlaceNotFoundException();
         });
 
         var product = productService.findProductById(dto.getProductId()).orElseThrow(() -> {
-            var message = String.format(ErrorMessageConstant.NOT_FOUND_BY_ID, PRODUCT, dto.getProductId());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+            throw new ProductNotFoundException();
         });
 
         var cartItem = cartService.getOrCreateCartItem(user, place, product);

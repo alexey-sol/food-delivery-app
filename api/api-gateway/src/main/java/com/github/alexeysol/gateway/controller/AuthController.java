@@ -1,10 +1,11 @@
 package com.github.alexeysol.gateway.controller;
 
-import com.github.alexeysol.common.shared.constant.ErrorMessageConstant;
-import com.github.alexeysol.common.shared.model.dto.InitDto;
+import com.github.alexeysol.common.feature.user.exception.UserAlreadyExistsException;
+import com.github.alexeysol.common.feature.user.exception.UserUnauthorizedException;
 import com.github.alexeysol.common.feature.user.model.dto.SignInDto;
 import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
+import com.github.alexeysol.common.shared.model.dto.InitDto;
 import com.github.alexeysol.gateway.constant.AuthConstant;
 import com.github.alexeysol.gateway.service.AuthService;
 import com.github.alexeysol.gateway.service.CityService;
@@ -12,9 +13,7 @@ import com.github.alexeysol.gateway.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -23,8 +22,6 @@ import java.util.Optional;
 @RequestMapping(value = "/auth", produces = "application/json")
 @RequiredArgsConstructor
 public class AuthController {
-    private final static String USER = "User";
-
     private final AuthService authService;
     private final CityService cityService;
     private final UserService userService;
@@ -41,8 +38,7 @@ public class AuthController {
         var userDto = userService.getUser(dto.getPhone());
 
         if (Objects.nonNull(userDto)) {
-            var message = String.format(ErrorMessageConstant.ALREADY_EXISTS, USER);
-            throw new ResponseStatusException(HttpStatus.CONFLICT, message);
+            throw new UserAlreadyExistsException();
         }
 
         var createdUserDto = userService.createUser(dto);
@@ -60,8 +56,7 @@ public class AuthController {
         var userDto = userService.getUser(dto.getPhone(), dto.getPassword());
 
         if (Objects.isNull(userDto)) {
-            var message = String.format(ErrorMessageConstant.INVALID_CREDENTIALS);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, message);
+            throw new UserUnauthorizedException();
         }
 
         response.addCookie(authService.getAuthCookie(userDto));
