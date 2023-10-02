@@ -32,7 +32,7 @@ public class CartService {
         return cartRepository.findTopByUserIdAndPlaceId(userId, placeId);
     }
 
-    public CartItem getOrCreateCartItem(User user, Place place, Product product) {
+    public CartItem findOrCreateCartItem(User user, Place place, Product product) {
         var optionalCart = findCartByUserIdAndPlaceId(user.getId(), place.getId());
 
         Cart cart;
@@ -44,7 +44,7 @@ public class CartService {
             user.getCarts().add(cart);
         }
 
-        var optionalCartItem = findCartItemByCartIdAndProductId(cart.getId(), product.getId());
+        var optionalCartItem = cartItemRepository.findByCartIdAndProductId(cart.getId(), product.getId());
         return optionalCartItem.orElseGet(() -> cartItemMapper.map(cart, product, new CartItem()));
     }
 
@@ -67,8 +67,8 @@ public class CartService {
         if (cartItem.isIdle()) {
             deleteCartItemById(cartItem.getId());
         } else {
-            saveCart(cart);
-            saveCartItem(cartItem);
+            cartRepository.save(cart);
+            cartItemRepository.save(cartItem);
             cart.getCartItems().add(cartItem);
         }
 
@@ -79,20 +79,8 @@ public class CartService {
         return cart;
     }
 
-    public void saveCart(Cart cart) {
-        cartRepository.save(cart);
-    }
-
     public void deleteCartById(long id) {
         cartRepository.deleteById(id);
-    }
-
-    public Optional<CartItem> findCartItemByCartIdAndProductId(long cartId, long productId) {
-        return cartItemRepository.findByCartIdAndProductId(cartId, productId);
-    }
-
-    public void saveCartItem(CartItem cartItem) {
-        cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItemById(long id) {

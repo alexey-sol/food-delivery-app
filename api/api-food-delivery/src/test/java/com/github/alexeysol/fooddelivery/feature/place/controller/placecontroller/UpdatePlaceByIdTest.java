@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-
 public class UpdatePlaceByIdTest extends BasePlaceControllerTest {
     public UpdatePlaceByIdTest(@Autowired MockMvc mockMvc) {
         super(mockMvc);
@@ -35,7 +34,7 @@ public class UpdatePlaceByIdTest extends BasePlaceControllerTest {
         when(placeMapper.map(Mockito.any(UpdatePlaceDto.class), Mockito.any(Place.class))).thenReturn(place);
         when(placeMapper.map(Mockito.any(Place.class))).thenReturn(placeDto);
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(1), updatePlaceDto))
+        mockMvc.perform(TestUtil.mockPatchRequest(getPlaceUri(1), updatePlaceDto))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(placeDto);
@@ -51,7 +50,7 @@ public class UpdatePlaceByIdTest extends BasePlaceControllerTest {
 
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(0), updatePlaceDto))
+        mockMvc.perform(TestUtil.mockPatchRequest(getPlaceUri(0), updatePlaceDto))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

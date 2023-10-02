@@ -38,7 +38,7 @@ public class UpdateOrderByIdTest extends BaseOrderControllerTest {
         when(orderMapper.map(Mockito.any(UpdateOrderDto.class), Mockito.any(Order.class))).thenReturn(order);
         when(orderMapper.map(Mockito.any(Order.class))).thenReturn(orderDto);
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(1), UPDATE_ORDER_DTO))
+        mockMvc.perform(TestUtil.mockPatchRequest(getOrderUri(1), UPDATE_ORDER_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(orderDto);
@@ -52,7 +52,7 @@ public class UpdateOrderByIdTest extends BaseOrderControllerTest {
     public void givenOrderDoesntExist_whenUpdateOrderById_thenThrowsResponseStatusException() {
         when(orderService.findOrderById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(0), UPDATE_ORDER_DTO))
+        mockMvc.perform(TestUtil.mockPatchRequest(getOrderUri(0), UPDATE_ORDER_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

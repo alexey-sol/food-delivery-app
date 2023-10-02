@@ -21,10 +21,10 @@ public class SignUpTest extends BaseAuthControllerTest {
     private static final String PATH = "sign-up";
     private static final SignUpDto SIGN_UP_DTO = SignUpDto.builder()
         .username("User")
+        .cityId(1L)
         .phone("70000000000")
         .password("password")
         .address(CreateAddressDto.builder()
-            .cityId(1L)
             .addressLine("Address line")
             .build())
         .build();
@@ -38,11 +38,11 @@ public class SignUpTest extends BaseAuthControllerTest {
     public void givenUserDoesntExist_whenSignUp_thenReturnsUserDtoWithAuthToken() {
         var userDto = new UserDto();
 
-        when(userService.getUser(Mockito.anyString())).thenReturn(null);
+        when(userService.getUserByPhone(Mockito.anyString())).thenReturn(null);
         when(userService.createUser(Mockito.any(SignUpDto.class))).thenReturn(userDto);
         when(authService.getAuthCookie(Mockito.any(UserDto.class))).thenReturn(AUTH_TOKEN);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH), SIGN_UP_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH), SIGN_UP_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.cookie().exists(AuthConstant.AUTH_COOKIE_NAME))
@@ -58,9 +58,9 @@ public class SignUpTest extends BaseAuthControllerTest {
     public void givenUserExists_whenSignUp_thenThrowsResponseStatusException() {
         var userDto = new UserDto();
 
-        when(userService.getUser(Mockito.anyString())).thenReturn(userDto);
+        when(userService.getUserByPhone(Mockito.anyString())).thenReturn(userDto);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH), SIGN_UP_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH), SIGN_UP_DTO))
             .andExpect(MockMvcResultMatchers.status().isConflict())
             .andExpect(MockMvcResultMatchers.cookie().doesNotExist(AuthConstant.AUTH_COOKIE_NAME))
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));

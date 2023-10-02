@@ -28,14 +28,14 @@ public class AuthController {
 
     @GetMapping("/profile")
     public InitDto getProfile(@CookieValue(AuthConstant.AUTH_COOKIE_NAME) Optional<String> authToken) {
-        var profile = authToken.map(authService::getProfileIfAvailable).orElse(null);
-        var cities = cityService.getAllCities();
+        var profile = authToken.map(authService::getProfileIfExists).orElse(null);
+        var cities = cityService.getCities();
         return new InitDto(profile, cities);
     }
 
     @PostMapping("/sign-up")
     public UserDto signUp(@RequestBody @Valid SignUpDto dto, HttpServletResponse response) {
-        var userDto = userService.getUser(dto.getPhone());
+        var userDto = userService.getUserByPhone(dto.getPhone());
 
         if (Objects.nonNull(userDto)) {
             throw new UserAlreadyExistsException();
@@ -53,7 +53,7 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     public UserDto signIn(@RequestBody @Valid SignInDto dto, HttpServletResponse response) {
-        var userDto = userService.getUser(dto.getPhone(), dto.getPassword());
+        var userDto = userService.getUserByPhone(dto.getPhone(), dto.getPassword());
 
         if (Objects.isNull(userDto)) {
             throw new UserUnauthorizedException();

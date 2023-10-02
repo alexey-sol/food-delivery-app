@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 public class CreateOrderTest extends BaseOrderControllerTest {
     private static final CreateOrderDto CREATE_ORDER_DTO = CreateOrderDto.builder()
         .placeId(1L)
-        .userId(1L)
         .orderItems(List.of(CreateOrderItemDto.builder()
             .productId(1L)
             .quantity(10)
@@ -47,7 +46,7 @@ public class CreateOrderTest extends BaseOrderControllerTest {
         when(orderMapper.map(Mockito.any(CreateOrderDto.class), Mockito.any(User.class), Mockito.any(Order.class))).thenReturn(order);
         when(orderMapper.map(Mockito.any(Order.class))).thenReturn(orderDto);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), CREATE_ORDER_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserOrderUri(1), CREATE_ORDER_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(orderDto);
@@ -61,7 +60,7 @@ public class CreateOrderTest extends BaseOrderControllerTest {
     public void givenInvalidDto_whenCreateOrder_thenThrowsMethodArgumentNotValidException() {
         var createOrderDto = CreateOrderDto.builder().build();
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), createOrderDto))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserOrderUri(1), createOrderDto))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
     }
@@ -71,7 +70,7 @@ public class CreateOrderTest extends BaseOrderControllerTest {
     public void givenOrderIsAlreadyExists_whenCreateOrder_thenThrowsResponseStatusException() {
         when(orderService.hasActiveOrderByUserIdAndPlaceId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(true);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), CREATE_ORDER_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserOrderUri(1), CREATE_ORDER_DTO))
             .andExpect(MockMvcResultMatchers.status().isConflict())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
@@ -82,7 +81,7 @@ public class CreateOrderTest extends BaseOrderControllerTest {
         when(orderService.hasActiveOrderByUserIdAndPlaceId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(false);
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), CREATE_ORDER_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserOrderUri(1), CREATE_ORDER_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> {
                 Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException);

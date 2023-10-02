@@ -29,11 +29,11 @@ public abstract class BaseUserControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
+    protected String getUserUri() {
         return String.format("/%s", ResourceConstant.USER);
     }
 
-    protected String getUrl(long id) {
+    protected String getUserUri(long id) {
         return String.format("/%s/%d", ResourceConstant.USER, id);
     }
 }

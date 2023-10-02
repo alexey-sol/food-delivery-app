@@ -27,7 +27,7 @@ public class UserOrderController {
     private final OrderMapper orderMapper;
 
     @GetMapping
-    public List<OrderDto> getAllOrdersByUserId(@PathVariable long userId) {
+    public List<OrderDto> getOrdersByUserId(@PathVariable long userId) {
         var orders = orderService.findAllOrdersByUserId(userId);
         return orderMapper.map(orders);
     }

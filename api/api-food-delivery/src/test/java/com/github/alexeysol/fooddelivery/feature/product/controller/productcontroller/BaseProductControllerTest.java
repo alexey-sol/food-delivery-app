@@ -29,11 +29,15 @@ public abstract class BaseProductControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
+    protected String getProductUri() {
         return String.format("/%s", ResourceConstant.PRODUCT);
     }
 
-    protected String getUrl(long id) {
+    protected String getProductUri(long id) {
         return String.format("/%s/%d", ResourceConstant.PRODUCT, id);
+    }
+
+    protected String getPlaceProductUri(long userId) {
+        return String.format("/%s/%d/%s", ResourceConstant.PLACE, userId, ResourceConstant.PRODUCT);
     }
 }

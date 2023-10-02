@@ -34,10 +34,10 @@ public class GetProfileTest extends BaseAuthControllerTest {
             .profile(userDto)
             .build();
 
-        when(authService.getProfileIfAvailable(Mockito.anyString())).thenReturn(userDto);
-        when(cityService.getAllCities()).thenReturn(CITY_DTO_LIST);
+        when(authService.getProfileIfExists(Mockito.anyString())).thenReturn(userDto);
+        when(cityService.getCities()).thenReturn(CITY_DTO_LIST);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(PATH))
+        mockMvc.perform(MockMvcRequestBuilders.get(getAuthUri(PATH))
                 .cookie(AUTH_TOKEN))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -57,10 +57,10 @@ public class GetProfileTest extends BaseAuthControllerTest {
             .cities(cityDtoList)
             .build();
 
-        when(authService.getProfileIfAvailable(Mockito.anyString())).thenReturn(userDto);
-        when(cityService.getAllCities()).thenReturn(CITY_DTO_LIST);
+        when(authService.getProfileIfExists(Mockito.anyString())).thenReturn(userDto);
+        when(cityService.getCities()).thenReturn(CITY_DTO_LIST);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(PATH)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getAuthUri(PATH)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(result -> {

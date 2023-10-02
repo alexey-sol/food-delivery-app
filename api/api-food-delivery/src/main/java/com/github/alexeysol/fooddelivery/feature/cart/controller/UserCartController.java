@@ -48,7 +48,7 @@ public class UserCartController {
             throw new ProductNotFoundException();
         });
 
-        var cartItem = cartService.getOrCreateCartItem(user, place, product);
+        var cartItem = cartService.findOrCreateCartItem(user, place, product);
         var cart = cartService.saveCartItemInCart(cartItem, dto.getOperation(), dto.getCount());
         return cartMapper.map(cart);
     }

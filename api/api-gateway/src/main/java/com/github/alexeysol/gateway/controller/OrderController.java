@@ -24,8 +24,8 @@ public class OrderController {
     }
 
     @GetMapping("/user/{userId}/order")
-    public List<OrderDto> getAllOrdersByUserId(@PathVariable long userId, HttpServletRequest request) {
-        return orderService.getAllOrdersByUserId(userId, request.getQueryString());
+    public List<OrderDto> getOrdersByUserId(@PathVariable long userId, HttpServletRequest request) {
+        return orderService.getOrdersByUserId(userId, request.getQueryString());
     }
 
     @PostMapping("/user/{userId}/order")

@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-
 public class GetPlaceByIdTest extends BasePlaceControllerTest {
     public GetPlaceByIdTest(@Autowired MockMvc mockMvc) {
         super(mockMvc);
@@ -32,7 +31,7 @@ public class GetPlaceByIdTest extends BasePlaceControllerTest {
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.of(place));
         when(placeMapper.map(Mockito.any(Place.class))).thenReturn(placeDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(1)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getPlaceUri(1)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(result -> {
@@ -47,7 +46,7 @@ public class GetPlaceByIdTest extends BasePlaceControllerTest {
     public void givenPlaceDoesntExist_whenGetPlaceById_thenThrowsResponseStatusException() {
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(0)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getPlaceUri(0)))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

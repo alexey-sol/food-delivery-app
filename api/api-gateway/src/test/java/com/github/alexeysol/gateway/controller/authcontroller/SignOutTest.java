@@ -29,7 +29,7 @@ public class SignOutTest extends BaseAuthControllerTest {
 
         when(authService.getExpiredAuthCookie()).thenReturn(expiredAuthToken);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH))
                 .cookie(AUTH_TOKEN))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -44,7 +44,7 @@ public class SignOutTest extends BaseAuthControllerTest {
     @Test
     @SneakyThrows
     public void givenNoAuthToken_whenSignOut_thenReturnsFalse() {
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH)))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.cookie().doesNotExist(AuthConstant.AUTH_COOKIE_NAME))

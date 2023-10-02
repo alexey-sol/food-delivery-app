@@ -25,7 +25,7 @@ public abstract class BaseCityControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
+    protected String getCityUri() {
         return String.format("/%s", ResourceConstant.CITY);
     }
 }

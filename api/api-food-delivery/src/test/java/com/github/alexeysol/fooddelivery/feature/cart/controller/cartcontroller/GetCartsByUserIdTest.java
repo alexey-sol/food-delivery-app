@@ -1,7 +1,7 @@
-package com.github.alexeysol.fooddelivery.feature.order.controller.ordercontroller;
+package com.github.alexeysol.fooddelivery.feature.cart.controller.cartcontroller;
 
-import com.github.alexeysol.fooddelivery.feature.order.model.entity.Order;
-import com.github.alexeysol.common.feature.order.model.dto.OrderDto;
+import com.github.alexeysol.fooddelivery.feature.cart.model.entity.Cart;
+import com.github.alexeysol.common.feature.cart.model.dto.CartDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,29 +16,28 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-public class GetAllOrdersByUserIdTest extends BaseOrderControllerTest {
-    public GetAllOrdersByUserIdTest(@Autowired MockMvc mockMvc) {
+public class GetCartsByUserIdTest extends BaseCartControllerTest {
+    public GetCartsByUserIdTest(@Autowired MockMvc mockMvc) {
         super(mockMvc);
     }
 
     @Test
     @SneakyThrows
-    public void ordersExist_whenGetAllOrdersByUserId_thenReturnsOrderDtoList() {
-        var orders = List.of(new Order(), new Order());
+    public void cartsExist_whenGetCartsByUserId_thenReturnsCartDtoList() {
+        var carts = List.of(new Cart(), new Cart());
 
-        var orderDtoList = List.of(OrderDto.builder().build(), OrderDto.builder().build());
+        var cartDtoList = List.of(CartDto.builder().build(), CartDto.builder().build());
 
-        when(orderService.findAllOrdersByUserId(Mockito.anyLong())).thenReturn(orders);
-        when(orderMapper.map(Mockito.anyList())).thenReturn(orderDtoList);
+        when(cartService.findAllCartsByUserId(Mockito.anyLong())).thenReturn(carts);
+        when(cartMapper.map(Mockito.anyList())).thenReturn(cartDtoList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
-                .param("userId", "1"))
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserCartUri(1)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
             .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
             .andExpect(result -> {
-                var expected = objectMapper.writeValueAsString(orderDtoList);
+                var expected = objectMapper.writeValueAsString(cartDtoList);
                 var actual = result.getResponse().getContentAsString();
                 Assertions.assertEquals(expected, actual);
             });

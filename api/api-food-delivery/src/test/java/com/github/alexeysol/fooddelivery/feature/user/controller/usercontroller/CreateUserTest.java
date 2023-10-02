@@ -22,10 +22,10 @@ import static org.mockito.Mockito.when;
 public class CreateUserTest extends BaseUserControllerTest {
     private static final SignUpDto SIGN_UP_DTO = SignUpDto.builder()
         .username("User")
+        .cityId(1L)
         .phone("70000000000")
         .password("password")
         .address(CreateAddressDto.builder()
-            .cityId(1L)
             .addressLine("Address line")
             .build())
         .build();
@@ -45,7 +45,7 @@ public class CreateUserTest extends BaseUserControllerTest {
         when(userMapper.map(Mockito.any(SignUpDto.class), Mockito.any(City.class))).thenReturn(user);
         when(userMapper.map(Mockito.any(User.class))).thenReturn(userDto);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), SIGN_UP_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserUri(), SIGN_UP_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(userDto);
@@ -59,7 +59,7 @@ public class CreateUserTest extends BaseUserControllerTest {
     public void givenCityDoesntExist_whenCreateUser_thenThrowsResponseStatusException() {
         when(cityService.findCityById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), SIGN_UP_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getUserUri(), SIGN_UP_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

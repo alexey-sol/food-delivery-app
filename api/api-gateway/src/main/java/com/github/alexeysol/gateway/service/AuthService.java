@@ -20,7 +20,7 @@ public class AuthService {
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
-    public UserDto getProfileIfAvailable(String authToken) {
+    public UserDto getProfileIfExists(String authToken) {
         if (jwtUtil.isValidAccessToken(authToken)) {
             var claims = jwtUtil.getSubject(authToken);
 

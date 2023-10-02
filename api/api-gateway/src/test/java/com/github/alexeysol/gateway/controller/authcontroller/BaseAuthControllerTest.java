@@ -33,7 +33,7 @@ public abstract class BaseAuthControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl(String path) {
+    protected String getAuthUri(String path) {
         return String.format("/%s/%s", AUTH, path);
     }
 }

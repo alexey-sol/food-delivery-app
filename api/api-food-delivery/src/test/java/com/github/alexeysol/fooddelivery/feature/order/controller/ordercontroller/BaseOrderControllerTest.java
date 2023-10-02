@@ -33,11 +33,11 @@ public abstract class BaseOrderControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
-        return String.format("/%s", ResourceConstant.ORDER);
+    protected String getOrderUri(long id) {
+        return String.format("/%s/%d", ResourceConstant.ORDER, id);
     }
 
-    protected String getUrl(long id) {
-        return String.format("/%s/%d", ResourceConstant.ORDER, id);
+    protected String getUserOrderUri(long userId) {
+        return String.format("/%s/%d/%s", ResourceConstant.USER, userId, ResourceConstant.ORDER);
     }
 }

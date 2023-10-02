@@ -23,7 +23,6 @@ public class CreateProductTest extends BaseProductControllerTest {
     private static final CreateProductDto CREATE_PRODUCT_DTO = CreateProductDto.builder()
         .name("Product")
         .price(100L)
-        .placeId(1L)
         .build();
 
     public CreateProductTest(@Autowired MockMvc mockMvc) {
@@ -41,7 +40,7 @@ public class CreateProductTest extends BaseProductControllerTest {
         when(productMapper.map(Mockito.any(CreateProductDto.class), Mockito.any(Place.class))).thenReturn(product);
         when(productMapper.map(Mockito.any(Product.class))).thenReturn(productDto);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), CREATE_PRODUCT_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getPlaceProductUri(1), CREATE_PRODUCT_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(productDto);
@@ -55,7 +54,7 @@ public class CreateProductTest extends BaseProductControllerTest {
     public void givenInvalidDto_whenCreateProduct_thenThrowsMethodArgumentNotValidException() {
         var createProductDto = CreateProductDto.builder().build();
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), createProductDto))
+        mockMvc.perform(TestUtil.mockPostRequest(getPlaceProductUri(1), createProductDto))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
     }
@@ -65,7 +64,7 @@ public class CreateProductTest extends BaseProductControllerTest {
     public void givenPlaceDoesntExist_whenCreateProduct_thenThrowsResponseStatusException() {
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(), CREATE_PRODUCT_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getPlaceProductUri(1), CREATE_PRODUCT_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

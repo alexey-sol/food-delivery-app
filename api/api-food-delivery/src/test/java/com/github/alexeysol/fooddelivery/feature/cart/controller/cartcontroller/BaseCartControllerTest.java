@@ -1,12 +1,12 @@
 package com.github.alexeysol.fooddelivery.feature.cart.controller.cartcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.alexeysol.common.shared.constant.ResourceConstant;
 import com.github.alexeysol.fooddelivery.feature.cart.mapper.CartMapper;
 import com.github.alexeysol.fooddelivery.feature.cart.service.CartService;
 import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
 import com.github.alexeysol.fooddelivery.feature.product.service.ProductService;
 import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
-import com.github.alexeysol.common.shared.constant.ResourceConstant;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,11 +37,7 @@ public abstract class BaseCartControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
-        return String.format("/%s", ResourceConstant.CART);
-    }
-
-    protected String getUrl(long id) {
-        return String.format("/%s/%d", ResourceConstant.CART, id);
+    protected String getUserCartUri(long userId) {
+        return String.format("/%s/%d/%s", ResourceConstant.USER, userId, ResourceConstant.CART);
     }
 }

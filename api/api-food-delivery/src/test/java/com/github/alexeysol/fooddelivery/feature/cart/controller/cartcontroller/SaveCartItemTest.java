@@ -27,7 +27,6 @@ public class SaveCartItemTest extends BaseCartControllerTest {
     private static final SaveCartItemDto SAVE_CART_ITEM_DTO = SaveCartItemDto.builder()
         .placeId(1L)
         .productId(1L)
-        .userId(1L)
         .count(1)
         .operation(SaveCartItemOperation.ADD)
         .build();
@@ -49,13 +48,13 @@ public class SaveCartItemTest extends BaseCartControllerTest {
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.of(user));
         when(placeService.findPlaceById(Mockito.anyLong())).thenReturn(Optional.of(place));
         when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.of(product));
-        when(cartService.getOrCreateCartItem(Mockito.any(User.class), Mockito.any(Place.class),
+        when(cartService.findOrCreateCartItem(Mockito.any(User.class), Mockito.any(Place.class),
             Mockito.any(Product.class))).thenReturn(cartItem);
         when(cartService.saveCartItemInCart(Mockito.any(CartItem.class), Mockito.any(),
             Mockito.anyInt())).thenReturn(cart);
         when(cartMapper.map(Mockito.any(Cart.class))).thenReturn(cartDto);
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(), SAVE_CART_ITEM_DTO))
+        mockMvc.perform(TestUtil.mockPatchRequest(getUserCartUri(1), SAVE_CART_ITEM_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(result -> {
@@ -70,7 +69,7 @@ public class SaveCartItemTest extends BaseCartControllerTest {
     public void givenUserDoesntExist_whenSaveCartItem_thenThrowsResponseStatusException() {
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(), SAVE_CART_ITEM_DTO))
+        mockMvc.perform(TestUtil.mockPatchRequest(getUserCartUri(1), SAVE_CART_ITEM_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

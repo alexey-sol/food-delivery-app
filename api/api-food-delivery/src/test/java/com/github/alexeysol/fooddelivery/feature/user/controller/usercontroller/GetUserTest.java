@@ -32,7 +32,7 @@ public class GetUserTest extends BaseUserControllerTest {
         when(userService.findUserByPhone(Mockito.anyString())).thenReturn(Optional.of(user));
         when(userMapper.map(Mockito.any(User.class))).thenReturn(userDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserUri())
                 .param("phone", PHONE))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -48,7 +48,7 @@ public class GetUserTest extends BaseUserControllerTest {
     public void givenUserDoesntExist_whenGetUser_thenReturnsNull() {
         when(userService.findUserByPhone(Mockito.anyString())).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserUri())
                 .param("phone", PHONE))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
@@ -65,7 +65,7 @@ public class GetUserTest extends BaseUserControllerTest {
         when(userService.findUserByPhone(Mockito.anyString())).thenReturn(Optional.of(user));
         when(userService.isValidPassword(Mockito.anyString(), Mockito.any(User.class))).thenReturn(false);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserUri())
                 .param("phone", PHONE)
                 .param("password", "qwerty"))
             .andExpect(MockMvcResultMatchers.status().isOk())

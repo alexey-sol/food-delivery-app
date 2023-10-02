@@ -31,7 +31,7 @@ public class GetCitiesTest extends BaseCityControllerTest {
         when(cityService.findAllCities()).thenReturn(products);
         when(cityMapper.map(Mockito.anyList())).thenReturn(productDtoList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl()))
+        mockMvc.perform(MockMvcRequestBuilders.get(getCityUri()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())

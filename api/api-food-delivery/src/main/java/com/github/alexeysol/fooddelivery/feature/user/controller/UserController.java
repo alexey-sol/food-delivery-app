@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping
-    public UserDto getUser(@RequestParam String phone, @RequestParam Optional<String> password) {
+    public UserDto getUserByPhone(@RequestParam String phone, @RequestParam Optional<String> password) {
         var user = userService.findUserByPhone(phone).orElse(null);
 
         if (Objects.isNull(user) || (password.isPresent() && !userService.isValidPassword(password.get(), user))) {

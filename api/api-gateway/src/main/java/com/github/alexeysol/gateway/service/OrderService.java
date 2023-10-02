@@ -32,7 +32,7 @@ public class OrderService {
         return builder.pathSegment(ResourceConstant.ORDER, String.valueOf(id));
     }
 
-    public List<OrderDto> getAllOrdersByUserId(long userId, String query) {
+    public List<OrderDto> getOrdersByUserId(long userId, String query) {
         return config.appWebClient()
             .get()
             .uri(builder -> getUserOrderUri(builder, userId)

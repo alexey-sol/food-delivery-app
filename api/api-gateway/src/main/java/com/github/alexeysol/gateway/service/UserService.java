@@ -24,11 +24,11 @@ public class UserService {
             .block();
     }
 
-    public UserDto getUser(String phone) {
-        return getUser(phone, null);
+    public UserDto getUserByPhone(String phone) {
+        return getUserByPhone(phone, null);
     }
 
-    public UserDto getUser(String phone, String password) {
+    public UserDto getUserByPhone(String phone, String password) {
         return config.appWebClient()
             .get()
             .uri(builder -> builder.pathSegment(ResourceConstant.USER)

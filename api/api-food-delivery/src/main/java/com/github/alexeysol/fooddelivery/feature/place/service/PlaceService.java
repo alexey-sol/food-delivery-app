@@ -30,7 +30,7 @@ public class PlaceService {
         return placeRepository.save(place);
     }
 
-    public Place findById(Long id) {
+    public Place findPlaceByIdIfExists(long id) {
         return placeRepository.findById(id).orElse(null);
     }
 }

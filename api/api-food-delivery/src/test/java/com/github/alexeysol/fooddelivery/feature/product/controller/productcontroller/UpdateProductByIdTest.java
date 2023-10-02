@@ -34,7 +34,7 @@ public class UpdateProductByIdTest extends BaseProductControllerTest {
         when(productMapper.map(Mockito.any(UpdateProductDto.class), Mockito.any(Product.class))).thenReturn(product);
         when(productMapper.map(Mockito.any(Product.class))).thenReturn(productDto);
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(1), updateProductDto))
+        mockMvc.perform(TestUtil.mockPatchRequest(getProductUri(1), updateProductDto))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(productDto);
@@ -50,7 +50,7 @@ public class UpdateProductByIdTest extends BaseProductControllerTest {
 
         when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(TestUtil.mockPatchRequest(getUrl(0), updateProductDto))
+        mockMvc.perform(TestUtil.mockPatchRequest(getProductUri(0), updateProductDto))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

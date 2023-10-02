@@ -31,7 +31,7 @@ public class GetProductByIdTest extends BaseProductControllerTest {
         when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.of(product));
         when(productMapper.map(Mockito.any(Product.class))).thenReturn(productDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(1)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getProductUri(1)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(result -> {
@@ -46,7 +46,7 @@ public class GetProductByIdTest extends BaseProductControllerTest {
     public void givenProductDoesntExist_whenGetProductById_thenThrowsResponseStatusException() {
         when(productService.findProductById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(0)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getProductUri(0)))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

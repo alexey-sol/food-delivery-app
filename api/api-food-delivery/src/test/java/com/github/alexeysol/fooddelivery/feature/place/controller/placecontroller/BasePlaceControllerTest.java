@@ -29,11 +29,15 @@ public abstract class BasePlaceControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    protected String getUrl() {
+    protected String getPlaceUri() {
         return String.format("/%s", ResourceConstant.PLACE);
     }
 
-    protected String getUrl(long id) {
+    protected String getPlaceUri(long id) {
         return String.format("/%s/%d", ResourceConstant.PLACE, id);
+    }
+
+    protected String getCityPlaceUri(long userId) {
+        return String.format("/%s/%d/%s", ResourceConstant.CITY, userId, ResourceConstant.PLACE);
     }
 }

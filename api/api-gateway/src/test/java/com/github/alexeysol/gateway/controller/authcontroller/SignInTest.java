@@ -4,7 +4,6 @@ import com.github.alexeysol.common.feature.user.model.dto.SignInDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.common.shared.util.TestUtil;
 import com.github.alexeysol.gateway.constant.AuthConstant;
-import jakarta.servlet.http.Cookie;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,10 +32,10 @@ public class SignInTest extends BaseAuthControllerTest {
     public void givenValidCredentials_whenSignIn_thenReturnsUserDtoWithAuthToken() {
         var userDto = new UserDto();
 
-        when(userService.getUser(Mockito.anyString(), Mockito.anyString())).thenReturn(userDto);
+        when(userService.getUserByPhone(Mockito.anyString(), Mockito.anyString())).thenReturn(userDto);
         when(authService.getAuthCookie(Mockito.any(UserDto.class))).thenReturn(AUTH_TOKEN);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH), SIGN_IN_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH), SIGN_IN_DTO))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.cookie().exists(AuthConstant.AUTH_COOKIE_NAME))
@@ -50,9 +49,9 @@ public class SignInTest extends BaseAuthControllerTest {
     @Test
     @SneakyThrows
     public void givenInvalidCredentials_whenSignIn_thenThrowsResponseStatusException() {
-        when(userService.getUser(Mockito.anyString())).thenReturn(null);
+        when(userService.getUserByPhone(Mockito.anyString())).thenReturn(null);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getUrl(PATH), SIGN_IN_DTO))
+        mockMvc.perform(TestUtil.mockPostRequest(getAuthUri(PATH), SIGN_IN_DTO))
             .andExpect(MockMvcResultMatchers.status().isUnauthorized())
             .andExpect(MockMvcResultMatchers.cookie().doesNotExist(AuthConstant.AUTH_COOKIE_NAME))
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));

@@ -31,7 +31,7 @@ public class GetUserByIdTest extends BaseUserControllerTest {
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.of(user));
         when(userMapper.map(Mockito.any(User.class))).thenReturn(userDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(1)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserUri(1)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(result -> {
@@ -46,7 +46,7 @@ public class GetUserByIdTest extends BaseUserControllerTest {
     public void givenUserDoesntExist_whenGetUserById_thenThrowsResponseStatusException() {
         when(userService.findUserById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getUrl(0)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getUserUri(0)))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
