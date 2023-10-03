@@ -56,10 +56,10 @@ public class PlaceService {
         return builder.pathSegment(ResourceConstant.PLACE, String.valueOf(id));
     }
 
-    public ServicePage<PlacePreviewDto> getPlacesByCityId(long cityId, String query) {
+    public ServicePage<PlacePreviewDto> getPlacesByLocalityId(long localityId, String query) {
         return config.appWebClient()
             .get()
-            .uri(builder -> getCityPlaceUri(builder, cityId)
+            .uri(builder -> getLocalityPlaceUri(builder, localityId)
                 .query(query)
                 .build())
             .retrieve()
@@ -67,17 +67,17 @@ public class PlaceService {
             .block();
     }
 
-    public PlaceDto createPlace(long cityId, CreatePlaceDto dto) {
+    public PlaceDto createPlace(long localityId, CreatePlaceDto dto) {
         return config.appWebClient()
             .post()
-            .uri(builder -> getCityPlaceUri(builder, cityId).build())
+            .uri(builder -> getLocalityPlaceUri(builder, localityId).build())
             .body(BodyInserters.fromValue(dto))
             .retrieve()
             .bodyToMono(PlaceDto.class)
             .block();
     }
 
-    private UriBuilder getCityPlaceUri(UriBuilder builder, long cityId) {
-        return builder.pathSegment(ResourceConstant.CITY, String.valueOf(cityId), ResourceConstant.PLACE);
+    private UriBuilder getLocalityPlaceUri(UriBuilder builder, long localityId) {
+        return builder.pathSegment(ResourceConstant.LOCALITY, String.valueOf(localityId), ResourceConstant.PLACE);
     }
 }

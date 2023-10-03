@@ -21,7 +21,7 @@ public class SignUpTest extends BaseAuthControllerTest {
     private static final String PATH = "sign-up";
     private static final SignUpDto SIGN_UP_DTO = SignUpDto.builder()
         .username("User")
-        .cityId(1L)
+        .localityId(1L)
         .phone("70000000000")
         .password("password")
         .address(CreateAddressDto.builder()

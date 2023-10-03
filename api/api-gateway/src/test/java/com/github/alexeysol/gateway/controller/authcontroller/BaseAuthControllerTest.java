@@ -3,7 +3,7 @@ package com.github.alexeysol.gateway.controller.authcontroller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.alexeysol.gateway.constant.AuthConstant;
 import com.github.alexeysol.gateway.service.AuthService;
-import com.github.alexeysol.gateway.service.CityService;
+import com.github.alexeysol.gateway.service.LocalityService;
 import com.github.alexeysol.gateway.service.UserService;
 import jakarta.servlet.http.Cookie;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +24,7 @@ public abstract class BaseAuthControllerTest {
     protected AuthService authService;
 
     @MockBean
-    protected CityService cityService;
+    protected LocalityService localityService;
 
     @MockBean
     protected UserService userService;

@@ -1,7 +1,7 @@
 package com.github.alexeysol.fooddelivery.feature.user.controller.usercontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
+import com.github.alexeysol.fooddelivery.feature.locality.service.LocalityService;
 import com.github.alexeysol.fooddelivery.feature.user.mapper.UserMapper;
 import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
 import com.github.alexeysol.common.shared.constant.ResourceConstant;
@@ -17,7 +17,7 @@ public abstract class BaseUserControllerTest {
     protected final MockMvc mockMvc;
 
     @MockBean
-    protected CityService cityService;
+    protected LocalityService localityService;
 
     @MockBean
     protected UserService userService;

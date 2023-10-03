@@ -1,6 +1,6 @@
 package com.github.alexeysol.fooddelivery.feature.user.mapper;
 
-import com.github.alexeysol.fooddelivery.feature.city.mapper.CityMapper;
+import com.github.alexeysol.fooddelivery.feature.locality.mapper.LocalityMapper;
 import com.github.alexeysol.fooddelivery.feature.user.model.entity.UserAddress;
 import com.github.alexeysol.common.shared.model.dto.CreateAddressDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserAddressDto;
@@ -10,7 +10,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(
     componentModel = "spring",
-    uses = CityMapper.class,
+    uses = LocalityMapper.class,
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface UserAddressMapper {

@@ -18,8 +18,8 @@ public class PlaceService {
         return placeRepository.findAll(pageable);
     }
 
-    public Page<Place> findAllPlacesByCityId(long cityId, Pageable pageable) {
-        return placeRepository.findAllByAddressCityId(cityId, pageable);
+    public Page<Place> findAllPlacesByLocalityId(long localityId, Pageable pageable) {
+        return placeRepository.findAllByAddressLocalityId(localityId, pageable);
     }
 
     public Optional<Place> findPlaceById(long id) {

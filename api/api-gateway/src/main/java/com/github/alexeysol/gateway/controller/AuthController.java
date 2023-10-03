@@ -8,7 +8,7 @@ import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.common.shared.model.dto.InitDto;
 import com.github.alexeysol.gateway.constant.AuthConstant;
 import com.github.alexeysol.gateway.service.AuthService;
-import com.github.alexeysol.gateway.service.CityService;
+import com.github.alexeysol.gateway.service.LocalityService;
 import com.github.alexeysol.gateway.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -23,13 +23,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final CityService cityService;
+    private final LocalityService localityService;
     private final UserService userService;
 
     @GetMapping("/profile")
     public InitDto getProfile(@CookieValue(AuthConstant.AUTH_COOKIE_NAME) Optional<String> authToken) {
         var profile = authToken.map(authService::getProfileIfExists).orElse(null);
-        var cities = cityService.getCities();
+        var cities = localityService.getLocalities();
         return new InitDto(profile, cities);
     }
 

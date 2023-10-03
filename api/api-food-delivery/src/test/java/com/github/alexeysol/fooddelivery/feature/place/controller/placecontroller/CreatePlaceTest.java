@@ -1,6 +1,6 @@
 package com.github.alexeysol.fooddelivery.feature.place.controller.placecontroller;
 
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.locality.model.entity.Locality;
 import com.github.alexeysol.fooddelivery.feature.place.model.entity.Place;
 import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
@@ -35,15 +35,15 @@ public class CreatePlaceTest extends BasePlaceControllerTest {
             .address(createPlaceAddressDto)
             .build();
 
-        var city = new City();
+        var locality = new Locality();
         var place = new Place();
         var placeDto = PlaceDto.builder().build();
 
-        when(cityService.findCityById(Mockito.anyLong())).thenReturn(Optional.of(city));
-        when(placeMapper.map(Mockito.any(CreatePlaceDto.class), Mockito.any(City.class))).thenReturn(place);
+        when(localityService.findLocalityById(Mockito.anyLong())).thenReturn(Optional.of(locality));
+        when(placeMapper.map(Mockito.any(CreatePlaceDto.class), Mockito.any(Locality.class))).thenReturn(place);
         when(placeMapper.map(Mockito.any(Place.class))).thenReturn(placeDto);
 
-        mockMvc.perform(TestUtil.mockPostRequest(getCityPlaceUri(1), createPlaceDto))
+        mockMvc.perform(TestUtil.mockPostRequest(getLocalityPlaceUri(1), createPlaceDto))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(result -> {
                 var expected = objectMapper.writeValueAsString(placeDto);
@@ -57,7 +57,7 @@ public class CreatePlaceTest extends BasePlaceControllerTest {
     public void givenInvalidDto_whenCreatePlace_thenThrowsMethodArgumentNotValidException() {
         var createPlaceDto = CreatePlaceDto.builder().build();
 
-        mockMvc.perform(TestUtil.mockPostRequest(getCityPlaceUri(1), createPlaceDto))
+        mockMvc.perform(TestUtil.mockPostRequest(getLocalityPlaceUri(1), createPlaceDto))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
     }

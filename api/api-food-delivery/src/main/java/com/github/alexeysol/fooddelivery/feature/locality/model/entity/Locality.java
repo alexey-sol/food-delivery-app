@@ -1,4 +1,4 @@
-package com.github.alexeysol.fooddelivery.feature.city.model.entity;
+package com.github.alexeysol.fooddelivery.feature.locality.model.entity;
 
 import com.github.alexeysol.fooddelivery.feature.place.model.entity.PlaceAddress;
 import com.github.alexeysol.fooddelivery.feature.user.model.entity.UserAddress;
@@ -19,19 +19,19 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
+public class Locality {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
-    @SequenceGenerator(name = "city_seq", sequenceName = "city_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locality_seq")
+    @SequenceGenerator(name = "locality_seq", sequenceName = "locality_seq", allocationSize = 1)
     private long id;
 
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "locality")
     private Set<UserAddress> userAddresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "locality")
     private Set<PlaceAddress> placeAddresses = new HashSet<>();
 
     @Column(name = "created_at", updatable = false)

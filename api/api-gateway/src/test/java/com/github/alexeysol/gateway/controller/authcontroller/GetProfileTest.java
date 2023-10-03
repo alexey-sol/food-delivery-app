@@ -1,6 +1,6 @@
 package com.github.alexeysol.gateway.controller.authcontroller;
 
-import com.github.alexeysol.common.feature.city.model.dto.CityDto;
+import com.github.alexeysol.common.feature.locality.model.dto.LocalityDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import com.github.alexeysol.common.shared.model.dto.InitDto;
 import lombok.SneakyThrows;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 public class GetProfileTest extends BaseAuthControllerTest {
     private static final String PATH = "profile";
-    private static final List<CityDto> CITY_DTO_LIST = List.of(new CityDto(), new CityDto());
+    private static final List<LocalityDto> LOCALITY_DTO_LIST = List.of(new LocalityDto(), new LocalityDto());
 
     public GetProfileTest(@Autowired MockMvc mockMvc) {
         super(mockMvc);
@@ -30,12 +30,12 @@ public class GetProfileTest extends BaseAuthControllerTest {
     public void givenAuthToken_whenGetProfile_thenReturnsInitDto() {
         var userDto = new UserDto();
         var initDto = InitDto.builder()
-            .cities(CITY_DTO_LIST)
+            .cities(LOCALITY_DTO_LIST)
             .profile(userDto)
             .build();
 
         when(authService.getProfileIfExists(Mockito.anyString())).thenReturn(userDto);
-        when(cityService.getCities()).thenReturn(CITY_DTO_LIST);
+        when(localityService.getLocalities()).thenReturn(LOCALITY_DTO_LIST);
 
         mockMvc.perform(MockMvcRequestBuilders.get(getAuthUri(PATH))
                 .cookie(AUTH_TOKEN))
@@ -51,14 +51,14 @@ public class GetProfileTest extends BaseAuthControllerTest {
     @Test
     @SneakyThrows
     public void givenNoAuthToken_whenGetProfile_thenReturnsInitDtoWithNoProfile() {
-        var cityDtoList = List.of(new CityDto(), new CityDto());
+        var localityDtoList = List.of(new LocalityDto(), new LocalityDto());
         var userDto = new UserDto();
         var initDto = InitDto.builder()
-            .cities(cityDtoList)
+            .cities(localityDtoList)
             .build();
 
         when(authService.getProfileIfExists(Mockito.anyString())).thenReturn(userDto);
-        when(cityService.getCities()).thenReturn(CITY_DTO_LIST);
+        when(localityService.getLocalities()).thenReturn(LOCALITY_DTO_LIST);
 
         mockMvc.perform(MockMvcRequestBuilders.get(getAuthUri(PATH)))
             .andExpect(MockMvcResultMatchers.status().isOk())

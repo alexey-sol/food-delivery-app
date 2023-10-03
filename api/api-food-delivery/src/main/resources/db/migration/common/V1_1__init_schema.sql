@@ -4,7 +4,7 @@ create sequence cart_seq start with 1 increment by 1;
 
 create sequence category_seq start with 1 increment by 1;
 
-create sequence city_seq start with 1 increment by 1;
+create sequence locality_seq start with 1 increment by 1;
 
 create sequence order_item_seq start with 1 increment by 1;
 
@@ -74,7 +74,7 @@ create table category (
     primary key (id)
 );
 
-create table city (
+create table locality (
     id bigint not null,
     name varchar(255) not null,
     created_at timestamp(6),
@@ -128,14 +128,14 @@ create table place (
 
 create table place_address (
     id bigint not null,
-    city_id bigint,
+    locality_id bigint,
     address_line varchar(255) not null,
     primary key (id)
 );
 
 create table user_address (
     id bigint not null,
-    city_id bigint,
+    locality_id bigint,
     address_line varchar(255) not null,
     primary key (id)
 );
@@ -154,7 +154,7 @@ create index IDX7ot2xiq5gkyyvx8bu7lbcd0y2 on cart (user_id, place_id);
 
 create index IDX2fypguoq8qc1uigt9i6em0t07 on cart_item (cart_id, product_id);
 
-create index IDXlejodabacstkd042ij5ilx6tl on place_address (city_id);
+create index IDXlejodabacstkd042ij5ilx6tl on place_address (locality_id);
 
 create index IDXd3m1iper28s5bxu61usj4ein9 on product (place_id);
 
@@ -235,10 +235,10 @@ alter table if exists place
 
 alter table if exists place_address
     add constraint FKryg0psm2gvueonpbakr91vyst
-    foreign key (city_id)
-    references city;
+    foreign key (locality_id)
+    references locality;
 
 alter table if exists user_address
     add constraint FKn0wqubhqgnp048fnmagvg1q76
-    foreign key (city_id)
-    references city;
+    foreign key (locality_id)
+    references locality;

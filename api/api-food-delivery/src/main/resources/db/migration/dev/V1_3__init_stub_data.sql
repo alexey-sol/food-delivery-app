@@ -8,23 +8,23 @@ begin
 end;
 $$ language 'plpgsql' strict;
 
--- Init "city" data
+-- Init "locality" data
 
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Moscow', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Saint Petersburg', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Novosibirsk', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Yekaterinburg', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Nizhny Novgorod', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Omsk', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Samara', current_timestamp, current_timestamp);
-insert into public."city" (id, name, created_at, updated_at) values (nextval('city_seq'), 'Rostov-on-Don', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Moscow', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Saint Petersburg', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Novosibirsk', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Yekaterinburg', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Nizhny Novgorod', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Omsk', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Samara', current_timestamp, current_timestamp);
+insert into public."locality" (id, name, created_at, updated_at) values (nextval('locality_seq'), 'Rostov-on-Don', current_timestamp, current_timestamp);
 
 -- Init "place_address" data
 
 do $$
 begin
 for i in 1..30 loop
-    insert into public."place_address" (id, city_id, address_line)
+    insert into public."place_address" (id, locality_id, address_line)
         values (nextval('place_address_seq'), 1, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;
@@ -33,7 +33,7 @@ $$;
 do $$
 begin
 for i in 1..20 loop
-    insert into public."place_address" (id, city_id, address_line)
+    insert into public."place_address" (id, locality_id, address_line)
         values (nextval('place_address_seq'), 2, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;
@@ -42,7 +42,7 @@ $$;
 do $$
 begin
 for i in 1..10 loop
-    insert into public."place_address" (id, city_id, address_line)
+    insert into public."place_address" (id, locality_id, address_line)
         values (nextval('place_address_seq'), 3, 'This is a place address ' || currval('place_address_seq'));
     end loop;
 end;

@@ -2,8 +2,8 @@ package com.github.alexeysol.fooddelivery.feature.user.controller;
 
 import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
-import com.github.alexeysol.common.feature.city.exception.CityNotFoundException;
-import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
+import com.github.alexeysol.common.feature.locality.exception.LocalityNotFoundException;
+import com.github.alexeysol.fooddelivery.feature.locality.service.LocalityService;
 import com.github.alexeysol.common.feature.user.exception.UserNotFoundException;
 import com.github.alexeysol.fooddelivery.feature.user.mapper.UserMapper;
 import com.github.alexeysol.fooddelivery.feature.user.service.UserService;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequestMapping(value = "/user", produces = "application/json")
 @RequiredArgsConstructor
 public class UserController {
-    private final CityService cityService;
+    private final LocalityService localityService;
     private final UserService userService;
 
     private final UserMapper userMapper;
@@ -47,13 +47,13 @@ public class UserController {
 
     @PostMapping
     public UserDto createUser(@RequestBody @Valid SignUpDto dto) {
-        var cityId = dto.getCityId();
+        var localityId = dto.getLocalityId();
 
-        var city = cityService.findCityById(cityId).orElseThrow(() -> {
-            throw new CityNotFoundException();
+        var locality = localityService.findLocalityById(localityId).orElseThrow(() -> {
+            throw new LocalityNotFoundException();
         });
 
-        var userToCreate = userMapper.map(dto, city);
+        var userToCreate = userMapper.map(dto, locality);
         userService.saveUser(userToCreate);
         return userMapper.map(userToCreate);
     }

@@ -1,6 +1,6 @@
 package com.github.alexeysol.fooddelivery.feature.user.controller.usercontroller;
 
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.locality.model.entity.Locality;
 import com.github.alexeysol.fooddelivery.feature.user.model.entity.User;
 import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class CreateUserTest extends BaseUserControllerTest {
     private static final SignUpDto SIGN_UP_DTO = SignUpDto.builder()
         .username("User")
-        .cityId(1L)
+        .localityId(1L)
         .phone("70000000000")
         .password("password")
         .address(CreateAddressDto.builder()
@@ -37,12 +37,12 @@ public class CreateUserTest extends BaseUserControllerTest {
     @Test
     @SneakyThrows
     public void givenValidDto_whenCreateUser_thenReturnsUserDto() {
-        var city = new City();
+        var locality = new Locality();
         var user = new User();
         var userDto = UserDto.builder().build();
 
-        when(cityService.findCityById(Mockito.anyLong())).thenReturn(Optional.of(city));
-        when(userMapper.map(Mockito.any(SignUpDto.class), Mockito.any(City.class))).thenReturn(user);
+        when(localityService.findLocalityById(Mockito.anyLong())).thenReturn(Optional.of(locality));
+        when(userMapper.map(Mockito.any(SignUpDto.class), Mockito.any(Locality.class))).thenReturn(user);
         when(userMapper.map(Mockito.any(User.class))).thenReturn(userDto);
 
         mockMvc.perform(TestUtil.mockPostRequest(getUserUri(), SIGN_UP_DTO))
@@ -56,8 +56,8 @@ public class CreateUserTest extends BaseUserControllerTest {
 
     @Test
     @SneakyThrows
-    public void givenCityDoesntExist_whenCreateUser_thenThrowsResponseStatusException() {
-        when(cityService.findCityById(Mockito.anyLong())).thenReturn(Optional.empty());
+    public void givenLocalityDoesntExist_whenCreateUser_thenThrowsResponseStatusException() {
+        when(localityService.findLocalityById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         mockMvc.perform(TestUtil.mockPostRequest(getUserUri(), SIGN_UP_DTO))
             .andExpect(MockMvcResultMatchers.status().isNotFound())

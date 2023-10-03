@@ -9,7 +9,7 @@ import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
 
 import { useAuth } from "features/auth/contexts/auth";
 import { useParams } from "react-router-dom";
-import { useGetPlacesByCityIdQuery } from "../services/api";
+import { useGetPlacesByLocalityIdQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
 import { GetPlacesByIdArg } from "../services/api/types";
@@ -28,18 +28,18 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
 
     const { profile } = useAuth();
 
-    const city = profile?.address.city;
-    const cityId = city?.id;
+    const locality = profile?.address.locality;
+    const localityId = locality?.id;
 
     const { page, size } = pagingOptions;
 
     const getPlacesByIdArg: GetPlacesByIdArg = useMemo(
-        () => ({ cityId, paging: { page, size } }),
-        [cityId, page, size],
+        () => ({ localityId, paging: { page, size } }),
+        [localityId, page, size],
     );
 
-    const resultOfGet = useGetPlacesByCityIdQuery(getPlacesByIdArg, {
-        skip: !cityId,
+    const resultOfGet = useGetPlacesByLocalityIdQuery(getPlacesByIdArg, {
+        skip: !localityId,
         selectFromResult: ({ data, isFetching }) => ({
             isFetching,
             places: data?.content ?? INITIAL_PLACES,
@@ -59,7 +59,7 @@ const usePlaces = ({ pagingOptions, setTotalElements }: UsePlacesArg) => {
     }, [totalElements, setTotalElements]);
 
     return {
-        city,
+        locality,
         currentPlace,
         isPending: isFetching,
         places,

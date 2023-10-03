@@ -31,13 +31,13 @@ const USERNAME_MAX_LENGTH = 200;
 const ADDRESS_LINE_MAX_LENGTH = 500;
 
 type Data = Pick<SignInDto, "password"> & Pick<SignUpDto, "username"> & CreateAddressDto & {
-    cityId: number;
+    localityId: number;
     phone: string;
 };
 
 const DEFAULT_DATA: Data = {
     addressLine: "",
-    cityId: 1,
+    localityId: 1,
     password: "",
     phone: "7",
     username: "",
@@ -60,8 +60,8 @@ export const SignUpForm: FC = () => {
         setData((oldData) => ({ ...oldData, username: target.value }));
     };
 
-    const handleCityChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-        setData((oldData) => ({ ...oldData, cityId: +target.value }));
+    const handleLocalityChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+        setData((oldData) => ({ ...oldData, localityId: +target.value }));
     };
 
     const handleAddressLineChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -75,7 +75,7 @@ export const SignUpForm: FC = () => {
             address: {
                 addressLine: data.addressLine,
             },
-            cityId: data.cityId,
+            localityId: data.localityId,
             password: data.password,
             phone: data.phone.replaceAll(/\+|\ |\(|\)|\-/gi, ""),
             username: data.username,
@@ -115,10 +115,10 @@ export const SignUpForm: FC = () => {
                 />
 
                 <TextField
-                    value={data.cityId}
-                    onChange={handleCityChange}
+                    value={data.localityId}
+                    onChange={handleLocalityChange}
                     select
-                    label="Your city"
+                    label="The locality you live in"
                 >
                     {cities.map(({ id, name }) => (
                         <MenuItem key={id} value={id}>{name}</MenuItem>

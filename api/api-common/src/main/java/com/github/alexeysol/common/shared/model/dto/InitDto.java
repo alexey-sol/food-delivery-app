@@ -1,6 +1,6 @@
 package com.github.alexeysol.common.shared.model.dto;
 
-import com.github.alexeysol.common.feature.city.model.dto.CityDto;
+import com.github.alexeysol.common.feature.locality.model.dto.LocalityDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +16,5 @@ import java.util.List;
 public class InitDto {
     private UserDto profile;
 
-    private List<CityDto> cities;
+    private List<LocalityDto> cities;
 }

@@ -2,13 +2,13 @@ import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { handleFailureEffect } from "shared/utils/handlers";
 import { placeApi } from "../services/api";
 
-const { getPlacesByCityId } = placeApi.endpoints;
+const { getPlacesByLocalityId } = placeApi.endpoints;
 
 export const placeListener = createListenerMiddleware();
 
 placeListener.startListening({
     matcher: isAnyOf(
-        getPlacesByCityId.matchRejected,
+        getPlacesByLocalityId.matchRejected,
     ),
     effect: handleFailureEffect,
 });

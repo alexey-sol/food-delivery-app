@@ -1,7 +1,7 @@
 package com.github.alexeysol.fooddelivery.feature.place.controller.placecontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.alexeysol.fooddelivery.feature.city.service.CityService;
+import com.github.alexeysol.fooddelivery.feature.locality.service.LocalityService;
 import com.github.alexeysol.fooddelivery.feature.place.mapper.PlaceMapper;
 import com.github.alexeysol.fooddelivery.feature.place.service.PlaceService;
 import com.github.alexeysol.common.shared.constant.ResourceConstant;
@@ -17,7 +17,7 @@ public abstract class BasePlaceControllerTest {
     protected final MockMvc mockMvc;
 
     @MockBean
-    protected CityService cityService;
+    protected LocalityService localityService;
 
     @MockBean
     protected PlaceService placeService;
@@ -37,7 +37,7 @@ public abstract class BasePlaceControllerTest {
         return String.format("/%s/%d", ResourceConstant.PLACE, id);
     }
 
-    protected String getCityPlaceUri(long userId) {
-        return String.format("/%s/%d/%s", ResourceConstant.CITY, userId, ResourceConstant.PLACE);
+    protected String getLocalityPlaceUri(long userId) {
+        return String.format("/%s/%d/%s", ResourceConstant.LOCALITY, userId, ResourceConstant.PLACE);
     }
 }

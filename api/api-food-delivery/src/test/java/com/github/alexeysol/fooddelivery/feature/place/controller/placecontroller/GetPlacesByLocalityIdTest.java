@@ -20,25 +20,25 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 
-public class GetPlacesByCityIdTest extends BasePlaceControllerTest {
+public class GetPlacesByLocalityIdTest extends BasePlaceControllerTest {
     private final static PageRequest pageableStub = PageRequest.of(0, 20);
 
-    public GetPlacesByCityIdTest(@Autowired MockMvc mockMvc) {
+    public GetPlacesByLocalityIdTest(@Autowired MockMvc mockMvc) {
         super(mockMvc);
     }
 
     @Test
     @SneakyThrows
-    public void placesExist_whenGetPlacesByCityId_thenReturnsPlaceDtoPage() {
+    public void placesExist_whenGetPlacesByLocalityId_thenReturnsPlaceDtoPage() {
         var places = List.of(Place.builder().id(1).build(), Place.builder().id(2).build());
         var placePage = new PageImpl<>(places, pageableStub, places.size());
 
         var placeDtoList = List.of(PlaceDto.builder().id(1L).build(), PlaceDto.builder().id(2L).build());
         var placeDtoPage = new PageImpl<>(placeDtoList, pageableStub, placeDtoList.size());
 
-        when(placeService.findAllPlacesByCityId(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(placePage);
+        when(placeService.findAllPlacesByLocalityId(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(placePage);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getCityPlaceUri(1)))
+        mockMvc.perform(MockMvcRequestBuilders.get(getLocalityPlaceUri(1)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$.content").isArray())

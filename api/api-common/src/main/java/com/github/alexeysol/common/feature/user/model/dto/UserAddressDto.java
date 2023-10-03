@@ -1,6 +1,6 @@
 package com.github.alexeysol.common.feature.user.model.dto;
 
-import com.github.alexeysol.common.feature.city.model.dto.CityDto;
+import com.github.alexeysol.common.feature.locality.model.dto.LocalityDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserAddressDto {
     private Long id;
 
-    private CityDto city;
+    private LocalityDto locality;
 
     private String addressLine;
 }

@@ -8,7 +8,7 @@ import { PlacePageProvider, usePlacePageContext } from "../contexts/place-page";
 type HandlePageChange = NonNullable<PageLayoutProps["handlePageChange"]>;
 
 export const PlaceListView: FC = () => {
-    const { city, isPending, pagingOptions } = usePlacePageContext();
+    const { locality, isPending, pagingOptions } = usePlacePageContext();
     const [, setSearchParams] = useSearchParams();
 
     const handlePageChange = useCallback<HandlePageChange>((event, newPage) => {
@@ -21,7 +21,7 @@ export const PlaceListView: FC = () => {
             isPending={isPending}
             pagingOptions={pagingOptions}
             skeletonSx={{ minHeight: 122 }}
-            title={city?.name}
+            title={locality?.name}
         >
             <PlaceList />
         </PageLayout>

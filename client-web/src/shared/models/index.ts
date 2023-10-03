@@ -15,7 +15,7 @@ export type AddressPreview = HasId & {
 };
 
 export type Address = AddressPreview & {
-    city: HasId & {
+    locality: HasId & {
         name: string;
     }
 };

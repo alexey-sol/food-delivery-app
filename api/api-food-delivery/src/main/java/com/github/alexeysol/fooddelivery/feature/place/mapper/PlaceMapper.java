@@ -3,7 +3,7 @@ package com.github.alexeysol.fooddelivery.feature.place.mapper;
 import com.github.alexeysol.common.feature.place.model.dto.CreatePlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.PlaceDto;
 import com.github.alexeysol.common.feature.place.model.dto.UpdatePlaceDto;
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.locality.model.entity.Locality;
 import com.github.alexeysol.fooddelivery.feature.place.model.entity.Place;
 import org.mapstruct.*;
 
@@ -20,11 +20,11 @@ public interface PlaceMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "address.addressLine", source = "dto.address.addressLine") // [1]
-    @Mapping(target = "address.city", source = "city")
-    Place map(CreatePlaceDto dto, City city);
+    @Mapping(target = "address.locality", source = "locality")
+    Place map(CreatePlaceDto dto, Locality locality);
 
     @Mapping(target = "id", ignore = true)
     Place map(UpdatePlaceDto dto, @MappingTarget Place place);
 }
 
-// [1]. Without "disableBuilder = true", can't map address anymore in combination with mapping address.city.
+// [1]. Without "disableBuilder = true", can't map address anymore in combination with mapping address.locality.

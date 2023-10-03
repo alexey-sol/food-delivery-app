@@ -25,8 +25,8 @@ public class SignUpDto {
     @NotNull(message = "Address is required")
     private CreateAddressDto address;
 
-    @NotNull(message = "City ID is required")
-    private Long cityId;
+    @NotNull(message = "Locality ID is required")
+    private Long localityId;
 
     @NotEmpty(message = "Password is required and must not be blank")
     private String password;

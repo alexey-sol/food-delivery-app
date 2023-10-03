@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ResourceConstant {
     public final String CART = "cart";
-    public final String CITY = "city";
+    public final String LOCALITY = "locality";
     public final String ORDER = "order";
     public final String PRODUCT = "product";
     public final String PLACE = "place";

@@ -1,4 +1,4 @@
-package com.github.alexeysol.common.feature.city.model.dto;
+package com.github.alexeysol.common.feature.locality.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDto {
+public class LocalityDto {
     private Long id;
 
     private String name;

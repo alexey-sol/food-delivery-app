@@ -8,17 +8,17 @@ import { useAppDispatch } from "app/store/hooks";
 import { useNavigate } from "react-router-dom";
 import { cartApi } from "features/cart/services/api";
 import { orderApi } from "features/order/services/api";
-import type { City, SignInDto, SignUpDto } from "../models";
+import type { Locality, SignInDto, SignUpDto } from "../models";
 import {
     authApi, useGetProfileQuery, useSignInMutation, useSignOutMutation, useSignUpMutation,
 } from "../services/api";
 
-const INITIAL_CITIES: City[] = [];
+const INITIAL_CITIES: Locality[] = [];
 
 export type AuthPending = "get-profile" | "sign-in" | "sign-up" | "sign-out";
 
 export type UseAuthApiResult = {
-    cities: City[];
+    cities: Locality[];
     profile?: User;
     signIn: (arg: SignInDto) => void;
     signOut: () => void;

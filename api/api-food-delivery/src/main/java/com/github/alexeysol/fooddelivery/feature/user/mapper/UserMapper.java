@@ -1,7 +1,7 @@
 package com.github.alexeysol.fooddelivery.feature.user.mapper;
 
 import com.github.alexeysol.fooddelivery.feature.cart.mapper.CartMapper;
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.locality.model.entity.Locality;
 import com.github.alexeysol.fooddelivery.feature.user.model.entity.User;
 import com.github.alexeysol.common.feature.user.model.dto.SignUpDto;
 import com.github.alexeysol.common.feature.user.model.dto.UserDto;
@@ -22,6 +22,6 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "address.addressLine", source = "dto.address.addressLine")
-    @Mapping(target = "address.city", source = "city")
-    User map(SignUpDto dto, City city);
+    @Mapping(target = "address.locality", source = "locality")
+    User map(SignUpDto dto, Locality locality);
 }

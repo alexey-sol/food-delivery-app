@@ -33,14 +33,14 @@ public class PlaceController {
         return placeService.updatePlaceById(id, dto);
     }
 
-    @GetMapping("/city/{cityId}/place")
-    public ServicePage<PlacePreviewDto> getPlacesByCityId(@PathVariable long cityId, HttpServletRequest request) {
-        return placeService.getPlacesByCityId(cityId, request.getQueryString());
+    @GetMapping("/locality/{localityId}/place")
+    public ServicePage<PlacePreviewDto> getPlacesByLocalityId(@PathVariable long localityId, HttpServletRequest request) {
+        return placeService.getPlacesByLocalityId(localityId, request.getQueryString());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/city/{cityId}/place")
-    public PlaceDto createPlace(@PathVariable long cityId, @RequestBody CreatePlaceDto dto) {
-        return placeService.createPlace(cityId, dto);
+    @PostMapping("/locality/{localityId}/place")
+    public PlaceDto createPlace(@PathVariable long localityId, @RequestBody CreatePlaceDto dto) {
+        return placeService.createPlace(localityId, dto);
     }
 }

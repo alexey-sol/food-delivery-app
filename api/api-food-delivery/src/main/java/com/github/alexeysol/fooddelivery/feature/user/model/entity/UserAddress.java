@@ -1,6 +1,6 @@
 package com.github.alexeysol.fooddelivery.feature.user.model.entity;
 
-import com.github.alexeysol.fooddelivery.feature.city.model.entity.City;
+import com.github.alexeysol.fooddelivery.feature.locality.model.entity.Locality;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +18,8 @@ public class UserAddress {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
+    @JoinColumn(name = "locality_id", referencedColumnName = "id")
+    private Locality locality;
 
     @Column(name = "address_line", nullable = false)
     private String addressLine;

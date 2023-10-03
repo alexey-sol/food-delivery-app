@@ -1,6 +1,6 @@
 import type { PagingOptions } from "shared/models";
 
 export type GetPlacesByIdArg = {
-    cityId?: number;
+    localityId?: number;
     paging: Pick<PagingOptions, "page" | "size">;
 };

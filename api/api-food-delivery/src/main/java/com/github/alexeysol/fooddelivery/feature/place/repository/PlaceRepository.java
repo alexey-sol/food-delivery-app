@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlaceRepository extends PagingAndSortingRepository<Place, Long>, JpaRepository<Place, Long> {
     @Query("SELECT p FROM Place p JOIN FETCH p.address")
-    Page<Place> findAllByAddressCityId(long cityId, Pageable pageable);
+    Page<Place> findAllByAddressLocalityId(long localityId, Pageable pageable);
 
     @NonNull
     @Query("SELECT p FROM Place p JOIN FETCH p.address")
