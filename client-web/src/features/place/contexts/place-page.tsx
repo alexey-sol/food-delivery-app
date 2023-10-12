@@ -2,12 +2,12 @@ import React, {
     useMemo, type FC, type PropsWithChildren, useCallback, useEffect,
 } from "react";
 
-import { getUseContextOrThrowError } from "shared/utils/helpers/context";
-import { useAppDispatch, useAppSelector } from "app/store/hooks";
-import { PagingOptions } from "shared/models";
-import { usePagingOptions } from "shared/utils/hooks/use-paging-options";
+import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { PagingOptions } from "@/shared/models";
+import { usePagingOptions } from "@/shared/utils/hooks/use-paging-options";
 
-import { useAuth } from "features/auth/contexts/auth";
+import { useAuth } from "@/features/auth/contexts/auth";
 import { useParams } from "react-router-dom";
 import { useGetPlacesByLocalityIdQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";

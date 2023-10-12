@@ -1,5 +1,5 @@
 import { type Context, useContext } from "react";
-import { ContextOutsideProviderError } from "shared/errors";
+import { ContextOutsideProviderError } from "@/shared/errors";
 
 const useCustomContext = <T>(Ctx: Context<T | null>): T | never => {
     const context = useContext(Ctx);

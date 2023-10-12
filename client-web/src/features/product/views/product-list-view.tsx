@@ -2,11 +2,11 @@ import React, {
     type FC, memo, useCallback, useEffect,
 } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ProductList } from "features/product/components/product-list";
-import { PageLayout, type PageLayoutProps } from "shared/components/layout";
-import { url } from "shared/const";
-import { useUserContext } from "features/user/contexts/user";
-import { PlacePageProvider, usePlacePageContext } from "features/place/contexts/place-page";
+import { ProductList } from "@/features/product/components/product-list";
+import { PageLayout, type PageLayoutProps } from "@/shared/components/layout";
+import { url } from "@/shared/const";
+import { useUserContext } from "@/features/user/contexts/user";
+import { PlacePageProvider, usePlacePageContext } from "@/features/place/contexts/place-page";
 import { ProductPageProvider, useProductPageContext } from "../contexts/product-page";
 
 type HandlePageChange = NonNullable<PageLayoutProps["handlePageChange"]>;

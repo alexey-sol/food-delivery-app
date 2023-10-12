@@ -1,8 +1,8 @@
-import { InvalidConfigError } from "shared/errors";
+import { InvalidConfigError } from "@/shared/errors";
 
 const config = {
     apiPrefix: process.env.API_GATEWAY_PREFIX?.replace("/", "") ?? "api",
-    appName: process.env.APP_NAME ?? "Food Delivery",
+    appName: process.env.APP_NAME ?? "Food Delivery", // TODO duplicated defaults?
     authResource: process.env.AUTH_RESOURCE ?? "auth",
     cartResource: process.env.CART_RESOURCE ?? "cart",
     nodeEnv: process.env.NODE_ENV,

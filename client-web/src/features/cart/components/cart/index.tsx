@@ -3,9 +3,9 @@ import {
     Box, Button, Chip, List, ListItem, Tab, Tabs, Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { useAuthContext } from "features/auth/contexts/auth";
-import { useUserContext } from "features/user/contexts/user";
-import { amountToRub } from "shared/utils/formatters/number";
+import { useAuthContext } from "@/features/auth/contexts/auth";
+import { useUserContext } from "@/features/user/contexts/user";
+import { amountToRub } from "@/shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
 const DELIVERY_PRICE = 20000;

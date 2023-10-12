@@ -1,6 +1,6 @@
 import React, { type FC } from "react";
 
-import { AppLayout } from "shared/components/layout";
+import { AppLayout } from "@/shared/components/layout";
 
 import { withProviders } from "./app-providers";
 import { AppRoutes } from "./app-routes";

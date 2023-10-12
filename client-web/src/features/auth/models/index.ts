@@ -1,6 +1,6 @@
-import type { User } from "features/user/models";
-import type { Address } from "shared/models";
-import type { HasId } from "shared/models/props";
+import type { User } from "@/features/user/models";
+import type { Address } from "@/shared/models";
+import type { HasId } from "@/shared/models/props";
 
 export type Locality = HasId & {
     name: string;

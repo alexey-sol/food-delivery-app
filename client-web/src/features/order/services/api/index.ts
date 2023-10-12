@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "app/app-config";
+import { appConfig } from "@/app/app-config";
 
-import type { Order } from "features/order/models";
+import type { Order } from "@/features/order/models";
 import { baseUrl } from "./utils";
 import type * as tp from "./types";
 

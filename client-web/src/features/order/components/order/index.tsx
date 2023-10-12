@@ -1,11 +1,11 @@
 import React, { useEffect, type FC } from "react";
-import { useAuthContext } from "features/auth/contexts/auth";
+import { useAuthContext } from "@/features/auth/contexts/auth";
 import {
     Box, Chip, List, ListItem, Paper, Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { useUserContext } from "features/user/contexts/user";
-import { amountToRub } from "shared/utils/formatters/number";
+import { useUserContext } from "@/features/user/contexts/user";
+import { amountToRub } from "@/shared/utils/formatters/number";
 
 const NOTHING_FOUND_TEXT = "Nothing found";
 const DELIVERY_PRICE = 20000;

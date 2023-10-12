@@ -1,16 +1,16 @@
-import { useAuthContext } from "features/auth/contexts/auth";
+import { useAuthContext } from "@/features/auth/contexts/auth";
 import React, { lazy, type FC } from "react";
 import {
-    Navigate, Outlet, Route, Routes, useLocation,
+    Navigate, Route, Routes, useLocation,
 } from "react-router-dom";
-import { url } from "shared/const";
+import { url } from "@/shared/const";
 
-const CartView = lazy(() => import("features/cart/views/cart-view"));
-const OrderView = lazy(() => import("features/order/views/order-view"));
-const PlaceListView = lazy(() => import("features/place/views/place-list-view"));
-const ProductListView = lazy(() => import("features/product/views/product-list-view"));
-const SignInView = lazy(() => import("features/auth/views/sign-in-view"));
-const SignUpView = lazy(() => import("features/auth/views/sign-up-view"));
+const CartView = lazy(() => import("@/features/cart/views/cart-view"));
+const OrderView = lazy(() => import("@/features/order/views/order-view"));
+const PlaceListView = lazy(() => import("@/features/place/views/place-list-view"));
+const ProductListView = lazy(() => import("@/features/product/views/product-list-view"));
+const SignInView = lazy(() => import("@/features/auth/views/sign-in-view"));
+const SignUpView = lazy(() => import("@/features/auth/views/sign-up-view"));
 
 const RootRoute = () => <Navigate to={url.PLACE} />;
 

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "app/app-config";
-import type { InitDto, SignInDto, SignUpDto } from "features/auth/models";
-import type { User } from "features/user/models";
+import { appConfig } from "@/app/app-config";
+import type { InitDto, SignInDto, SignUpDto } from "@/features/auth/models";
+import type { User } from "@/features/user/models";
 
 import { baseUrl } from "./utils";
 

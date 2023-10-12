@@ -1,17 +1,17 @@
 import React, {
     useMemo, type FC, type PropsWithChildren, useCallback, useEffect, useState,
 } from "react";
-import { getUseContextOrThrowError } from "shared/utils/helpers/context";
+import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
 
-import { useAuthContext } from "features/auth/contexts/auth";
-import { useLazyGetCartsByUserIdQuery, useSaveCartItemMutation } from "features/cart/services/api";
-import type { SaveCartItemArg } from "features/cart/services/api/types";
-import type { Cart } from "features/cart/models";
+import { useAuthContext } from "@/features/auth/contexts/auth";
+import { useLazyGetCartsByUserIdQuery, useSaveCartItemMutation } from "@/features/cart/services/api";
+import type { SaveCartItemArg } from "@/features/cart/services/api/types";
+import type { Cart } from "@/features/cart/models";
 import { useNavigate } from "react-router-dom";
-import { useCreateOrderMutation, useLazyGetOrdersByUserIdQuery } from "features/order/services/api";
-import { url } from "shared/const";
-import type { CreateOrderArg } from "features/order/services/api/types";
-import type { Order } from "features/order/models";
+import { useCreateOrderMutation, useLazyGetOrdersByUserIdQuery } from "@/features/order/services/api";
+import { url } from "@/shared/const";
+import type { CreateOrderArg } from "@/features/order/services/api/types";
+import type { Order } from "@/features/order/models";
 import type { User } from "../models";
 
 const INITIAL_CARTS: Cart[] = [];

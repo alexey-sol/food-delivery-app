@@ -5,7 +5,7 @@ import {
     Box, Pagination, Skeleton, Typography, type SxProps, type Theme,
 } from "@mui/material";
 import { type UsePaginationProps } from "@mui/material/usePagination";
-import type { PagingOptions } from "shared/models";
+import type { PagingOptions } from "@/shared/models";
 
 export type PageLayoutProps = PropsWithChildren<{
     handlePageChange: UsePaginationProps["onChange"];

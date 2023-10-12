@@ -12,6 +12,12 @@ services:
             - api-gateway
         networks:
             - food-delivery-app-external
+        environment:
+            - API_GATEWAY_HOST
+            - API_GATEWAY_PORT
+            - APP_NAME
+            - CLIENT_WEB_HOST
+            - CLIENT_WEB_PORT
 
     api-gateway:
         restart: always

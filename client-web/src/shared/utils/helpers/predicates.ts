@@ -1,5 +1,5 @@
-import type { ApiError } from "shared/models";
-import type { HasHttpStatus } from "shared/models/props";
+import type { ApiError } from "@/shared/models";
+import type { HasHttpStatus } from "@/shared/models/props";
 
 const hasHttpStatus = (value: unknown): value is HasHttpStatus => value instanceof Object
     && typeof (value as Record<string, unknown>).status === "number";

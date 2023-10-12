@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "app/app-config";
-import { transformGetItemsArg } from "shared/utils/converters";
-import type { ProductPage } from "features/product/models";
+import { appConfig } from "@/app/app-config";
+import { transformGetItemsArg } from "@/shared/utils/converters";
+import type { ProductPage } from "@/features/product/models";
 
 import { createTag, baseUrl } from "./utils";
 import * as cn from "./const";

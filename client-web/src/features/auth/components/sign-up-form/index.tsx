@@ -4,8 +4,8 @@ import React, {
 import {
     Box, MenuItem, TextField, Typography, Button,
 } from "@mui/material";
-import type { CreateAddressDto, SignInDto, SignUpDto } from "features/auth/models";
-import { useAuthContext } from "features/auth/contexts/auth";
+import type { CreateAddressDto, SignInDto, SignUpDto } from "@/features/auth/models";
+import { useAuthContext } from "@/features/auth/contexts/auth";
 import { IMaskInput } from "react-imask";
 
 const TextMaskCustom = React.forwardRef<HTMLElement, any>(

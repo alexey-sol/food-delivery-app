@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "app/app-config";
-import type { Cart } from "features/cart/models";
+import { appConfig } from "@/app/app-config";
+import type { Cart } from "@/features/cart/models";
 
 import { baseUrl } from "./utils";
 import * as cn from "./const";

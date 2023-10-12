@@ -1,7 +1,7 @@
 import React, { useMemo, type FC } from "react";
 import { Box, type SxProps, type Theme } from "@mui/material";
-import { useProductPageContext } from "features/product/contexts/product-page";
-import { DEFAULT_ITEM_SX } from "shared/components/layout";
+import { useProductPageContext } from "@/features/product/contexts/product-page";
+import { DEFAULT_ITEM_SX } from "@/shared/components/layout";
 import { Product } from "../product";
 
 export type ProductListProps = {

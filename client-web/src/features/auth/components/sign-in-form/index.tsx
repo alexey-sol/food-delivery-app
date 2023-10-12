@@ -1,14 +1,14 @@
 import {
     Box, Button, FormControl, Input, Link, TextField, Typography,
 } from "@mui/material";
-import { useAuthContext } from "features/auth/contexts/auth";
-import { SignInDto } from "features/auth/models";
+import { useAuthContext } from "@/features/auth/contexts/auth";
+import { SignInDto } from "@/features/auth/models";
 import React, {
     memo, type FC, useState, ChangeEventHandler, FormEventHandler,
 } from "react";
 import { IMaskInput } from "react-imask";
-import { AppLink } from "shared/components/app-link";
-import { url } from "shared/const";
+import { AppLink } from "@/shared/components/app-link";
+import { url } from "@/shared/const";
 
 interface CustomProps {
     onChange: (event: { target: { name: string; value: string } }) => void;

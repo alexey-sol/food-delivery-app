@@ -1,6 +1,6 @@
 import React, { Component, type PropsWithChildren, type ReactNode } from "react";
 import { Typography } from "@mui/material";
-import { defaults } from "shared/const";
+import { defaults } from "@/shared/const";
 
 export type ErrorBoundaryProps = PropsWithChildren<{
     errorMessage?: string;

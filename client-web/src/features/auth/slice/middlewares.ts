@@ -1,5 +1,5 @@
 import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
-import { handleFailureEffect } from "shared/utils/handlers";
+import { handleFailureEffect } from "@/shared/utils/handlers";
 import { authApi } from "../services/api";
 
 const {

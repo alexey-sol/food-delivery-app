@@ -1,8 +1,8 @@
 import {
     type AnyAction, type ListenerEffect, type ThunkDispatch, isRejectedWithValue,
 } from "@reduxjs/toolkit";
-import { createFailureSnackbarArg } from "features/feedback/slice/utils";
-import { setSnackbar } from "features/feedback/slice";
+import { createFailureSnackbarArg } from "@/features/feedback/slice/utils";
+import { setSnackbar } from "@/features/feedback/slice";
 import { isApiError } from "./helpers/predicates";
 
 const DEFAULT_ERROR = "Something went wrong";

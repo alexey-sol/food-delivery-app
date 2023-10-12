@@ -1,5 +1,5 @@
-import { appConfig } from "app/app-config";
-import { getApiPath } from "shared/utils/formatters/api-path";
+import { appConfig } from "@/app/app-config";
+import { getApiPath } from "@/shared/utils/formatters/api-path";
 import * as cn from "./const";
 
 const { apiPrefix } = appConfig;

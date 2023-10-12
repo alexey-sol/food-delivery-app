@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { pagingOptions } from "shared/const";
-import type { PagingOptions } from "shared/models";
+import { pagingOptions } from "@/shared/const";
+import type { PagingOptions } from "@/shared/models";
 
 export type ProductState = {
     pagingOptions: PagingOptions;

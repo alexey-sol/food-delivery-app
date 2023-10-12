@@ -1,4 +1,4 @@
-import type { PagingOptions } from "shared/models";
+import type { PagingOptions } from "@/shared/models";
 
 type Paging = Pick<PagingOptions, "page" | "size">;
 
