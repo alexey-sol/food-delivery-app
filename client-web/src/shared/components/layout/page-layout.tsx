@@ -5,7 +5,8 @@ import {
     Box, Pagination, Skeleton, Typography, type SxProps, type Theme,
 } from "@mui/material";
 import { type UsePaginationProps } from "@mui/material/usePagination";
-import type { PagingOptions } from "@/shared/models";
+
+import { type PagingOptions } from "@/shared/models";
 
 export type PageLayoutProps = PropsWithChildren<{
     handlePageChange: UsePaginationProps["onChange"];
@@ -43,7 +44,7 @@ export const PageLayout = memo(({
     const skeletons = useMemo(() => Array.from(Array(size)).map((item, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Skeleton key={index} variant="rectangular" sx={resultSkeletonSx} />
-    )), [size]);
+    )), [resultSkeletonSx, size]);
 
     const paginationCount = Math.ceil(totalElements / size);
 

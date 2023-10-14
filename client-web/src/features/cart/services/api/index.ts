@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "@/app/app-config";
-import type { Cart } from "@/features/cart/models";
 
-import { baseUrl } from "./utils";
+import { type Cart } from "@/features/cart/models";
+import { resources, url } from "@/shared/const";
+import { getApiPath } from "@/shared/utils/formatters/api-path";
+
 import * as cn from "./const";
 import type * as tp from "./types";
 
-const { cartResource, userResource } = appConfig;
+const baseUrl = getApiPath(url.API);
 
 export const cartApi = createApi({
     reducerPath: "cartApi",
@@ -16,14 +17,14 @@ export const cartApi = createApi({
         getCartsByUserId: builder.query<Cart[], number>({
             query: (userId) => ({
                 params: { userId },
-                url: `${userResource}/${userId}/${cartResource}`,
+                url: `${resources.USER}/${userId}/${resources.CART}`,
             }),
         }),
         saveCartItem: builder.mutation<Cart, tp.SaveCartItemArg>({
             query: (arg) => ({
                 body: arg,
                 method: "PATCH",
-                url: `${userResource}/${arg.userId}/${cartResource}`,
+                url: `${resources.USER}/${arg.userId}/${resources.CART}`,
             }),
             async onQueryStarted({ userId, placeId, ...patch }, { dispatch, queryFulfilled }) {
                 try {

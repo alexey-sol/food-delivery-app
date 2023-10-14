@@ -1,10 +1,9 @@
 import path from "path";
 
-import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import DotenvWebpack from "dotenv-webpack";
+import type webpack from "webpack";
 
-import "./env";
 import { getRules } from "./utils/rules";
 import * as cn from "./const";
 

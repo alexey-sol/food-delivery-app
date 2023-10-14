@@ -1,4 +1,5 @@
 import React, { type FC, memo } from "react";
+
 import { Cart } from "../components/cart";
 
 export const CartView: FC = () => (

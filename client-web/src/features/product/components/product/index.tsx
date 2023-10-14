@@ -2,9 +2,10 @@ import React, { useCallback, type FC } from "react";
 import {
     Card, CardContent, Typography, Button, Box, CircularProgress,
 } from "@mui/material";
+
 import { useUserContext } from "@/features/user/contexts/user";
 import { amountToRub } from "@/shared/utils/formatters/number";
-import type { ProductPreview } from "@/features/product/models";
+import { type ProductPreview } from "@/features/product/models";
 import { usePlacePageContext } from "@/features/place/contexts/place-page";
 
 const COUNT_UPDATE_STEP = 1;

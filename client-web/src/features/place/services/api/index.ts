@@ -1,15 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "@/app/app-config";
-import { transformGetItemsArg } from "@/shared/utils/converters";
-import type { PlacePage } from "@/features/place/models";
 
-import { createTag, baseUrl } from "./utils";
+import { transformGetItemsArg } from "@/shared/utils/converters";
+import { getApiPath } from "@/shared/utils/formatters/api-path";
+import { resources, url } from "@/shared/const";
+import { type PlacePage } from "@/features/place/models";
+
+import { createTag } from "./utils";
 import * as cn from "./const";
 import type * as tp from "./types";
 
-const { placeResource } = appConfig;
-
-const LOCALITY = "locality"; // TODO shared const
+const baseUrl = getApiPath(url.API);
 
 export const placeApi = createApi({
     reducerPath: "placeApi",
@@ -19,7 +19,7 @@ export const placeApi = createApi({
         getPlacesByLocalityId: builder.query<PlacePage, tp.GetPlacesByIdArg>({
             query: (arg) => ({
                 params: transformGetItemsArg(arg),
-                url: `${LOCALITY}/${arg.localityId}/${placeResource}`,
+                url: `${resources.LOCALITY}/${arg.localityId}/${resources.PLACE}`,
             }),
             providesTags: (result) => {
                 const tag = createTag();

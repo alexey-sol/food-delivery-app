@@ -12,12 +12,24 @@ export const pagingOptions = {
     totalElements: 0,
 };
 
-export const url = {
+export const resources = {
+    AUTH: "auth",
     CART: "cart",
-    PAGE: "page",
-    PRODUCT: "product",
+    LOCALITY: "locality",
     ORDER: "order",
     PLACE: "place",
+    PRODUCT: "product",
+    USER: "user",
+};
+
+export const url = {
+    API: "api",
+    CART: resources.CART,
+    LOCALITY: resources.LOCALITY,
+    PAGE: "page",
+    PRODUCT: resources.PRODUCT,
+    ORDER: resources.ORDER,
+    PLACE: resources.PLACE,
     SIGN_IN: "sign-in",
     SIGN_UP: "sign-up",
 };

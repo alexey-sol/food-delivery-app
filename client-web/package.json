@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "webpack serve --mode=development --config configs/webpack/config.dev.ts",
-        "build": "webpack --mode=production --config configs/webpack/config.prod.ts",
+        "build": "NODE_ENV=production webpack --mode=production --config configs/webpack/config.prod.ts",
         "analyze": "webpack --config configs/webpack/config.analyze.ts",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
         "lint:fix": "npm run lint -- --fix"

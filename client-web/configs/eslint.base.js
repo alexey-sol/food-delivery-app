@@ -13,24 +13,6 @@ module.exports = {
         NodeJS: true,
         React: true,
     },
-    ignorePatterns: ["build/*", "coverage/*", "dist/*", "node_modules/*"],
-    overrides: [
-        {
-            files: ["*.ts", "*.tsx"],
-            rules: {
-                "no-undef": "off",
-            },
-        },
-        {
-            files: ["*.spec.*", "*.test.*", "*-test.*"],
-            env: {
-                jest: true,
-            },
-            rules: {
-                "@typescript-eslint/no-empty-function": "off",
-            },
-        },
-    ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaFeatures: {
@@ -45,14 +27,18 @@ module.exports = {
         "unicorn",
     ],
     rules: {
-        "@typescript-eslint/member-delimiter-style": "warn",
-        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/consistent-type-imports": ["error", {
+            fixStyle: "inline-type-imports",
+            prefer: "type-imports",
+        }],
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-empty-function": "error",
         "@typescript-eslint/explicit-module-boundary-types": "error",
         "@typescript-eslint/no-redeclare": "error",
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/semi": "warn",
+        "@typescript-eslint/semi": "error",
         "class-methods-use-this": "off",
         "implicit-arrow-linebreak": "off",
         "import/extensions": ["error", "ignorePackages", {
@@ -61,13 +47,13 @@ module.exports = {
             ts: "never",
             tsx: "never",
         }],
-        "import/first": ["warn", "absolute-first"],
-        "import/newline-after-import": "warn",
+        "import/first": ["error", "absolute-first"],
+        "import/newline-after-import": "error",
         "import/no-extraneous-dependencies": ["error", {
             devDependencies: true,
         }],
         "import/no-default-export": "error",
-        "import/order": ["warn", {
+        "import/order": ["error", {
             groups: [
                 "builtin", "external", "internal", "parent", "sibling", "index",
             ],
@@ -100,17 +86,11 @@ module.exports = {
         "no-shadow": "off",
         "no-unused-vars": "off",
         "no-useless-constructor": "off",
-        quotes: ["error", "double"],
-        semi: "off",
-        "unicorn/filename-case": ["error", {
-            case: "kebabCase",
-        }],
-        // TODO
         "react/function-component-definition": ["error", {
             namedComponents: "arrow-function",
             unnamedComponents: "arrow-function",
         }],
-        "react/jsx-filename-extension": ["warn", {
+        "react/jsx-filename-extension": ["error", {
             extensions: [".tsx", ".ts"],
         }],
         "react/jsx-indent": ["error", 4],
@@ -119,6 +99,11 @@ module.exports = {
         "react/prop-types": "off",
         "react/require-default-props": "off",
         "react/state-in-constructor": "off",
+        quotes: ["error", "double"],
+        semi: "off",
+        "unicorn/filename-case": ["error", {
+            case: "kebabCase",
+        }],
     },
     settings: {
         "import/extensions": [".js", ".jsx", ".ts", ".tsx"],

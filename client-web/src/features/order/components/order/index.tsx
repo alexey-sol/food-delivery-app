@@ -1,9 +1,10 @@
 import React, { useEffect, type FC } from "react";
-import { useAuthContext } from "@/features/auth/contexts/auth";
 import {
     Box, Chip, List, ListItem, Paper, Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+
+import { useAuthContext } from "@/features/auth/contexts/auth";
 import { useUserContext } from "@/features/user/contexts/user";
 import { amountToRub } from "@/shared/utils/formatters/number";
 

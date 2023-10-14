@@ -1,4 +1,4 @@
-import type { HasHttpStatus, HasId } from "./props";
+import { type HasHttpStatus, type HasId } from "./props";
 
 export type Page<E = unknown> = {
     content: E;
@@ -17,7 +17,7 @@ export type AddressPreview = HasId & {
 export type Address = AddressPreview & {
     locality: HasId & {
         name: string;
-    }
+    };
 };
 
 export type ApiError = HasHttpStatus & {

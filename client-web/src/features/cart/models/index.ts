@@ -1,6 +1,6 @@
-import type { ProductPreview } from "@/features/product/models";
-import type { PlacePreview } from "@/features/place/models";
-import type { HasId } from "@/shared/models/props";
+import { type ProductPreview } from "@/features/product/models";
+import { type PlacePreview } from "@/features/place/models";
+import { type HasId } from "@/shared/models/props";
 
 export type CartItem = HasId & {
     product: ProductPreview;

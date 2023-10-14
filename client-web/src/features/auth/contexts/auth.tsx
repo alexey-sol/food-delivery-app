@@ -1,14 +1,15 @@
 import React, {
     useMemo, type FC, type PropsWithChildren, useCallback, useEffect,
 } from "react";
-import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
-
-import type { User } from "@/features/user/models";
-import { useAppDispatch } from "@/app/store/hooks";
 import { useNavigate } from "react-router-dom";
+
+import { type User } from "@/features/user/models";
+import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
+import { useAppDispatch } from "@/app/store/hooks";
 import { cartApi } from "@/features/cart/services/api";
 import { orderApi } from "@/features/order/services/api";
-import type { Locality, SignInDto, SignUpDto } from "../models";
+
+import { type Locality, type SignInDto, type SignUpDto } from "../models";
 import {
     authApi, useGetProfileQuery, useSignInMutation, useSignOutMutation, useSignUpMutation,
 } from "../services/api";

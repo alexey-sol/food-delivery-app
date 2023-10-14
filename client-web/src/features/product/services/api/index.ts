@@ -1,13 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "@/app/app-config";
-import { transformGetItemsArg } from "@/shared/utils/converters";
-import type { ProductPage } from "@/features/product/models";
 
-import { createTag, baseUrl } from "./utils";
+import { transformGetItemsArg } from "@/shared/utils/converters";
+import { getApiPath } from "@/shared/utils/formatters/api-path";
+import { resources, url } from "@/shared/const";
+import { type ProductPage } from "@/features/product/models";
+
+import { createTag } from "./utils";
 import * as cn from "./const";
 import type * as tp from "./types";
 
-const { placeResource, productResource } = appConfig;
+const baseUrl = getApiPath(url.API);
 
 export const productApi = createApi({
     reducerPath: "productApi",
@@ -17,7 +19,7 @@ export const productApi = createApi({
         getProductsByPlaceId: builder.query<ProductPage, tp.GetProductsByPlaceIdArg>({
             query: (arg) => ({
                 params: transformGetItemsArg(arg),
-                url: `${placeResource}/${arg.placeId}/${productResource}`,
+                url: `${resources.PLACE}/${arg.placeId}/${resources.PRODUCT}`,
             }),
             providesTags: (result) => {
                 const tag = createTag();

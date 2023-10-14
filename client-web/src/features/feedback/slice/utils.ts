@@ -1,4 +1,4 @@
-import type { SnackbarArg } from "../models";
+import { type SnackbarArg } from "../models";
 
 type CreateSnackbarArg = (message: SnackbarArg["message"]) => SnackbarArg;
 

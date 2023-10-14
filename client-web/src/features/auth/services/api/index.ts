@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { appConfig } from "@/app/app-config";
-import type { InitDto, SignInDto, SignUpDto } from "@/features/auth/models";
-import type { User } from "@/features/user/models";
 
-import { baseUrl } from "./utils";
+import { type InitDto, type SignInDto, type SignUpDto } from "@/features/auth/models";
+import { type User } from "@/features/user/models";
+import { resources, url } from "@/shared/const";
+import { getApiPath } from "@/shared/utils/formatters/api-path";
 
-const { authResource } = appConfig;
+const baseUrl = getApiPath(url.API);
 
 export const authApi = createApi({
     reducerPath: "authApi",
@@ -13,27 +13,27 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         getProfile: builder.query<InitDto, void>({
             query: () => ({
-                url: `${authResource}/profile`,
+                url: `${resources.AUTH}/profile`,
             }),
         }),
         signIn: builder.mutation<User, SignInDto>({
             query: (body) => ({
                 body,
                 method: "POST",
-                url: `${authResource}/sign-in`,
+                url: `${resources.AUTH}/sign-in`,
             }),
         }),
         signOut: builder.mutation<boolean, void>({
             query: () => ({
                 method: "POST",
-                url: `${authResource}/sign-out`,
+                url: `${resources.AUTH}/sign-out`,
             }),
         }),
         signUp: builder.mutation<User, SignUpDto>({
             query: (body) => ({
                 body,
                 method: "POST",
-                url: `${authResource}/sign-up`,
+                url: `${resources.AUTH}/sign-up`,
             }),
         }),
     }),

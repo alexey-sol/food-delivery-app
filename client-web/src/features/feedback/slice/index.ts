@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { SnackbarArg } from "../models";
+import { type SnackbarArg } from "../models";
 
 export type FeedbackState = {
     snackbar?: SnackbarArg;

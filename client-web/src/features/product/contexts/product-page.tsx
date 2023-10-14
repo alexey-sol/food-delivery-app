@@ -1,17 +1,18 @@
 import React, {
     useMemo, type FC, type PropsWithChildren, useCallback, useEffect,
 } from "react";
-import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
 import { useParams } from "react-router-dom";
+
+import { getUseContextOrThrowError } from "@/shared/utils/helpers/context";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
-import { PagingOptions } from "@/shared/models";
+import { type PagingOptions } from "@/shared/models";
 import { usePagingOptions } from "@/shared/utils/hooks/use-paging-options";
 
 import { useGetProductsByPlaceIdQuery } from "../services/api";
 import { selectPagingOptions } from "../slice/selectors";
 import { setPagingOptions } from "../slice";
-import { GetProductsByPlaceIdArg } from "../services/api/types";
-import type { ProductPreview } from "../models";
+import { type GetProductsByPlaceIdArg } from "../services/api/types";
+import { type ProductPreview } from "../models";
 
 const INITIAL_PRODUCTS: ProductPreview[] = [];
 

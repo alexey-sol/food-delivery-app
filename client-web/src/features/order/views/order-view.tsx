@@ -1,4 +1,5 @@
 import React, { type FC, memo } from "react";
+
 import { Order } from "../components/order";
 
 export const OrderView: FC = () => (

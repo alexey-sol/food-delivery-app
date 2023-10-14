@@ -2,10 +2,12 @@ import React, { useCallback, type FC, type PropsWithChildren } from "react";
 import {
     Alert, Box, Container, Snackbar,
 } from "@mui/material";
-import { SnackbarArg } from "@/features/feedback/models";
+
+import { type SnackbarArg } from "@/features/feedback/models";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import { resetSnackbar } from "@/features/feedback/slice";
 import { selectSnackbar } from "@/features/feedback/slice/selectors";
+
 import { Header } from "./header";
 
 export type LayoutData = {

@@ -2,11 +2,12 @@ import React, { type FC, useCallback } from "react";
 import {
     AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 import { appConfig } from "@/app/app-config";
 import { AppLink } from "@/shared/components/app-link";
 import { url } from "@/shared/const";
 import { useAuthContext } from "@/features/auth/contexts/auth";
-import { useNavigate } from "react-router-dom";
 
 type PageData = {
     path: string;

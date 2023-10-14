@@ -1,8 +1,9 @@
-import { useAuthContext } from "@/features/auth/contexts/auth";
 import React, { lazy, type FC } from "react";
 import {
     Navigate, Route, Routes, useLocation,
 } from "react-router-dom";
+
+import { useAuthContext } from "@/features/auth/contexts/auth";
 import { url } from "@/shared/const";
 
 const CartView = lazy(() => import("@/features/cart/views/cart-view"));

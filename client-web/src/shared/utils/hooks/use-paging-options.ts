@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+
 import { pagingOptions as initialPagingOptions, url } from "@/shared/const";
-import type { PagingOptions } from "@/shared/models";
+import { type PagingOptions } from "@/shared/models";
 
 type UsePagingOptionsArg = {
     initialOptions: PagingOptions;

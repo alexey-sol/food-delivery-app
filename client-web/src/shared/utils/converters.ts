@@ -1,4 +1,4 @@
-import type { PagingOptions } from "@/shared/models";
+import { type PagingOptions } from "@/shared/models";
 
 type Paging = Pick<PagingOptions, "page" | "size">;
 
@@ -22,6 +22,6 @@ type TransformArgArg<T> = {
 export const transformGetItemsArg = <T>(
     { paging, ...rest }: TransformArgArg<T>,
 ) => ({
-    ...transformPaging(paging),
-    ...rest,
-});
+        ...transformPaging(paging),
+        ...rest,
+    });

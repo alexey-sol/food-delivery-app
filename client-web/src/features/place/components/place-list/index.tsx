@@ -2,6 +2,7 @@ import React, { useMemo, type FC } from "react";
 import {
     Card, CardContent, Typography, type SxProps, type Theme, Box,
 } from "@mui/material";
+
 import { usePlacePageContext } from "@/features/place/contexts/place-page";
 import { AppLink } from "@/shared/components/app-link";
 import { url } from "@/shared/const";
